@@ -1,0 +1,32 @@
+## Mains
+    - Kevin's Famous Chili
+      - 'The Office'. The trick is to undercook the onions
+      - $11.99
+    - Ram-Don
+      - 'Parasite'. Steak included
+      - $19.99
+    - Baked Ziti with Mozzareall
+      - 'South Park'. Crème fraîche available
+      - $15.99
+    - Monica's Moist Maker
+      - 'Friends'. Gravy soaked piece of bread in the middle
+      - $9.99
+    - The Best Burger in New York
+      - 'How I Met Your Mother'. You'll be coming back
+      - $13.99
+    - Beef Wellington
+      - 'Hell's Kitchen'. Gordon Ramsay would approve
+      - $11.99
+    - Bubba Gump Shrimp
+      - 'Forrest Gump'. The Captain Dan special
+      - $19.99
+    - Ratatouille
+      - Ratatouille
+      - $15.99
+    - Spaghetti & Meatballs
+      - Lady and The Tramp
+      - $9.99
+    - Plain Cheese Pizza
+      - Home Alone. Keep the change ya filthy animal
+      - $13.99
+    - Baked Ziti with fresh basial & mozarella (South Park)
