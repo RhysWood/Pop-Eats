@@ -40,5 +40,5 @@ INSERT INTO users (name, email, password, phone_number, is_owner) VALUES
 ('Edward Noon', 'ednphd@mail.com', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.', 5236584552, FALSE),
 ('Christian Jones', 'chris1234@mail.com', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.', 4255589652, FALSE),
 ('George Sullivan', 'georgie4567@mail.com', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.', 1258652114, FALSE),
-('Will Britton', 'willb5647@mail.com', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.', 3658896521, FALSE),
+('Will Britton', 'willb5647@mail.com', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.', 3658896521, FALSE)
 
