@@ -11,6 +11,7 @@ CREATE TABLE "users" (
   "is_owner" boolean NOT NULL
 );
 
+<<<<<<< HEAD
 CREATE TABLE "orders" (
   "id" SERIAL PRIMARY KEY NOT NULL,
   "user_id" INTEGER NOT NULL,
@@ -29,4 +30,6 @@ CREATE TABLE "items" (
 ALTER TABLE "orders" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
 
 ALTER TABLE "items" ADD FOREIGN KEY ("id") REFERENCES "orders" ("item_id");
+=======
+>>>>>>> 76b19f3db389fe8b09233983d872f969e8eb499e
 
