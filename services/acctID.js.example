@@ -1,0 +1,4 @@
+const accountID = 'Account SID from www.twilio.com/console';
+const authToken = 'Auth token from www.twilio.com/console';
+
+module.exports = {accountID, authToken};
