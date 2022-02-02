@@ -11,7 +11,6 @@ CREATE TABLE "users" (
   "is_owner" boolean NOT NULL
 );
 
-
 CREATE TABLE "orders" (
   "id" SERIAL PRIMARY KEY NOT NULL,
   "user_id" INTEGER NOT NULL,
@@ -23,10 +22,9 @@ CREATE TABLE "items" (
   "id" SERIAL PRIMARY KEY,
   "title" varchar(250),
   "description" varchar(250),
-  "price" INTEGER NOT NULL,
+  "price"  DECIMAL NOT NULL,
   "rating" INTEGER NOT NULL
 );
 
-ALTER TABLE "orders" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
-
-ALTER TABLE "items" ADD FOREIGN KEY ("id") REFERENCES "orders" ("item_id");
+ALTER TABLE "orders" ADD FOREIGN KEY ("user_id") REFERENCES users("id");
+ALTER TABLE "orders" ADD FOREIGN KEY ("item_id") REFERENCES items("id");
