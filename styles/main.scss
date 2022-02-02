@@ -1,17 +1,83 @@
+html {
+  box-sizing: border-box;
+  overflow-x: hidden;
+  font-family: 'Roboto', sans-serif;
+}
+
+.header {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.85);
+  width: 100%;
+  overflow-x: hidden;
+  height: 120px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 0;
+  color: white;
+  font-size: 40px;
+}
+
 body {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  min-height: 100vh;
+  padding: 0%;
+  margin: 0%;
+  background-image: url('/public/images/home-page-background.jpg');
+  background-size: cover;
+}
 
-  background: rgb(163, 208, 219);
-  background: linear-gradient(
-    227deg,
-    rgba(163, 208, 219, 1) 0%,
-    rgba(163, 176, 219, 1) 20%,
-    rgba(163, 173, 219, 1) 34%,
-    rgba(163, 219, 208, 1) 59%,
-    rgba(163, 208, 219, 1) 74%,
-    rgba(163, 208, 219, 1) 100%
-  );
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 85%;
+  height: 100vh;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+a:hover {
+  color: #eb1c1c;
+}
+
+.intro-text {
+  background: rgba(0, 0, 0, 0.75);
+  color: white;
+  width: 400px;
+  font-size: 40px;
+  font-weight: bolder;
+  text-align: center;
+  border-radius: 10px;
+  padding: 0.4em;
+}
+
+.order-now {
+  cursor: pointer;
+  outline: none;
+  color:white;
+  background: rgba(255, 0, 0, 0.8);
+  border-radius: 5px;
+  width: 250px;
+  height: 85px;
+  border: none;
+  font-size: 35px;
+  margin-top: 15px;
+  box-shadow: 2px 2px 20px 10px rgba(251, 251, 251, 0.1);
+}
+
+.order-now:hover {
+  filter: brightness(90%);
+  background-color: white;
+  color: #eb1c1c;
 }
