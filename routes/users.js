@@ -22,5 +22,9 @@ module.exports = (db) => {
     //       .json({ error: err.message });
     //   });
   });
+
+  router.get('/about', (req, res) => {
+    res.render('about')
+  })
   return router;
 };
