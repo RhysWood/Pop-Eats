@@ -1,0 +1,26 @@
+body {
+  background: url(/images/about.jpg);
+  background-size: cover;
+  align-items: flex-start;
+}
+
+.about-text {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  background: rgba(0,0,0, 0.8);
+  margin-top: 200px;
+  color: white;
+  border-radius: 5px;
+  padding: 1em;
+  margin-left: 3%;
+  font-size: 40px;
+}
+
+#about-us{
+  display: inline-block;
+  font-size: 50px;
+  margin-bottom: 1em;
+  width: 260px;
+  border-bottom: 1px solid white;
+}

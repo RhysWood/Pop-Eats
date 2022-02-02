@@ -4,8 +4,9 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="about.css" />
+  <link rel="icon" href="/images/hamburger-solid.svg">
+  <link rel="stylesheet" href="/styles/main.css" type="text/css"/>
+  <link rel="stylesheet" href="/styles/about.css" />
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
@@ -13,7 +14,8 @@
   <title>About Pop.Eats</title>
 </head>
 <body>
-  <nav class="header">
+  <%- include('partials/_header') %>
+  <!-- <nav class="header">
     <div class="logo">
       <i class="fas fa-hamburger"></i>
       <div>
@@ -28,7 +30,7 @@
       <a href="/contact.html">CONTACT</a>
     </div>
     <div class="user">USER</div>
-  </nav>
+  </nav> -->
   <div class="about-text">
     <span id="about-us">ABOUT US</span>
     <span>Popology was formed by three aspiring software developers who also share a love for food and all things pop culture. Our mission is simple - to allow anyone to enjoy their favourite foods from TV, movies, and elsewhere. If you can watch it, you can eat it..</span>

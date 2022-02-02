@@ -19,7 +19,8 @@
     <title>Pop.Eats</title>
   </head>
   <body>
-    <nav class="header">
+    <%- include('partials/_header') %>
+    <!-- <nav class="header">
       <div class="logo">
         <i class="fas fa-hamburger"></i>
         <div>
@@ -34,12 +35,15 @@
         <a href="/contact.html">CONTACT</a>
       </div>
       <div class="user">USER</div>
-    </nav>
+    </nav> -->
     <main>
       <div class="intro-text">
         🍕 + 📺  = Pop.Eats 😋
       </div>
-      <button class="order-now">ORDER NOW</button>
+      <!-- <button class="order-now">ORDER NOW</button> -->
+      <form action="/menu" >
+        <input class="order-now" type="submit" value="ORDER NOW">
+      </form>
     </main>
   </body>
 </html>
