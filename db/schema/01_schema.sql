@@ -22,7 +22,7 @@ CREATE TABLE "items" (
   "id" SERIAL PRIMARY KEY,
   "title" varchar(250),
   "description" varchar(250),
-  "price" INTEGER NOT NULL,
+  "price"  DECIMAL NOT NULL,
   "rating" INTEGER NOT NULL
 );
 
