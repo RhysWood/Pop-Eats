@@ -1,13 +1,21 @@
-const {accountID, authToken, messagingID} = require('./acctID');
+// load .env data into process.env
+const path = require('path')
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
+
+twilioParams = {
+  accountID: process.env.accountID,
+  authToken: process.env.authToken,
+  messagingID: process.env.messagingID,
+};
 
 const twilio = require('twilio');
-const client = new twilio(accountID, authToken);
+const client = new twilio(twilioParams.accountID, twilioParams.authToken);
 
 const sendMessage = function(phoneNumber, message) {
   return client.messages
     .create({
       body: message,
-      messagingServiceSid: messagingID,
+      messagingServiceSid: twilioParams.messagingID,
       to: `+${phoneNumber}`
     })
     .then(message => console.log(message.sid))
@@ -20,4 +28,4 @@ const sendMessage = function(phoneNumber, message) {
 
 module.exports = {sendMessage};
 
-//console.log(sendMessage('17783586873', 'Hello from trial run three!'));
+//console.log(sendMessage('17783586873', 'Hello four!!'));
