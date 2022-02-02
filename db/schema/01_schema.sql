@@ -26,6 +26,5 @@ CREATE TABLE "items" (
   "rating" INTEGER NOT NULL
 );
 
-ALTER TABLE "orders" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
-
-ALTER TABLE "items" ADD FOREIGN KEY ("id") REFERENCES "orders" ("item_id");
+ALTER TABLE "orders" ADD FOREIGN KEY ("user_id") REFERENCES users("id");
+ALTER TABLE "orders" ADD FOREIGN KEY ("item_id") REFERENCES items("id");
