@@ -1,41 +1,31 @@
-const {accountID, authToken} = require('./acctID');
+// load .env data into process.env
+const path = require('path')
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
-const {db} = require('../db');
-
-const twilio = require('twilio');
-const client = new twilio(accountID, authToken);
-
-const sendMessage = function(id, message) {
-  return db
-  .query(`
-  SELECT phone_number
-  FROM users
-  WHERE id = $1
-  `, [id])
-  .then((result) => {
-    return client.messages
-      .create({
-        body: message,
-        messagingServiceSid: 'MGed55daed1e16f5639267fce30c5ac8ab',
-        to: result.rows[0]
-      })
-      .then(message => console.log(message.sid))
-      .done();
-
-  })
-  .catch((err) => {
-    console.log(err.message);
-    return null;
-  });
+twilioParams = {
+  accountID: process.env.accountID,
+  authToken: process.env.authToken,
+  messagingID: process.env.messagingID,
 };
 
-// client.messages
-//       .create({
-//          body: 'Testing take 2?!',
-//          messagingServiceSid: 'MGed55daed1e16f5639267fce30c5ac8ab',
-//          to: '+17783586873'
-//        })
-//       .then(message => console.log(message.sid))
-//       .done();
+const twilio = require('twilio');
+const client = new twilio(twilioParams.accountID, twilioParams.authToken);
+
+const sendMessage = function(phoneNumber, message) {
+  return client.messages
+    .create({
+      body: message,
+      messagingServiceSid: twilioParams.messagingID,
+      to: `+${phoneNumber}`
+    })
+    .then(message => console.log(message.sid))
+    .catch((err) => {
+      console.log(err.message);
+      return null;
+    })
+    .done();
+};
 
 module.exports = {sendMessage};
+
+//console.log(sendMessage('17783586873', 'Hello four!!'));
