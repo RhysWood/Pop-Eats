@@ -16,6 +16,17 @@ const dbParams = require("./lib/db.js");
 const db = new Pool(dbParams);
 db.connect();
 
+// const testFunc = () => {
+//   const queryString = `SELECT * FROM users WHERE id = $1`;
+//   const values = [4];
+//   return db.query(queryString, values)
+//    .then((res) => {
+//      console.log(res.rows[0].id)
+//    })
+// }
+
+// testFunc();
+
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
@@ -39,6 +50,7 @@ app.use(express.static("public"));
 // Note: Feel free to replace the example routes below with your own
 const usersRoutes = require("./routes/users");
 const widgetsRoutes = require("./routes/widgets");
+const { query } = require("express");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -54,7 +66,7 @@ app.use("/api/widgets", widgetsRoutes(db));
 //   res.render("index");
 // });
 
-app.use('/', usersRoutes())
+app.use('/', usersRoutes(db))
 // app.get('/', (req, res) => {
 //   res.render('home')
 // })
@@ -62,3 +74,5 @@ app.use('/', usersRoutes())
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });
+
+module.exports = db;
