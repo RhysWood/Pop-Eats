@@ -111,8 +111,35 @@ const orderCost = (orderID) => {
   })
 };
 
+const startOrder = (userID) => {
+  const queryString = `
+  INSERT INTO orders (user_id, submitted, start_date, end_date)
+  VALUES($1, $2, $3, $4)
+  RETURNING *;
+  `;
+  const values =[userID, false, ]
+}
 
-
+const addToOrder = (itemID, orderID) => {
+  const queryString = `
+  INSERT INTO orders_items
+  `;
+  const values = [orderID];
+  return db.query(queryString, values)
+  .then((res) => {
+    if(res.rows[0]['sum'] !== null) {
+      // console.log('Order Total:');
+      //console.log(res.rows[0]);
+      return res.rows[0];
+    }
+    console.log(`Order #${orderID} Empty`);
+    return null;
+  })
+  .catch((err) => {
+    console.log(err.message);
+    return null;
+  })
+}
 
 
 module.exports = {findUser, menuItems, allUsers, orderItems, orderCost};
