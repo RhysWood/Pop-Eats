@@ -86,7 +86,7 @@ app.get('/contact', (req, res) => {
   res.render('contact')
 })
 
-app.use("/api/widgets", widgetsRoutes(db));
+// app.use("/api/widgets", widgetsRoutes(db));
 // Note: mount other resources here, using the same pattern above
 
 // Home page
@@ -104,11 +104,12 @@ app.use("/api/widgets", widgetsRoutes(db));
 app.use('/login', login)
 
 app.get('/menu', (req, res) => {
-  database.menuItems()
+  database.menuItems(db)
   .then(items => {
     console.log(items);
+    let templateVars = {items}
+    res.render('menu', templateVars)
   })
-  res.render('menu')
 })
 
 app.listen(PORT, () => {

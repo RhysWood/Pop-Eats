@@ -1,4 +1,4 @@
-const {db} = require('./dbpool');
+// const {db} = require('./dbpool');
 // const db = require('./server')
 
 //returns user from database
@@ -26,7 +26,7 @@ const findUser = (userID) => {
 
 
 //Return all items on menu as array
-const menuItems = () => {
+const menuItems = (db) => {
   const queryString = `
   SELECT * from items
   GROUP BY id
@@ -34,7 +34,6 @@ const menuItems = () => {
   `;
   return db.query(queryString)
   .then((res) => {
-    console.log('menuItems');
     return res.rows;
   })
   .catch((err) => {

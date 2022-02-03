@@ -8,7 +8,9 @@ CREATE TABLE "items" (
   "title" varchar(50),
   "description" varchar(250),
   "price" decimal,
-  "rating" int
+  "rating" int,
+  "img_url" varchar(250),
+  "img_alt" varchar(250)
 );
 
 CREATE TABLE "users" (
@@ -24,8 +26,8 @@ CREATE TABLE "orders" (
   "id" SERIAL PRIMARY KEY,
   "user_id" int,
   "submitted" boolean,
-  "start_date" TIMESTAMP,
-  "end_date" TIMESTAMP
+  "start_date" date,
+  "end_date" date
 );
 
 CREATE TABLE "orders_items" (
