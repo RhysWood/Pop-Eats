@@ -69,8 +69,55 @@ const userOrders = (userID) => {
   })
 };
 
+//update user details by passing in options object
+const updateUser = (userID, options) => {
+  const values = [userID];
+  let queryString = `
+  UPDATE users
+  SET id = $1`;
 
-//const updateUser;
+  if(options.name) {
+    values.push(`${options.name}`);
+    queryString += `, name= $${values.length}`;
+  }
+
+  if(options.email) {
+    values.push(`${options.email}`);
+    queryString += `, email= $${values.length}`;
+  }
+
+  if(options.password) {
+    values.push(`${options.password}`);
+    queryString += `, password= $${values.length}`;
+  }
+
+  if(options.phone_number) {
+  values.push(`${options.phone_number}`);
+  queryString += `, phone_number= $${values.length}`;
+  }
+
+  if(options.is_owner) {
+    values.push(`${options.is_owner}`);
+    queryString += `, is_owner= $${values.length}`;
+  }
+
+  queryString += ` WHERE id = $1
+  RETURNING *;`;
+  return db.query(queryString, values)
+   .then((res) => {
+     if(res.rows[0]) {
+      console.log('updated user!');
+      console.log(res.rows[0])
+      return res.rows[0];
+     };
+     console.log('User Not Found');
+     return null;
+   })
+   .catch((err) => {
+    console.log(err.message);
+    return null;
+  })
+};
 
 
 //Return all items on menu as array
@@ -91,8 +138,69 @@ const menuItems = () => {
   })
 };
 
-// const addMenuItem;
-// const editMenuItem;
+const addMenuItem = (title, description, price, rating) => {
+  const queryString = `
+  INSERT INTO items (title, description, price, rating)
+  VALUES($1, $2, $3, $4)
+  RETURNING *;
+  `;
+  const values = [title, description, price, rating];
+  return db.query(queryString, values)
+  .then((res) => {
+    console.log('Added items to menu!');
+    console.log(res.rows);
+    return res.rows[0];
+  })
+  .catch((err) => {
+    console.log(err.message);
+    return null;
+  })
+};;
+
+const editMenuItem = (itemID, options) => {
+  const values = [itemID];
+  let queryString = `
+  UPDATE items
+  SET id = $1`;
+
+  if(options.title) {
+    values.push(`${options.title}`);
+    queryString += `, title= $${values.length}`;
+  }
+
+  if(options.description) {
+    values.push(`${options.description}`);
+    queryString += `, description= $${values.length}`;
+  }
+
+  if(options.price) {
+    values.push(`${options.price}`);
+    queryString += `, price= $${values.length}`;
+  }
+
+  if(options.rating) {
+  values.push(`${options.rating}`);
+  queryString += `, rating= $${values.length}`;
+  }
+
+  queryString += ` WHERE id = $1
+  RETURNING *;`;
+  return db.query(queryString, values)
+   .then((res) => {
+     if(res.rows[0]) {
+      console.log('updated menu item!');
+      console.log(res.rows[0])
+      return res.rows[0];
+     };
+     console.log('User Not Found');
+     return null;
+   })
+   .catch((err) => {
+    console.log(err.message);
+    return null;
+  })
+};
+
 // const deleteMenuItem;
 
 //returns all items in an order
@@ -229,4 +337,4 @@ const restartCart = (orderID) => {
 // const setSubmitted;
 // const setCompleted;
 
-module.exports = {allUsers, findUser,userOrders, menuItems, orderItems, orderCost, startOrder, addToOrder, removeFromOrder, restartCart};
+module.exports = {allUsers, findUser, userOrders, updateUser, menuItems, addMenuItem, editMenuItem, orderItems, orderCost, startOrder, addToOrder, removeFromOrder, restartCart};
