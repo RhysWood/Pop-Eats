@@ -1,7 +1,27 @@
+const { user } = require('pg/lib/defaults');
 const {db} = require('./dbpool');
 // const db = require('./server')
 
-//returns user from database
+
+//Return all users on website as array
+const allUsers = () => {
+  const queryString = `
+  SELECT * from users
+  GROUP BY id
+  ORDER BY id;
+  `;
+  return db.query(queryString)
+  .then((res) => {
+    console.log('allUsers');
+    return res.rows;
+  })
+  .catch((err) => {
+    console.log(err.message);
+    return null;
+  })
+};
+
+//returns select user from database
 const findUser = (userID) => {
   const queryString = `
   SELECT *
@@ -22,7 +42,35 @@ const findUser = (userID) => {
     console.log(err.message);
     return null;
   })
-}
+};
+
+//show all orders under the current user
+const userOrders = (userID) => {
+  const queryString = `
+  SELECT orders
+  FROM orders
+  WHERE user_id = $1
+  ORDER BY start_date DESC;
+  `;
+  const values = [userID];
+  return db.query(queryString, values)
+   .then((res) => {
+     if(res.rows[0]) {
+      console.log('all orders!');
+      console.log(res.rows)
+      return res.rows;
+     };
+     console.log('User Not Found');
+     return null;
+   })
+   .catch((err) => {
+    console.log(err.message);
+    return null;
+  })
+};
+
+
+//const updateUser;
 
 
 //Return all items on menu as array
@@ -43,23 +91,9 @@ const menuItems = () => {
   })
 };
 
-//Return all users on website as array
-const allUsers = () => {
-  const queryString = `
-  SELECT * from users
-  GROUP BY id
-  ORDER BY id;
-  `;
-  return db.query(queryString)
-  .then((res) => {
-    console.log('allUsers');
-    return res.rows;
-  })
-  .catch((err) => {
-    console.log(err.message);
-    return null;
-  })
-};
+// const addMenuItem;
+// const editMenuItem;
+// const deleteMenuItem;
 
 //returns all items in an order
 const orderItems = (orderID) => {
@@ -128,7 +162,7 @@ const startOrder = (userID) => {
     console.log(err.message);
     return null;
   })
-}
+};
 
 //adds an item from the cart to a specific order
 const addToOrder = (itemID, orderID, quantity) => {
@@ -148,7 +182,7 @@ const addToOrder = (itemID, orderID, quantity) => {
     console.log(err.message);
     return null;
   })
-}
+};
 
 //deletes a specific item from the cart from a specific order
 const removeFromOrder = (itemID, orderID) => {
@@ -169,7 +203,7 @@ const removeFromOrder = (itemID, orderID) => {
     console.log(err.message);
     return null;
   })
-}
+};
 
 //emptys the cart and discards the order in progress
 const restartCart = (orderID) => {
@@ -189,8 +223,10 @@ const restartCart = (orderID) => {
     console.log(err.message);
     return null;
   })
-}
+};
 
+// const orderDetails;
+// const setSubmitted;
+// const setCompleted;
 
-
-module.exports = {findUser, menuItems, allUsers, orderItems, orderCost, startOrder, addToOrder, removeFromOrder, restartCart};
+module.exports = {allUsers, findUser,userOrders, menuItems, orderItems, orderCost, startOrder, addToOrder, removeFromOrder, restartCart};
