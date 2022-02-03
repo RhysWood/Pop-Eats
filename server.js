@@ -104,7 +104,7 @@ app.get('/contact', (req, res) => {
 app.use('/login', login)
 
 app.get('/menu', (req, res) => {
-  database.menuItems(db)
+  database.menuItems()
   .then(items => {
     console.log(items);
     let templateVars = {items}
