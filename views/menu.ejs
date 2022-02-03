@@ -22,15 +22,35 @@
   <body>
     <%- include('partials/_header') %>
     <div class="menu-container">
-      <div class="menu-item">
-        <img
-          src="https://www.fromvalerieskitchen.com/wordpress/wp-content/uploads/2021/01/Halftime-Chili-35.jpg"
-          alt=""
-        />
-        <div>Kevin's Famous Chili</div>
-        <div>The Office. The trick is to undercook the onions</div>
-        <div>$10.99</div>
-      </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">FAME Rating</th>
+            <th scope="col">Price</th>
+            <th scope="col">Add to Cart</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for(let item in items) { %>
+            <tr>
+              <div class="menu-item">
+                <td><img src = "<%= items[item]['img_url'] %>" alt = <%= items[item]['img_alt'] %>></a></td>
+                <td><%= items[item]['title'] %></td>
+                <td><%= items[item]['description'] %></td>
+                <td><%= items[item]['rating'] %></td>
+                <td><%= items[item]['price'] %></td>
+                <td><form class="form-inline" action="/cart" method="POST">
+                  <div class="form-group mb-2">
+                    <input class="form-control" type="number" name="longURL" placeholder="Enter Quantity">
+                    <button type="submit" class="btn btn-primary">Add to Cart</button>
+                  </div></td>
+              </div>
+            </tr>
+          <% } %>
+        </tbody>
     </div>
   </body>
 </html>
