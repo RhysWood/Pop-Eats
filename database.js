@@ -43,6 +43,8 @@ const menuItems = () => {
   })
 };
 
+exports.menuItems = menuItems;
+
 //Return all users on website as array
 const allUsers = () => {
   const queryString = `
