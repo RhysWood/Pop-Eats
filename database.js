@@ -1,4 +1,5 @@
-const db = require('./server')
+const {db} = require('./dbpool');
+// const db = require('./server')
 
 const testFunc = () => {
   const queryString = `SELECT * FROM users WHERE id = $1`;
@@ -11,3 +12,5 @@ const testFunc = () => {
 }
 
 testFunc();
+
+
