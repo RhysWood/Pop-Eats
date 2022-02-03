@@ -1,9 +1,4 @@
-<<<<<<< HEAD
 // const {db} = require('./dbpool');
-=======
-const { user } = require('pg/lib/defaults');
-const {db} = require('./dbpool');
->>>>>>> 3195b17fd66250e129aee01cafc044d4434f6d8e
 // const db = require('./server')
 
 
@@ -141,15 +136,14 @@ const menuItems = (db) => {
   })
 };
 
-<<<<<<< HEAD
+
 exports.menuItems = menuItems;
 
 //Return all users on website as array
-const allUsers = () => {
-=======
+
+
 //adds a new menu item to the item list
 const addMenuItem = (title, description, price, rating) => {
->>>>>>> 3195b17fd66250e129aee01cafc044d4434f6d8e
   const queryString = `
   INSERT INTO items (title, description, price, rating)
   VALUES($1, $2, $3, $4)
