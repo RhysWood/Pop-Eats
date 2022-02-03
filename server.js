@@ -1,6 +1,8 @@
 // load .env data into process.env
 require("dotenv").config();
 
+const {db} = require('./dbpool');
+
 // Web server config
 const PORT = process.env.PORT || 8080;
 const sassMiddleware = require("./lib/sass-middleware");
@@ -13,9 +15,9 @@ const cookieSession = require("cookie-session");
 // const homeRoute = require('./routes/users')
 
 // PG database client/connection setup
-const { Pool } = require("pg");
-const dbParams = require("./lib/db.js");
-const db = new Pool(dbParams);
+// const { Pool } = require("pg");
+// const dbParams = require("./lib/db.js");
+// const db = new Pool(dbParams);
 db.connect();
 
 // const testFunc = () => {
@@ -104,4 +106,4 @@ app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });
 
-module.exports = db;
+//module.exports = db;
