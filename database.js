@@ -1,7 +1,31 @@
+<<<<<<< HEAD
 // const {db} = require('./dbpool');
+=======
+const { user } = require('pg/lib/defaults');
+const {db} = require('./dbpool');
+>>>>>>> 3195b17fd66250e129aee01cafc044d4434f6d8e
 // const db = require('./server')
 
-//returns user from database
+
+//Return all users on website as array
+const allUsers = () => {
+  const queryString = `
+  SELECT * from users
+  GROUP BY id
+  ORDER BY id;
+  `;
+  return db.query(queryString)
+  .then((res) => {
+    console.log('allUsers');
+    return res.rows;
+  })
+  .catch((err) => {
+    console.log(err.message);
+    return null;
+  })
+};
+
+//returns select user from database
 const findUser = (userID) => {
   const queryString = `
   SELECT *
@@ -22,7 +46,82 @@ const findUser = (userID) => {
     console.log(err.message);
     return null;
   })
-}
+};
+
+//show all orders under the current user
+const userOrders = (userID) => {
+  const queryString = `
+  SELECT orders
+  FROM orders
+  WHERE user_id = $1
+  ORDER BY start_date DESC;
+  `;
+  const values = [userID];
+  return db.query(queryString, values)
+   .then((res) => {
+     if(res.rows[0]) {
+      console.log('all orders!');
+      console.log(res.rows)
+      return res.rows;
+     };
+     console.log('User Not Found');
+     return null;
+   })
+   .catch((err) => {
+    console.log(err.message);
+    return null;
+  })
+};
+
+//update user details by passing in options object
+const updateUser = (userID, options) => {
+  const values = [userID];
+  let queryString = `
+  UPDATE users
+  SET id = $1`;
+
+  if(options.name) {
+    values.push(`${options.name}`);
+    queryString += `, name= $${values.length}`;
+  }
+
+  if(options.email) {
+    values.push(`${options.email}`);
+    queryString += `, email= $${values.length}`;
+  }
+
+  if(options.password) {
+    values.push(`${options.password}`);
+    queryString += `, password= $${values.length}`;
+  }
+
+  if(options.phone_number) {
+  values.push(`${options.phone_number}`);
+  queryString += `, phone_number= $${values.length}`;
+  }
+
+  if(options.is_owner) {
+    values.push(`${options.is_owner}`);
+    queryString += `, is_owner= $${values.length}`;
+  }
+
+  queryString += ` WHERE id = $1
+  RETURNING *;`;
+  return db.query(queryString, values)
+   .then((res) => {
+     if(res.rows[0]) {
+      console.log('updated user!');
+      console.log(res.rows[0])
+      return res.rows[0];
+     };
+     console.log('User Not Found');
+     return null;
+   })
+   .catch((err) => {
+    console.log(err.message);
+    return null;
+  })
+};
 
 
 //Return all items on menu as array
@@ -42,42 +141,114 @@ const menuItems = (db) => {
   })
 };
 
+<<<<<<< HEAD
 exports.menuItems = menuItems;
 
 //Return all users on website as array
 const allUsers = () => {
+=======
+//adds a new menu item to the item list
+const addMenuItem = (title, description, price, rating) => {
+>>>>>>> 3195b17fd66250e129aee01cafc044d4434f6d8e
   const queryString = `
-  SELECT * from users
-  GROUP BY id
-  ORDER BY id;
+  INSERT INTO items (title, description, price, rating)
+  VALUES($1, $2, $3, $4)
+  RETURNING *;
   `;
-  return db.query(queryString)
+  const values = [title, description, price, rating];
+  return db.query(queryString, values)
   .then((res) => {
-    console.log('allUsers');
-    return res.rows;
+    console.log('Added items to menu!');
+    console.log(res.rows);
+    return res.rows[0];
   })
   .catch((err) => {
     console.log(err.message);
     return null;
   })
+};;
+
+//edits the properties of a current menu item
+const editMenuItem = (itemID, options) => {
+  const values = [itemID];
+  let queryString = `
+  UPDATE items
+  SET id = $1`;
+
+  if(options.title) {
+    values.push(`${options.title}`);
+    queryString += `, title= $${values.length}`;
+  }
+
+  if(options.description) {
+    values.push(`${options.description}`);
+    queryString += `, description= $${values.length}`;
+  }
+
+  if(options.price) {
+    values.push(`${options.price}`);
+    queryString += `, price= $${values.length}`;
+  }
+
+  if(options.rating) {
+  values.push(`${options.rating}`);
+  queryString += `, rating= $${values.length}`;
+  }
+
+  queryString += ` WHERE id = $1
+  RETURNING *;`;
+  return db.query(queryString, values)
+   .then((res) => {
+     if(res.rows[0]) {
+      console.log('updated menu item!');
+      console.log(res.rows[0])
+      return res.rows[0];
+     };
+     console.log('User Not Found');
+     return null;
+   })
+   .catch((err) => {
+    console.log(err.message);
+    return null;
+  })
 };
+
+//deletes an item from the menu
+const deleteMenuItem = (itemID) => {
+  const queryString = `
+  DELETE from items
+  WHERE id = $1
+  RETURNING *;
+  `;
+  const values = [itemID];
+  return db.query(queryString, values)
+  .then((res) => {
+    console.log('Removed item from menu!');
+    console.log(res.rows);
+    return null;
+  })
+  .catch((err) => {
+    console.log(err.message);
+    return null;
+  })
+};;
 
 //returns all items in an order
 const orderItems = (orderID) => {
   const queryString = `
-  SELECT items.title, items.price, orders_items.quantity
-  FROM items
+  SELECT items.title, items.price, sum(orders_items.quantity)
+  from items
   JOIN orders_items on orders_items.item_id = items.id
   JOIN orders on orders.id = orders_items.order_id
-  WHERE orders.id = $1
-  GROUP BY items.title, items.price, orders_items.quantity;
+  WHERE orders.id = 3
+  GROUP BY items.title, items.price;
   `;
   const values = [orderID];
   return db.query(queryString, values)
   .then((res) => {
     if(res.rows[0]) {
-      // console.log('Order Items:');
-      // console.log(res.rows);
+      console.log('Order Items:');
+      console.log(res.rows);
       return res.rows;
     }
     console.log(`Order #${orderID} Empty`);
@@ -88,7 +259,6 @@ const orderItems = (orderID) => {
     return null;
   })
 };
-
 
 //returns total sum of all items in an order as an object
 const orderCost = (orderID) => {
@@ -112,35 +282,153 @@ const orderCost = (orderID) => {
   })
 };
 
+//initites a new order item in the database
 const startOrder = (userID) => {
   const queryString = `
   INSERT INTO orders (user_id, submitted, start_date, end_date)
-  VALUES($1, $2, $3, $4)
+  VALUES($1, $2, CURRENT_TIMESTAMP, null)
   RETURNING *;
   `;
-  const values =[userID, false, ]
-}
-
-const addToOrder = (itemID, orderID) => {
-  const queryString = `
-  INSERT INTO orders_items
-  `;
-  const values = [orderID];
+  const values =[userID, false];
   return db.query(queryString, values)
   .then((res) => {
-    if(res.rows[0]['sum'] !== null) {
-      // console.log('Order Total:');
-      //console.log(res.rows[0]);
-      return res.rows[0];
-    }
-    console.log(`Order #${orderID} Empty`);
+    console.log('Added Order!');
+    console.log(res.rows);
+    return res.rows[0];
+  })
+  .catch((err) => {
+    console.log(err.message);
+    return null;
+  })
+};
+
+//adds an item from the cart to a specific order
+const addToOrder = (itemID, orderID, quantity) => {
+  const queryString = `
+  INSERT INTO orders_items (item_id, order_id, quantity)
+  VALUES($1, $2, $3)
+  RETURNING *;
+  `;
+  const values = [itemID, orderID, quantity];
+  return db.query(queryString, values)
+  .then((res) => {
+    console.log('Added items to Order!');
+    console.log(res.rows);
+    return res.rows[0];
+  })
+  .catch((err) => {
+    console.log(err.message);
+    return null;
+  })
+};
+
+//deletes a specific item from the cart from a specific order
+const removeFromOrder = (itemID, orderID) => {
+  const queryString = `
+  DELETE from orders_items
+  WHERE item_id = $1
+  AND order_id = $2
+  RETURNING *;
+  `;
+  const values = [itemID, orderID];
+  return db.query(queryString, values)
+  .then((res) => {
+    console.log('Removed items from Order!');
+    console.log(res.rows);
     return null;
   })
   .catch((err) => {
     console.log(err.message);
     return null;
   })
-}
+};
 
+//emptys the cart and discards the order in progress
+const restartCart = (orderID) => {
+  const queryString = `
+  DELETE from orders_items
+  WHERE order_id = $1
+  RETURNING *;
+  `;
+  const values = [orderID];
+  return db.query(queryString, values)
+  .then((res) => {
+    console.log('Discarded Order in Progress!');
+    console.log(res.rows);
+    return null;
+  })
+  .catch((err) => {
+    console.log(err.message);
+    return null;
+  })
+};
 
-module.exports = {findUser, menuItems, allUsers, orderItems, orderCost};
+//retrieves all order details from a specific order
+const orderDetails = (orderID) => {
+  const queryString = `
+  SELECT *
+  FROM orders
+  WHERE id = $1
+  `;
+  const values = [orderID];
+  return db.query(queryString, values)
+  .then((res) => {
+    console.log('orderDetails');
+    console.log(res.rows[0]);
+    return res.rows[0];
+  })
+  .catch((err) => {
+    console.log(err.message);
+    return null;
+  })
+};;
+
+//sets an order status as submitted
+const setSubmitted = (orderID) => {
+  const values = [orderID];
+  let queryString = `
+  UPDATE orders
+  SET submitted = true
+  WHERE id = $1
+  RETURNING *;`;
+  return db.query(queryString, values)
+   .then((res) => {
+     if(res.rows[0]) {
+      console.log('Submitted Order!');
+      console.log(res.rows[0])
+      return res.rows[0];
+     };
+     console.log('User Not Found');
+     return null;
+   })
+   .catch((err) => {
+    console.log(err.message);
+    return null;
+  })
+};
+
+//sets an end date on an order as completed
+const setCompleted = (orderID) => {
+  const values = [orderID];
+  let queryString = `
+  UPDATE orders
+  SET end_date = CURRENT_TIMESTAMP
+  WHERE id = $1
+  RETURNING *;`;
+  return db.query(queryString, values)
+   .then((res) => {
+     if(res.rows[0]) {
+      console.log('Ended Order!');
+      console.log(res.rows[0])
+      return res.rows[0];
+     };
+     console.log('User Not Found');
+     return null;
+   })
+   .catch((err) => {
+    console.log(err.message);
+    return null;
+  })
+};;
+
+module.exports = {allUsers, findUser, userOrders, updateUser, menuItems, addMenuItem, editMenuItem, deleteMenuItem, orderItems, orderCost, startOrder, addToOrder, removeFromOrder, restartCart, orderDetails, setSubmitted, setCompleted};

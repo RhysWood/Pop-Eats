@@ -97,7 +97,11 @@ app.get('/contact', (req, res) => {
 //   res.render("index");
 // });
 
+<<<<<<< HEAD
 // app.use('/', usersRoutes(db))
+=======
+//app.use('/', usersRoutes(db))
+>>>>>>> 3195b17fd66250e129aee01cafc044d4434f6d8e
 // app.get('/', (req, res) => {
 //   res.render('home')
 // })
