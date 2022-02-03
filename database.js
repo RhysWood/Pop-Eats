@@ -1,6 +1,4 @@
-// const {db} = require('./dbpool');
-// const db = require('./server')
-
+const {db} = require('./dbpool');
 
 //Return all users on website as array
 const allUsers = () => {
@@ -120,7 +118,7 @@ const updateUser = (userID, options) => {
 
 
 //Return all items on menu as array
-const menuItems = (db) => {
+const menuItems = () => {
   const queryString = `
   SELECT * from items
   GROUP BY id
@@ -135,12 +133,6 @@ const menuItems = (db) => {
     return null;
   })
 };
-
-
-exports.menuItems = menuItems;
-
-//Return all users on website as array
-
 
 //adds a new menu item to the item list
 const addMenuItem = (title, description, price, rating) => {
