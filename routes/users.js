@@ -10,7 +10,7 @@ const router = express.Router();
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
-    console.log(db);
+    // console.log(db);
     res.render("index");
     // db.query(`SELECT * FROM users;`)
     //   .then(data => {
