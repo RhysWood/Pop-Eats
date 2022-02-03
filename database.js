@@ -75,8 +75,8 @@ const orderItems = (orderID) => {
   return db.query(queryString, values)
   .then((res) => {
     if(res.rows[0]) {
-      // console.log('Order Items:');
-      // console.log(res.rows);
+      console.log('Order Items:');
+      console.log(res.rows);
       return res.rows;
     }
     console.log(`Order #${orderID} Empty`);
@@ -87,7 +87,6 @@ const orderItems = (orderID) => {
     return null;
   })
 };
-
 
 //returns total sum of all items in an order as an object
 const orderCost = (orderID) => {
@@ -111,29 +110,39 @@ const orderCost = (orderID) => {
   })
 };
 
+//initites a new order item in the database
 const startOrder = (userID) => {
   const queryString = `
   INSERT INTO orders (user_id, submitted, start_date, end_date)
-  VALUES($1, $2, $3, $4)
+  VALUES($1, $2, CURRENT_TIMESTAMP, null)
   RETURNING *;
   `;
-  const values =[userID, false, ]
-}
-
-const addToOrder = (itemID, orderID) => {
-  const queryString = `
-  INSERT INTO orders_items
-  `;
-  const values = [orderID];
+  const values =[userID, false];
   return db.query(queryString, values)
   .then((res) => {
-    if(res.rows[0]['sum'] !== null) {
-      // console.log('Order Total:');
-      //console.log(res.rows[0]);
-      return res.rows[0];
-    }
-    console.log(`Order #${orderID} Empty`);
+    console.log('Added Order!');
+    console.log(res.rows);
+    return res.rows[0];
+  })
+  .catch((err) => {
+    console.log(err.message);
     return null;
+  })
+}
+
+//adds an item from the cart to a specific order
+const addToOrder = (itemID, orderID, quantity) => {
+  const queryString = `
+  INSERT INTO orders_items (item_id, order_id, quantity)
+  VALUES($1, $2, $3)
+  RETURNING *;
+  `;
+  const values = [itemID, orderID, quantity];
+  return db.query(queryString, values)
+  .then((res) => {
+    console.log('Added items to Order!');
+    console.log(res.rows);
+    return res.rows[0];
   })
   .catch((err) => {
     console.log(err.message);
@@ -142,4 +151,4 @@ const addToOrder = (itemID, orderID) => {
 }
 
 
-module.exports = {findUser, menuItems, allUsers, orderItems, orderCost};
+module.exports = {findUser, menuItems, allUsers, orderItems, orderCost, startOrder, addToOrder};
