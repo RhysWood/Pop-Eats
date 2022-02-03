@@ -7,6 +7,8 @@ const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
+const cookieSession = require("cookie-session");
+
 
 // const homeRoute = require('./routes/users')
 
@@ -31,6 +33,10 @@ db.connect();
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
 app.use(morgan("dev"));
+app.use(cookieSession({
+  name: 'session',
+  keys: ['key1', 'key2']
+}))
 
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
@@ -48,13 +54,35 @@ app.use(express.static("public"));
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
-const usersRoutes = require("./routes/users");
 const widgetsRoutes = require("./routes/widgets");
 const { query } = require("express");
+const login = require('./routes/login');
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // app.use("/api/users", usersRoutes(db));
+app.get("/", (req, res) => {
+  res.render('index');
+  // db.query(`SELECT * FROM users;`)
+  //   .then(data => {
+  //     const users = data.rows;
+  //     res.json({ users });
+  //   })
+  //   .catch(err => {
+  //     res
+  //       .status(500)
+  //       .json({ error: err.message });
+  //   });
+});
+
+app.get('/about', (req, res) => {
+  res.render('about')
+})
+
+app.get('/contact', (req, res) => {
+  res.render('contact')
+})
+
 app.use("/api/widgets", widgetsRoutes(db));
 // Note: mount other resources here, using the same pattern above
 
@@ -70,6 +98,7 @@ app.use('/', usersRoutes(db))
 // app.get('/', (req, res) => {
 //   res.render('home')
 // })
+app.use('/login', login)
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
