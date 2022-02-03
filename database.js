@@ -64,12 +64,12 @@ const allUsers = () => {
 //returns all items in an order
 const orderItems = (orderID) => {
   const queryString = `
-  SELECT items.title, items.price, orders_items.quantity
-  FROM items
+  SELECT items.title, items.price, sum(orders_items.quantity)
+  from items
   JOIN orders_items on orders_items.item_id = items.id
   JOIN orders on orders.id = orders_items.order_id
-  WHERE orders.id = $1
-  GROUP BY items.title, items.price, orders_items.quantity;
+  WHERE orders.id = 3
+  GROUP BY items.title, items.price;
   `;
   const values = [orderID];
   return db.query(queryString, values)
@@ -150,5 +150,47 @@ const addToOrder = (itemID, orderID, quantity) => {
   })
 }
 
+//deletes a specific item from the cart from a specific order
+const removeFromOrder = (itemID, orderID) => {
+  const queryString = `
+  DELETE from orders_items
+  WHERE item_id = $1
+  AND order_id = $2
+  RETURNING *;
+  `;
+  const values = [itemID, orderID];
+  return db.query(queryString, values)
+  .then((res) => {
+    console.log('Removed items from Order!');
+    console.log(res.rows);
+    return null;
+  })
+  .catch((err) => {
+    console.log(err.message);
+    return null;
+  })
+}
 
-module.exports = {findUser, menuItems, allUsers, orderItems, orderCost, startOrder, addToOrder};
+//emptys the cart and discards the order in progress
+const restartCart = (orderID) => {
+  const queryString = `
+  DELETE from orders_items
+  WHERE order_id = $1
+  RETURNING *;
+  `;
+  const values = [orderID];
+  return db.query(queryString, values)
+  .then((res) => {
+    console.log('Discarded Order in Progress!');
+    console.log(res.rows);
+    return null;
+  })
+  .catch((err) => {
+    console.log(err.message);
+    return null;
+  })
+}
+
+
+
+module.exports = {findUser, menuItems, allUsers, orderItems, orderCost, startOrder, addToOrder, removeFromOrder, restartCart};
