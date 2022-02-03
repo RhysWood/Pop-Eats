@@ -96,7 +96,7 @@ app.use("/api/widgets", widgetsRoutes(db));
 //   res.render("index");
 // });
 
-app.use('/', usersRoutes(db))
+//app.use('/', usersRoutes(db))
 // app.get('/', (req, res) => {
 //   res.render('home')
 // })
