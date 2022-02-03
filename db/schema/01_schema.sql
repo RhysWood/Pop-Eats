@@ -24,8 +24,8 @@ CREATE TABLE "orders" (
   "id" SERIAL PRIMARY KEY,
   "user_id" int,
   "submitted" boolean,
-  "start_date" date,
-  "end_date" date
+  "start_date" TIMESTAMP,
+  "end_date" TIMESTAMP
 );
 
 CREATE TABLE "orders_items" (
