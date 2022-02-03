@@ -5,12 +5,13 @@
  * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
  */
 
-const express = require('express');
-const router  = express.Router();
+const express = require("express");
+const router = express.Router();
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
-    res.render('index');
+    console.log(db);
+    res.render("index");
     // db.query(`SELECT * FROM users;`)
     //   .then(data => {
     //     const users = data.rows;
@@ -23,12 +24,16 @@ module.exports = (db) => {
     //   });
   });
 
-  router.get('/about', (req, res) => {
-    res.render('about')
-  })
+  router.get("/about", (req, res) => {
+    res.render("about");
+  });
 
-  router.get('/contact', (req, res) => {
-    res.render('contact')
-  })
+  router.get("/contact", (req, res) => {
+    res.render("contact");
+  });
+
+  router.get('/menu', (req, res) => {
+    res.render('menu')
+  });
   return router;
 };
