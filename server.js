@@ -11,6 +11,7 @@ const app = express();
 const morgan = require("morgan");
 const cookieSession = require("cookie-session");
 
+const database = require('./database')
 
 // const homeRoute = require('./routes/users')
 
@@ -101,6 +102,14 @@ app.use("/api/widgets", widgetsRoutes(db));
 //   res.render('home')
 // })
 app.use('/login', login)
+
+app.get('/menu', (req, res) => {
+  database.menuItems()
+  .then(items => {
+    console.log(items);
+  })
+  res.render('menu')
+})
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
