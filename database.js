@@ -138,6 +138,7 @@ const menuItems = () => {
   })
 };
 
+//adds a new menu item to the item list
 const addMenuItem = (title, description, price, rating) => {
   const queryString = `
   INSERT INTO items (title, description, price, rating)
@@ -157,6 +158,7 @@ const addMenuItem = (title, description, price, rating) => {
   })
 };;
 
+//edits the properties of a current menu item
 const editMenuItem = (itemID, options) => {
   const values = [itemID];
   let queryString = `
@@ -201,7 +203,25 @@ const editMenuItem = (itemID, options) => {
   })
 };
 
-// const deleteMenuItem;
+//deletes an item from the menu
+const deleteMenuItem = (itemID) => {
+  const queryString = `
+  DELETE from items
+  WHERE id = $1
+  RETURNING *;
+  `;
+  const values = [itemID];
+  return db.query(queryString, values)
+  .then((res) => {
+    console.log('Removed item from menu!');
+    console.log(res.rows);
+    return null;
+  })
+  .catch((err) => {
+    console.log(err.message);
+    return null;
+  })
+};;
 
 //returns all items in an order
 const orderItems = (orderID) => {
@@ -333,8 +353,72 @@ const restartCart = (orderID) => {
   })
 };
 
-// const orderDetails;
-// const setSubmitted;
-// const setCompleted;
+//retrieves all order details from a specific order
+const orderDetails = (orderID) => {
+  const queryString = `
+  SELECT *
+  FROM orders
+  WHERE id = $1
+  `;
+  const values = [orderID];
+  return db.query(queryString, values)
+  .then((res) => {
+    console.log('orderDetails');
+    console.log(res.rows[0]);
+    return res.rows[0];
+  })
+  .catch((err) => {
+    console.log(err.message);
+    return null;
+  })
+};;
 
-module.exports = {allUsers, findUser, userOrders, updateUser, menuItems, addMenuItem, editMenuItem, orderItems, orderCost, startOrder, addToOrder, removeFromOrder, restartCart};
+//sets an order status as submitted
+const setSubmitted = (orderID) => {
+  const values = [orderID];
+  let queryString = `
+  UPDATE orders
+  SET submitted = true
+  WHERE id = $1
+  RETURNING *;`;
+  return db.query(queryString, values)
+   .then((res) => {
+     if(res.rows[0]) {
+      console.log('Submitted Order!');
+      console.log(res.rows[0])
+      return res.rows[0];
+     };
+     console.log('User Not Found');
+     return null;
+   })
+   .catch((err) => {
+    console.log(err.message);
+    return null;
+  })
+};
+
+//sets an end date on an order as completed
+const setCompleted = (orderID) => {
+  const values = [orderID];
+  let queryString = `
+  UPDATE orders
+  SET end_date = CURRENT_TIMESTAMP
+  WHERE id = $1
+  RETURNING *;`;
+  return db.query(queryString, values)
+   .then((res) => {
+     if(res.rows[0]) {
+      console.log('Ended Order!');
+      console.log(res.rows[0])
+      return res.rows[0];
+     };
+     console.log('User Not Found');
+     return null;
+   })
+   .catch((err) => {
+    console.log(err.message);
+    return null;
+  })
+};;
+
+module.exports = {allUsers, findUser, userOrders, updateUser, menuItems, addMenuItem, editMenuItem, deleteMenuItem, orderItems, orderCost, startOrder, addToOrder, removeFromOrder, restartCart, orderDetails, setSubmitted, setCompleted};
