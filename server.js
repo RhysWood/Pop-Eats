@@ -11,6 +11,7 @@ const app = express();
 const morgan = require("morgan");
 const cookieSession = require("cookie-session");
 
+const database = require('./database')
 
 // const homeRoute = require('./routes/users')
 
@@ -85,7 +86,7 @@ app.get('/contact', (req, res) => {
   res.render('contact')
 })
 
-app.use("/api/widgets", widgetsRoutes(db));
+// app.use("/api/widgets", widgetsRoutes(db));
 // Note: mount other resources here, using the same pattern above
 
 // Home page
@@ -96,11 +97,20 @@ app.use("/api/widgets", widgetsRoutes(db));
 //   res.render("index");
 // });
 
-//app.use('/', usersRoutes(db))
+// app.use('/', usersRoutes(db))
 // app.get('/', (req, res) => {
 //   res.render('home')
 // })
 app.use('/login', login)
+
+app.get('/menu', (req, res) => {
+  database.menuItems(db)
+  .then(items => {
+    console.log(items);
+    let templateVars = {items}
+    res.render('menu', templateVars)
+  })
+})
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);

@@ -1,5 +1,4 @@
-const { user } = require('pg/lib/defaults');
-const {db} = require('./dbpool');
+// const {db} = require('./dbpool');
 // const db = require('./server')
 
 
@@ -121,7 +120,7 @@ const updateUser = (userID, options) => {
 
 
 //Return all items on menu as array
-const menuItems = () => {
+const menuItems = (db) => {
   const queryString = `
   SELECT * from items
   GROUP BY id
@@ -129,7 +128,6 @@ const menuItems = () => {
   `;
   return db.query(queryString)
   .then((res) => {
-    console.log('menuItems');
     return res.rows;
   })
   .catch((err) => {
@@ -137,6 +135,12 @@ const menuItems = () => {
     return null;
   })
 };
+
+
+exports.menuItems = menuItems;
+
+//Return all users on website as array
+
 
 //adds a new menu item to the item list
 const addMenuItem = (title, description, price, rating) => {
