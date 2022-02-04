@@ -14,7 +14,7 @@
   <div class="contact">
     <a href="/contact">CONTACT</a>
   </div>
-  <% if (user.name){ %>
+  <% if (user && user.name){ %>
   <div class="user">Hi, <%- user.name %></div>
   <% } else { %>
     <div>USER</div>
