@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="icon" href="/images/hamburger-solid.svg">
+    <link rel="icon" href="/images/hamburger-solid.svg" />
     <link
       href="https://fonts.googleapis.com/css2?family=Bungee&family=Montserrat&family=Roboto&family=Sacramento&family=Source+Sans+Pro:wght@600&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="/styles/main.css" type="text/css"/>
-    <link rel="stylesheet" href="/styles/menu.css" type="text/css"/>
+    <link rel="stylesheet" href="/styles/main.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/menu.css" type="text/css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
@@ -31,29 +31,51 @@
             <th scope="col">Description</th>
             <th scope="col">FAME Rating</th>
             <th scope="col">Price</th>
-            <th scope="col">Add to Cart</th>
+            <th scope="col">Total</th>
           </tr>
         </thead>
         <tbody>
           <% for(let item in items) { %>
-            <tr>
-              <div class="menu-item">
-                <td><img src = "<%= items[item]['img_url'] %>" alt = <%= items[item]['img_alt'] %>></a></td>
-                <td><%= items[item]['title'] %></td>
-                <td><%= items[item]['description'] %></td>
-                <td><%= items[item]['rating'] %></td>
-                <td><%= items[item]['price'] %></td>
-                <td><form class="form-inline" action="/cart" method="POST">
-                  <div class="form-group mb-2">
-                    <input class="form-control" type="number" name="longURL" placeholder="Enter Quantity">
-                    <button type="submit" class="btn btn-primary">Add to Cart</button>
-                  </div></td>
-              </div>
-            </tr>
+          <tr class="table-row">
+            <!-- <div class="menu-item"> -->
+            <td>
+              <img src = "<%= items[item]['img_url'] %>" alt = <%=
+              items[item]['img_alt'] %>>
+            </td>
+            <td><%= items[item]['title'] %></td>
+            <td><%= items[item]['description'] %></td>
+            <td><%= items[item]['rating'] %></td>
+            <td id="price"><%= items[item]['price'] %></td>
+            <td>
+              <form class="form-inline" method="POST">
+                <!-- <div class="form-group mb-2"> -->
+                <input
+                  class="form-control"
+                  type="number"
+                  name="longURL"
+                  placeholder="Enter Quantity"
+                  min="0"
+                />
+                <button type="submit" class="btn btn-primary">Remove</button>
+              </form>
+              <!-- </div> -->
+            </td>
+            <td id="total"></td>
+            <!-- </div> -->
+          </tr>
           <% } %>
         </tbody>
+      </table>
     </div>
     <!-- Scipt -->
     <script src="/scripts/app.js"></script>
   </body>
 </html>
+
+<!--
+<aside>
+  <div class="cart-description"></div>
+  <div class="total"></div>
+  <div class="tax"></div>
+  <div class="subtotal"></div>
+</aside> -->
