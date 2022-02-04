@@ -30,8 +30,8 @@ const findUser = (userID) => {
   return db.query(queryString, values)
    .then((res) => {
      if(res.rows[0]) {
-      console.log('foundUser!');
-      console.log(res.rows[0])
+      // console.log('foundUser!');
+      // console.log(res.rows[0])
       return res.rows[0];
      };
      console.log('User Not Found');

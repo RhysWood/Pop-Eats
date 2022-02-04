@@ -54,6 +54,13 @@ app.use(
 );
 
 app.use(express.static("public"));
+app.use((req,res, next)=>{
+  database.findUser(req.session.user_id)
+  .then((response)=>{
+    res.locals.user = response;
+    return next();
+  });
+})
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
@@ -79,8 +86,8 @@ app.get("/", (req, res) => {
 });
 
 app.get('/about', (req, res) => {
-  res.render('about')
-})
+    res.render('about');
+  });
 
 app.get('/contact', (req, res) => {
   res.render('contact')

@@ -14,5 +14,9 @@
   <div class="contact">
     <a href="/contact">CONTACT</a>
   </div>
-  <div class="user">USER</div>
+  <% if (user && user.name){ %>
+  <div class="user">Hi, <%- user.name %></div>
+  <% } else { %>
+    <div>USER</div>
+    <% } %>
 </nav>
