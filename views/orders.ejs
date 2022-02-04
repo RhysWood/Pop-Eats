@@ -12,6 +12,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/styles/main.css" type="text/css"/>
+    <link rel="stylesheet" href="/styles/orders.css" type="text/css"/>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
@@ -30,6 +31,7 @@
           <thead>
             <tr>
               <th scope="col">Order Number</th>
+              <th scope="col">Items</th>
               <th scope="col">Order Date</th>
               <th scope="col">Completed Date</th>
               <th scope="col">Update</th>
@@ -49,7 +51,23 @@
                 </div>
                 <td><button id="DetailsButton" type="submit">Order Details</button></td>
               </form>
-                <td></td>
+              <td>
+                <% for(let item in items) { %>
+                  <% if(items[item]['orderid'] === id) { %>
+                    <p><%= items[item]['title'] %></p>
+                  <% } %>
+                <% } %>
+              </td>
+              <td>
+                <% let sum = 0 %>
+                <% for(let item in items) { %>
+                  <% if(items[item]['orderid'] === id) { %>
+                    <% sum += (items[item]['price'] * items[item]['sum'])  %>
+                  <% } %>
+                <% } %>
+                <% sum = sum.toFixed(2) %>
+                <p><%= sum %></p>
+              </td>
 
               </tr>
             <% } %>

@@ -117,25 +117,24 @@ app.get('/orders', (req, res) => {
   // //sets default user as user 1 for testing purposes
   const id = req.session.user_id || 1;
   const itemArray = [];
+  const userID = database.findUser(id);
+  let orders;
   database.findUser(id)
   .then(user => {
     database.userOrders(id)
     .then(orders => {
-      for(let order of orders){
-        database.orderItems(order['id'])
-        .then(items => {
-          itemArray.push(items);
-        })
-      }
-      const templateVars = {orders, itemArray, user};
-      console.log(templateVars);
-      res.render('orders', templateVars);
+      database.alluserOrderItems(id)
+      .then(items => {
+        const templateVars = {orders, items, user};
+        console.log('these are templatevars:', templateVars);
+        res.render('orders', templateVars);
+      })
     })
-    .catch(err => {
-      console.log(err.message)
-      return null;
-    })
-  });
+  })
+  .catch(err => {
+    console.log(err.message)
+    return null;
+  })
 });
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
