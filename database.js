@@ -18,6 +18,8 @@ const allUsers = () => {
   })
 };
 
+exports.allUsers = allUsers;
+
 //returns select user from database
 const findUser = (userID) => {
   const queryString = `
@@ -41,10 +43,12 @@ const findUser = (userID) => {
   })
 };
 
+exports.findUser = findUser;
+
 //show all orders under the current user
 const userOrders = (userID) => {
   const queryString = `
-  SELECT orders
+  SELECT *
   FROM orders
   WHERE user_id = $1
   ORDER BY start_date DESC;
@@ -65,6 +69,9 @@ const userOrders = (userID) => {
     return null;
   })
 };
+
+
+exports.userOrders = userOrders;
 
 //update user details by passing in options object
 const updateUser = (userID, options) => {
@@ -116,6 +123,7 @@ const updateUser = (userID, options) => {
   })
 };
 
+exports.updateUser = updateUser;
 
 //Return all items on menu as array
 const menuItems = () => {
@@ -152,7 +160,9 @@ const addMenuItem = (title, description, price, rating, img_url, img_alt) => {
     console.log(err.message);
     return null;
   })
-};;
+};
+
+exports.addMenuItem = addMenuItem;
 
 //edits the properties of a current menu item
 const editMenuItem = (itemID, options) => {
@@ -209,6 +219,8 @@ const editMenuItem = (itemID, options) => {
   })
 };
 
+exports.editMenuItem = editMenuItem;
+
 //deletes an item from the menu
 const deleteMenuItem = (itemID) => {
   const queryString = `
@@ -227,7 +239,9 @@ const deleteMenuItem = (itemID) => {
     console.log(err.message);
     return null;
   })
-};;
+};
+
+exports.deleteMenuItem = deleteMenuItem;
 
 //returns all items in an order
 const orderItems = (orderID) => {
@@ -236,7 +250,7 @@ const orderItems = (orderID) => {
   from items
   JOIN orders_items on orders_items.item_id = items.id
   JOIN orders on orders.id = orders_items.order_id
-  WHERE orders.id = 3
+  WHERE orders.id = $1
   GROUP BY items.title, items.price;
   `;
   const values = [orderID];
@@ -255,6 +269,9 @@ const orderItems = (orderID) => {
     return null;
   })
 };
+
+
+exports.orderItems = orderItems;
 
 //returns total sum of all items in an order as an object
 const orderCost = (orderID) => {
@@ -278,7 +295,9 @@ const orderCost = (orderID) => {
   })
 };
 
-//initites a new order item in the database
+exports.orderCost = orderCost;
+
+//initiates a new order item in the database
 const startOrder = (userID) => {
   const queryString = `
   INSERT INTO orders (user_id, submitted, start_date, end_date)
@@ -297,6 +316,8 @@ const startOrder = (userID) => {
     return null;
   })
 };
+
+exports.startOrder = startOrder;
 
 //adds an item from the cart to a specific order
 const addToOrder = (itemID, orderID, quantity) => {
@@ -317,6 +338,8 @@ const addToOrder = (itemID, orderID, quantity) => {
     return null;
   })
 };
+
+exports.startOrder = startOrder;
 
 //deletes a specific item from the cart from a specific order
 const removeFromOrder = (itemID, orderID) => {
@@ -339,6 +362,8 @@ const removeFromOrder = (itemID, orderID) => {
   })
 };
 
+exports.removeFromOrder = removeFromOrder;
+
 //emptys the cart and discards the order in progress
 const restartCart = (orderID) => {
   const queryString = `
@@ -359,6 +384,8 @@ const restartCart = (orderID) => {
   })
 };
 
+exports.restartCart = restartCart;
+
 //retrieves all order details from a specific order
 const orderDetails = (orderID) => {
   const queryString = `
@@ -377,7 +404,9 @@ const orderDetails = (orderID) => {
     console.log(err.message);
     return null;
   })
-};;
+};
+
+exports.orderDetails = orderDetails;
 
 //sets an order status as submitted
 const setSubmitted = (orderID) => {
@@ -403,6 +432,8 @@ const setSubmitted = (orderID) => {
   })
 };
 
+exports.setSubmitted = setSubmitted;
+
 //sets an end date on an order as completed
 const setCompleted = (orderID) => {
   const values = [orderID];
@@ -425,6 +456,8 @@ const setCompleted = (orderID) => {
     console.log(err.message);
     return null;
   })
-};;
+};
+
+exports.setCompleted = setCompleted;
 
 module.exports = {allUsers, findUser, userOrders, updateUser, menuItems, addMenuItem, editMenuItem, deleteMenuItem, orderItems, orderCost, startOrder, addToOrder, removeFromOrder, restartCart, orderDetails, setSubmitted, setCompleted};
