@@ -32,8 +32,7 @@
             <tr>
               <div class="menu-container">
                 <td><img src = "<%= items[item]['img_url'] %>" class="rounded mx-auto d-block" alt = <%= items[item]['img_alt'] %>></a></td>
-                <td><%= items[item]['title'] %></td>
-                <td><%= items[item]['description'] %></td>
+                <td style="font-size: large;margin-top: ;"><b><%= items[item]['title'] %></b> <br><br> <%= items[item]['description'] %></td>
                 <td>Rating: <br> <%= items[item]['rating'] %> / 5</td>
                 <td>Price: <br>$<%= items[item]['price'] %></td>
                 <td><form class="form-inline" action="/cart" method="POST">
