@@ -15,8 +15,14 @@
     <a href="/contact">CONTACT</a>
   </div>
   <% if (user && user.name){ %>
-  <div class="user">Hi, <%- user.name %></div>
+  <div id="user" class="dropbtn">Hi, <%- user.name %></div>
+  <div id="dropDownMenu" class="dropdown-content">
+    <a href="/orders">Orders</a>
+    <a href="/profile">Profile</a>
+  </div>
   <% } else { %>
     <div>USER</div>
     <% } %>
 </nav>
+
+
