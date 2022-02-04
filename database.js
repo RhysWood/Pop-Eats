@@ -73,6 +73,35 @@ const userOrders = (userID) => {
 
 exports.userOrders = userOrders;
 
+//show all orders, including final price and items under the current user
+const alluserOrderItems = (userID) => {
+  const queryString = `
+  SELECT orders.id as orderid, items.title, items.price, sum(orders_items.quantity)
+  from items
+  JOIN orders_items on orders_items.item_id = items.id
+  JOIN orders on orders.id = orders_items.order_id
+  WHERE user_id = $1
+  GROUP BY items.title, items.price, orders.id;
+  `;
+  const values = [userID];
+  return db.query(queryString, values)
+   .then((res) => {
+     if(res.rows[0]) {
+      console.log('all orders!');
+      console.log(res.rows)
+      return res.rows;
+     };
+     console.log('User Not Found');
+     return null;
+   })
+   .catch((err) => {
+    console.log(err.message);
+    return null;
+  })
+};
+
+exports.alluserOrderItems = alluserOrderItems;
+
 //update user details by passing in options object
 const updateUser = (userID, options) => {
   const values = [userID];
@@ -246,12 +275,12 @@ exports.deleteMenuItem = deleteMenuItem;
 //returns all items in an order
 const orderItems = (orderID) => {
   const queryString = `
-  SELECT items.title, items.price, sum(orders_items.quantity)
+  SELECT orders.id as orderid, items.title, items.price, sum(orders_items.quantity)
   from items
   JOIN orders_items on orders_items.item_id = items.id
   JOIN orders on orders.id = orders_items.order_id
   WHERE orders.id = $1
-  GROUP BY items.title, items.price;
+  GROUP BY items.title, items.price, orders.id;
   `;
   const values = [orderID];
   return db.query(queryString, values)
@@ -460,4 +489,4 @@ const setCompleted = (orderID) => {
 
 exports.setCompleted = setCompleted;
 
-module.exports = {allUsers, findUser, userOrders, updateUser, menuItems, addMenuItem, editMenuItem, deleteMenuItem, orderItems, orderCost, startOrder, addToOrder, removeFromOrder, restartCart, orderDetails, setSubmitted, setCompleted};
+module.exports = {allUsers, findUser, userOrders, alluserOrderItems, updateUser, menuItems, addMenuItem, editMenuItem, deleteMenuItem, orderItems, orderCost, startOrder, addToOrder, removeFromOrder, restartCart, orderDetails, setSubmitted, setCompleted};
