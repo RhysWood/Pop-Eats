@@ -135,13 +135,13 @@ const menuItems = () => {
 };
 
 //adds a new menu item to the item list
-const addMenuItem = (title, description, price, rating) => {
+const addMenuItem = (title, description, price, rating, img_url, img_alt) => {
   const queryString = `
-  INSERT INTO items (title, description, price, rating)
-  VALUES($1, $2, $3, $4)
+  INSERT INTO items (title, description, price, rating, img_url, img_alt)
+  VALUES($1, $2, $3, $4, $5, $6)
   RETURNING *;
   `;
-  const values = [title, description, price, rating];
+  const values = [title, description, price, rating, img_url, img_alt];
   return db.query(queryString, values)
   .then((res) => {
     console.log('Added items to menu!');
@@ -179,6 +179,16 @@ const editMenuItem = (itemID, options) => {
   if(options.rating) {
   values.push(`${options.rating}`);
   queryString += `, rating= $${values.length}`;
+  }
+
+  if(options.img_url) {
+  values.push(`${options.img_url}`);
+  queryString += `, img_url= $${values.length}`;
+  }
+
+  if(options.img_alt) {
+  values.push(`${options.img_alt}`);
+  queryString += `, img_alt= $${values.length}`;
   }
 
   queryString += ` WHERE id = $1
