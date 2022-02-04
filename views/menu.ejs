@@ -30,12 +30,12 @@
         <tbody>
           <% for(let item in items) { %>
             <tr>
-              <div class="menu-item">
+              <div class="menu-container">
                 <td><img src = "<%= items[item]['img_url'] %>" class="rounded mx-auto d-block" alt = <%= items[item]['img_alt'] %>></a></td>
                 <td><%= items[item]['title'] %></td>
                 <td><%= items[item]['description'] %></td>
-                <td><%= items[item]['rating'] %></td>
-                <td><%= items[item]['price'] %></td>
+                <td>Rating: <br> <%= items[item]['rating'] %> / 5</td>
+                <td>Price: <br>$<%= items[item]['price'] %></td>
                 <td><form class="form-inline" action="/cart" method="POST">
                   <div class="form-group mb-2" id="qty-input">
                     <input class="form-control" style="width: 75px;" type="number" name="longURL" placeholder="qty">
