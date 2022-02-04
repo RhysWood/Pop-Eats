@@ -32,13 +32,13 @@
             <tr>
               <div class="menu-container">
                 <td><img src = "<%= items[item]['img_url'] %>" class="rounded mx-auto d-block" alt = <%= items[item]['img_alt'] %>></a></td>
-                <td style="font-size: large;margin-top: ;"><b><%= items[item]['title'] %></b> <br><br> <%= items[item]['description'] %></td>
+                <td style="font-size: large;"><b><%= items[item]['title'] %></b> <br><br> <%= items[item]['description'] %></td>
                 <td>Rating: <br> <%= items[item]['rating'] %> / 5</td>
                 <td>Price: <br>$<%= items[item]['price'] %></td>
                 <td><form class="form-inline" action="/cart" method="POST">
                   <div class="form-group mb-2" id="qty-input">
                     <input class="form-control" style="width: 75px;" type="number" name="longURL" placeholder="qty">
-                    <button type="submit" class="btn btn-danger">Add</button>
+                    <td><button type="submit" class="btn btn-danger">Add</button></td>
                   </div></td>
               </div>
             </tr>
