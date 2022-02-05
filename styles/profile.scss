@@ -1,9 +1,8 @@
 body {
-  align-items: flex-start;
+  display: flex;
   background-image: none;
   width: 100%;
   background-color:rgb(249, 249, 249);
-  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -11,15 +10,38 @@ body {
   margin-right: auto;
 }
 
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content:flex-start;
+  width: 85%;
+  height: 100vh;
+  padding-top: 2em;
+}
+
 h1 {
   margin-bottom: 2em;
 }
 
-h2 {
+h3 {
   margin-bottom: 1em;
 }
 
-tr {
-  padding: 1em;
+h4 {
+  padding-bottom: 1em;
 }
 
+tr td {
+  padding-right: 2em;
+  padding-bottom: 2em;
+}
+
+tr th {
+  padding-right: 2em;
+}
+
+#name {
+  font-weight: bold;
+  color:darkblue;
+}

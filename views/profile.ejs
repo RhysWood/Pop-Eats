@@ -26,26 +26,79 @@
   <body>
     <%- include('partials/_header') %>
     <main>
-      <h1>Welcome, <%- user.name %>! </h1>
-      <h2>You can edit your profile here:</h2>
+      <h1>Welcome, <span id="name"><%- user.name %></span>! </h1>
+      <h3>Here are your current details:</h3>
       <table>
         <tr>
           <th>Name</th>
-          <th>Email Address</th>
-          <th>Phone Number</th>
+          <th>Email</th>
+          <th>Phone</th>
           <th>Password</th>
         </tr>
         <tr>
-          <td><%- user.name %>e</td>
-          <td>Maria Anders</td>
-          <td>Germany</td>
-        </tr>
-        <tr>
-          <td>Centro comercial Moctezuma</td>
-          <td>Francisco Chang</td>
-          <td>Mexico</td>
+          <td><%- user.name %></td>
+          <td><%- user.email %></td>
+          <td><%- user.phone_number %></td>
+          <td>********</td>
         </tr>
       </table>
+      <br>
+      <br>
+      <h4>Something not look right? Edit below! </h4>
+      <table>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Password</th>
+          </tr>
+          <tr>
+            <!-- NEW NAME -->
+            <td><form class="form-inline" method="POST">
+              <div class="form-group mb-2" id="qty-input">
+              <input
+                class="form-control"
+                style="width: 110px;"
+                type="text"
+                name="name"
+                placeholder="New Name"
+              /></td>
+                <!-- NEW EMAIL -->
+            <td><form class="form-inline" method="POST">
+              <div class="form-group mb-2" id="qty-input">
+              <input
+                class="form-control"
+                style="width: 110px;"
+                type="text"
+                name="name"
+                placeholder="New Email"
+              /></td>
+                <!-- NEW PHONE -->
+            <td><form class="form-inline" method="POST">
+              <div class="form-group mb-2" id="qty-input">
+              <input
+                class="form-control"
+                style="width: 110px;"
+                type="text"
+                name="name"
+                placeholder="New Phone"
+              /></td>
+            <!-- NEW PASSWORD -->
+            <td><form class="form-inline" method="POST">
+              <div class="form-group mb-2" id="qty-input">
+              <input
+
+                class="form-control"
+                style="width: 110px;"
+                type="text"
+                name="name"
+                placeholder="UNSECURE"
+              /></td>
+          </tr>
+      </table>
+      <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Disabled tooltip">
+        <button class="btn btn-primary" style="pointer-events: none;" type="button" disabled>SUBMIT</button>
+      </span>
     </main>
   </body>
 </html>
