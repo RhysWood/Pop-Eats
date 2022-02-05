@@ -7,16 +7,22 @@ $(document).ready(function () {
                   <div class="subtotal"></div>
                 </aside>`);
 
-  $(".add").on('click', function () {
-    console.log('hi');
+  $(".add").on("click", function () {
+    console.log("hi");
     event.preventDefault();
 
     $(".menu-item-container").append($cart);
 
-    let target = $(this).parent().parent().children('.row-input').children().children().children()
+    let target = $(this)
+      .parent()
+      .parent()
+      .children(".row-input")
+      .children()
+      .children()
+      .children();
     console.log(target);
     // updateTotal(target)
-    updateTotal(target)
+    updateTotal(target);
     // updateTotal($(this).parent().parent().children('.form-inline'))
     // updateTotal(this.parent().children('.form-inline'));
   });
@@ -55,29 +61,29 @@ $(document).ready(function () {
 
   updateTotal = (quantityInput) => {
     let row = $(quantityInput).parent().parent().parent().parent();
-    let price = row.children("#whatever").children('.price').text();
+    let price = row.children("#whatever").children(".price").text();
     console.log(row);
     console.log("PRICE:" + price);
     let quantity = $(quantityInput).val();
     console.log("QTY:" + quantity);
     let rowPrice = Number(price) * Number(quantity);
 
-    row.children('#total').html(rowPrice.toFixed(2))
-
+    row.children("#total").html(rowPrice.toFixed(2));
 
     // console.log($('#total').text());
 
     // console.log($('.table-row').children('#total').text());
 
     let subTotal = 0;
-    $('.table-row').each(function () {
-      subTotal += Number($(this).children('#total').text());
-    })
+    $(".table-row").each(function () {
+      subTotal += Number($(this).children("#total").text());
+    });
 
-    let total = subTotal.toFixed(2)
+    let total = subTotal.toFixed(2);
+    let totalText = `$ ${total.toString()}`;
     // console.log(total);
     // console.log(subTotal.toFixed(2));
-    $('.cart-total-item').text(total);
+    $(".cart-total-item").text(totalText);
     // $(".menu-container").append($cart);
     // let test = row.children().each(function () {
     //   // console.log($('#total').text());
@@ -94,11 +100,6 @@ $(document).ready(function () {
     // });
 
     // console.log(subtotal);
-
-
-
-
-
 
   };
 });

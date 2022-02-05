@@ -12,8 +12,8 @@ body {
 }
 
 img {
-  width: 300px;
-  height: 300px;
+  width: 250px;
+  height: 250px;
 }
 
 .menu-container {
@@ -46,8 +46,18 @@ img {
 }
 
 aside {
-  width: 300px;
-  // margin-left: 150px;
+  width: 250px;
+  background: rgba(0,0,0, 0.8);
+  color: white;
+  font-size: 30px;
+  position: fixed;
+  right: 20px;
+  padding: 0.5em;
+  border-radius: 2px;
+}
+
+.table {
+  margin-right: 190px;
 }
 
 h1{
@@ -60,10 +70,10 @@ h1{
   margin-bottom: 2em;
 }
 
-td img {
-  height: 150px;
-  width: 150px;
-}
+// td img {
+//   // height: 150px;
+//   // width: 150px;
+// }
 
 .qty-submit{
   display: flex;
