@@ -68,6 +68,7 @@ app.use((req,res, next)=>{
 const widgetsRoutes = require("./routes/widgets");
 const { query } = require("express");
 const login = require('./routes/login');
+const { json } = require("express/lib/response");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -93,6 +94,11 @@ app.get('/about', (req, res) => {
 app.get('/contact', (req, res) => {
   res.render('contact')
 })
+
+app.get('/profile', (req, res) => {
+  res.render('profile')
+})
+
 
 //app.use("/api/widgets", widgetsRoutes(db));
 // Note: mount other resources here, using the same pattern above
@@ -165,6 +171,15 @@ app.get('/manage', (req, res) => {
   .catch(err => {
     console.log(err.message)
     return null;
+  })
+});
+
+app.post("/profile", (req, res) => {
+  const id = req.session.user_id
+  console.log("THIS IS MY LOG:" + JSON.stringify(req.body));
+  database.updateUser(id, req.body)
+  .then(result =>{
+    res.redirect('/profile');
   })
 });
 
