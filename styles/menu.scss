@@ -16,13 +16,18 @@ img {
   height: 250px;
 }
 
+.header {
+  position: fixed;
+  top: 0;
+}
+
 .menu-container {
   display: flex;
   width: 100%;
   // flex-wrap: wrap;
   flex-direction: column;
   text-align: center;
-  // justify-content: center;
+  margin-top: 120px;
   align-items: center;
 }
 
