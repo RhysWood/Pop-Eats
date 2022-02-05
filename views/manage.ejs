@@ -56,16 +56,18 @@
                       <i class="fas fa-check-circle" id="complete-check"></i>
                     <% } else { %>
                     <form action="/manage/<%= id %>" method="POST">
-                      <button class = "mark-complete"> Mark Complete!</button>
+                      <button class = "mark-complete" class="btn btn-success"> Mark Complete!</button>
                     </form>
                     <% } %>
                   </td>
                   <td class="order-id"><%= orderCount %></td>
-                  <td class="order-start"><%= orders[order]['start_date'] %></td>
+                  <% const start = String(orders[order]['start_date']) %>
+                  <td class="order-start"><%= start.substring(0, 21) %></td>
                   <% if(orders[order]['end_date']) { %>
-                    <td class="order-end"><%= orders[order]['end_date'] %></td>
+                    <% const end = String(orders[order]['end_date']) %>
+                    <td class="order-end"><%= end.substring(0, 21) %></td>
                   <% } else { %>
-                    <td class="order-not-end">Pending</td>
+                    <td class="order-not-end">Submitted-In Progress</td>
                   <% } %>
                   <div class = "order-items-sum">
               <td class = "order-details<%= count %>" id="order-items">
