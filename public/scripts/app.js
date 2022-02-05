@@ -9,22 +9,36 @@ $(document).ready(function () {
                   <div class="tax">TAX: <div class="cart-tax"></div></div>
                   <br>
                   <div class="grand-total">TOTAL: <div class="cart-grand-total"></div></div>
-                  <div><form action="/orders" method="POST">
-                  <button class="submit-btn">SUBMIT ORDER</button>
+                  <div><form action="/order" method="POST">
+                  <button class="submit-btn"> SUBMIT ORDER</button>
+
                 </form></div>
                 </aside>`);
 
-  $(window).keydown(function (event) {
-    if (event.keyCode == 13) {
-      event.preventDefault();
-      return false;
-    }
-  });
+  // $(window).keydown(function (event) {
+  //   if (event.keyCode == 13) {
+  //     event.preventDefault();
+  //     return false;
+  //   }
+  // });
 
-  $(".add-btn").on("click", function () {
+  // <input class="submit-btn" type="submit" value="SUBMIT ORDER"/>
+  let orderDetails = {};
+  $(".add-btn").on("click", function (event) {
     event.preventDefault();
 
-    if (!$(this).parent().parent().children('.row-input').children().children().children().val()) return;
+    if (
+      !$(this)
+        .parent()
+        .parent()
+        .children(".row-input")
+        .children()
+        .children()
+        .children()
+        .val()
+    ) {
+      return;
+    }
     $(".menu-item-container").append($cart);
 
     let target = $(this)
@@ -36,10 +50,32 @@ $(document).ready(function () {
       .children();
 
     updateTotal(target);
-  });
 
-  $("button").on("click", function () {
-    event.preventDefault();
+    let qty = Number(
+      $(this)
+        .parent()
+        .parent()
+        .children(".row-input")
+        .children()
+        .children()
+        .children()
+        .val()
+    );
+
+    let itemID = Number($(this).parent().parent().children(".items-id").text());
+
+    if (!orderDetails[itemID]) {
+      orderDetails[itemID] = qty;
+    } else {
+      orderDetails[itemID] += qty;
+    }
+    // console.log("orderDetails", orderDetails);
+
+    $(".submit-btn").on("click", function (event) {
+      event.preventDefault();
+      console.log(orderDetails);
+    });
+
   });
 
   $(".remove-btn").on("click", function () {
@@ -51,7 +87,7 @@ $(document).ready(function () {
       .children()
       .children()
       .children();
-    inputQty.val(null);
+    inputQty.val(0);
     let target = $(this)
       .parent()
       .parent()
@@ -60,7 +96,30 @@ $(document).ready(function () {
       .children()
       .children();
     updateTotal(target);
+    let qty = Number(
+      $(this)
+        .parent()
+        .parent()
+        .children(".row-input")
+        .children()
+        .children()
+        .children()
+        .val()
+    );
+
+    let itemID = Number($(this).parent().parent().children(".items-id").text());
+    delete orderDetails[itemID];
+    // if (!orderDetails[itemID]) {
+    //   orderDetails[itemID] = qty;
+    // } else {
+    //   orderDetails[itemID] += qty;
+    // }
+    // console.log("orderDetails", orderDetails);
   });
+
+  // $('.form-control').on('change', function () {
+
+  // })
 
   // function recalculateCart() {
   //   var subtotal = 0;
@@ -101,6 +160,7 @@ $(document).ready(function () {
 
     let subTotal = 0;
     let itemTotal = 0;
+
     $(".table-row").each(function () {
       subTotal += Number($(this).children("#total").text());
       itemTotal += Number(
@@ -121,5 +181,10 @@ $(document).ready(function () {
     $(".cart-tax").text(taxAmtText);
     $(".cart-grand-total").text(grandTotalText);
     $(".item-count").text(itemTotal);
+
+    $(".submit-btn").on("click", function (event) {
+      event.preventDefault();
+      // console.log(orderDetails);
+    });
   };
 });
