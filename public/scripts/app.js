@@ -4,7 +4,7 @@ $(document).ready(function () {
                   <div><i class="fas fa-shopping-cart"> </i></div>
                   <div> YOUR CART: </div>
                   <br>
-                  <div class="cart-description"> <div class="item-count"></div>item(s) </div>
+                  <div class="cart-description"> <div class="item-count"></div> <div class="items-text">item(s)</div> </div>
                   <div class="total"> SUB-TOTAL: <div class="cart-total-item"> </div> </div>
                   <div class="tax">TAX: <div class="cart-tax"></div></div>
                   <br>
@@ -32,6 +32,7 @@ $(document).ready(function () {
   });
 
   $(".remove-btn").on("click", function () {
+    if (!$('.form-control').val()) return;
     let inputQty = $(this)
       .parent()
       .parent()
