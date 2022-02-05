@@ -16,7 +16,7 @@ const sendMessage = function(phoneNumber, message) {
     .create({
       body: message,
       messagingServiceSid: twilioParams.messagingID,
-      to: `+${phoneNumber}`
+      to: `${phoneNumber}`
     })
     .then(message => console.log(message.sid))
     .catch((err) => {
@@ -28,4 +28,5 @@ const sendMessage = function(phoneNumber, message) {
 
 module.exports = {sendMessage};
 
-//console.log(sendMessage('17783586873', 'Hello four!!'));
+
+//console.log(sendMessage('7783586873', 'Hello final testing!!'));
