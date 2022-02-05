@@ -9,11 +9,22 @@ $(document).ready(function () {
                   <div class="tax">TAX: <div class="cart-tax"></div></div>
                   <br>
                   <div class="grand-total">TOTAL: <div class="cart-grand-total"></div></div>
+                  <div><form action="/orders" method="POST">
+                  <button class="submit-btn">SUBMIT ORDER</button>
+                </form></div>
                 </aside>`);
+
+  $(window).keydown(function (event) {
+    if (event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
 
   $(".add-btn").on("click", function () {
     event.preventDefault();
-    if (!$('.form-control').val()) return;
+
+    if (!$(this).parent().parent().children('.row-input').children().children().children().val()) return;
     $(".menu-item-container").append($cart);
 
     let target = $(this)
@@ -32,7 +43,7 @@ $(document).ready(function () {
   });
 
   $(".remove-btn").on("click", function () {
-    if (!$('.form-control').val()) return;
+    // if (!$(".form-control").val()) return;
     let inputQty = $(this)
       .parent()
       .parent()
@@ -40,7 +51,7 @@ $(document).ready(function () {
       .children()
       .children()
       .children();
-    inputQty.val("0");
+    inputQty.val(null);
     let target = $(this)
       .parent()
       .parent()
@@ -92,22 +103,23 @@ $(document).ready(function () {
     let itemTotal = 0;
     $(".table-row").each(function () {
       subTotal += Number($(this).children("#total").text());
-      itemTotal += Number($(this).children(".row-input").children().children().children().val());
+      itemTotal += Number(
+        $(this).children(".row-input").children().children().children().val()
+      );
     });
 
     let total = subTotal.toFixed(2);
     let totalText = `$ ${total.toString()}`;
 
     let taxAmt = (taxRate * total).toFixed(2);
-    let taxAmtText = `$ ${taxAmt.toString()}`
+    let taxAmtText = `$ ${taxAmt.toString()}`;
 
     let grandTotal = (Number(total) + Number(taxAmt)).toFixed(2);
-    let grandTotalText = `$ ${grandTotal.toString()}`
+    let grandTotalText = `$ ${grandTotal.toString()}`;
 
     $(".cart-total-item").text(totalText);
-    $('.cart-tax').text(taxAmtText);
-    $('.cart-grand-total').text(grandTotalText);
-    $('.item-count').text(itemTotal)
-
+    $(".cart-tax").text(taxAmtText);
+    $(".cart-grand-total").text(grandTotalText);
+    $(".item-count").text(itemTotal);
   };
 });

@@ -43,6 +43,7 @@
             <!-- <div class="menu-container"> -->
             <% for(let item in items) { %>
             <tr class="table-row">
+              <td class="items-id"> <%= items[item]['id'] %></td>
               <td>
                 <img src = "<%= items[item]['img_url'] %>" class="rounded
                 mx-auto d-block" alt = <%= items[item]['img_alt'] %>>
@@ -108,3 +109,8 @@
   <div class="tax"></div>
   <div class="subtotal"></div>
 </aside> -->
+
+
+<!-- <form action="/orders" method="POST">
+  <button>SUBMIT ORDER</button>
+</form> -->
