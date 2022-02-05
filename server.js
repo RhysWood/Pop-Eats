@@ -93,6 +93,11 @@ app.get('/contact', (req, res) => {
   res.render('contact')
 })
 
+app.get('/profile', (req, res) => {
+  res.render('profile')
+})
+
+
 //app.use("/api/widgets", widgetsRoutes(db));
 // Note: mount other resources here, using the same pattern above
 
