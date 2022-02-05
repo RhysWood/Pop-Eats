@@ -72,7 +72,9 @@
                 <p class="font-weight-bold">Order Items:</p>
                 <% for(let item in items) { %>
                   <% if(items[item]['orderid'] === id) { %>
-                    <p><%= items[item]['title'] %></p>
+                    <p> <%= items[item]['sum'] %>
+                      x <%= items[item]['title'] %>
+                    </p>
                   <% } %>
                 <% } %>
               </td>
@@ -84,6 +86,8 @@
                     <% sum += (items[item]['price'] * items[item]['sum'])  %>
                   <% } %>
                 <% } %>
+                <% let tax = sum*.12 %>
+                <% sum = tax+sum %>
                 <% sum = sum.toFixed(2) %>
                 <p>$<%= sum %></p>
               </td>
