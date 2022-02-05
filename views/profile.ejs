@@ -24,7 +24,7 @@
     <title>Pop.Eats</title>
   </head>
   <body>
-    <form%- include('partials/_header') %>
+    <%- include('partials/_header') %>
     <main>
       <h1>Welcome, <span id="name"><%- user.name %></span>! </h1>
       <h3>Here are your current details:</h3>
@@ -99,7 +99,7 @@
               <button class="btn btn-primary"  type="submit">SUBMIT</button>
         </td>
       </tr>
-    </form>
+    </>
         </table>
     </main>
   </body>
