@@ -7,10 +7,18 @@ $(document).ready(function () {
                   <div class="subtotal"></div>
                 </aside>`);
 
-  $(".form-control").change(function () {
-    $(".menu-container").append($cart);
-    console.log("THIS IS A TEST");
-    updateTotal(this);
+  $(".add").on('click', function () {
+    console.log('hi');
+    event.preventDefault();
+
+    $(".menu-item-container").append($cart);
+
+    let target = $(this).parent().parent().children('.row-input').children().children().children()
+    console.log(target);
+    // updateTotal(target)
+    updateTotal(target)
+    // updateTotal($(this).parent().parent().children('.form-inline'))
+    // updateTotal(this.parent().children('.form-inline'));
   });
 
   $("button").on("click", function () {

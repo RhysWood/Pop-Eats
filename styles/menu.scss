@@ -18,20 +18,36 @@ img {
 
 .menu-container {
   display: flex;
-  flex-wrap: wrap;
+  width: 100%;
+  // flex-wrap: wrap;
+  flex-direction: column;
   text-align: center;
-  justify-content: center;
+  // justify-content: center;
   align-items: center;
 }
 
-.menu-container {
-  width: 70%;
+// .menu-container {
+//   width: 90%;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+//   margin-left: auto;
+//   margin-right: auto;
+// }
+
+// .table {
+//   margin-left: 0px;
+// }
+
+.menu-item-container {
+  width: 90%;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-left: auto;
-  margin-right: auto;
+}
+
+aside {
+  width: 300px;
+  // margin-left: 150px;
 }
 
 h1{
