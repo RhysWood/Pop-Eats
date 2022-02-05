@@ -1,20 +1,54 @@
 // Client facing scripts here
 $(document).ready(function () {
   const $cart = $(`<aside>
-                  <div class="cart-description"> You have item(s) in your cart</div>
-                  <div class="total"> Your Total is <div class="cart-total-item"> </div> </div>
-                  <div class="tax"></div>
-                  <div class="subtotal"></div>
+                  <div><i class="fas fa-shopping-cart"> </i></div>
+                  <div> YOUR CART: </div>
+                  <br>
+                  <div class="cart-description"> <div class="item-count"></div> <div class="items-text">item(s)</div> </div>
+                  <div class="total"> SUB-TOTAL: <div class="cart-total-item"> </div> </div>
+                  <div class="tax">TAX: <div class="cart-tax"></div></div>
+                  <br>
+                  <div class="grand-total">TOTAL: <div class="cart-grand-total"></div></div>
                 </aside>`);
 
-  $(".form-control").change(function () {
-    $(".menu-container").append($cart);
-    console.log("THIS IS A TEST");
-    updateTotal(this);
+  $(".add-btn").on("click", function () {
+    event.preventDefault();
+    if (!$('.form-control').val()) return;
+    $(".menu-item-container").append($cart);
+
+    let target = $(this)
+      .parent()
+      .parent()
+      .children(".row-input")
+      .children()
+      .children()
+      .children();
+
+    updateTotal(target);
   });
 
   $("button").on("click", function () {
     event.preventDefault();
+  });
+
+  $(".remove-btn").on("click", function () {
+    if (!$('.form-control').val()) return;
+    let inputQty = $(this)
+      .parent()
+      .parent()
+      .children(".row-input")
+      .children()
+      .children()
+      .children();
+    inputQty.val("0");
+    let target = $(this)
+      .parent()
+      .parent()
+      .children(".row-input")
+      .children()
+      .children()
+      .children();
+    updateTotal(target);
   });
 
   // function recalculateCart() {
@@ -46,51 +80,34 @@ $(document).ready(function () {
   // }
 
   updateTotal = (quantityInput) => {
+    let taxRate = 0.12;
     let row = $(quantityInput).parent().parent().parent().parent();
-    let price = row.children("#whatever").children('.price').text();
-    console.log(row);
-    console.log("PRICE:" + price);
+    let price = row.children("#whatever").children(".price").text();
     let quantity = $(quantityInput).val();
-    console.log("QTY:" + quantity);
     let rowPrice = Number(price) * Number(quantity);
 
-    row.children('#total').html(rowPrice.toFixed(2))
-
-
-    // console.log($('#total').text());
-
-    // console.log($('.table-row').children('#total').text());
+    row.children("#total").html(rowPrice.toFixed(2));
 
     let subTotal = 0;
-    $('.table-row').each(function () {
-      subTotal += Number($(this).children('#total').text());
-    })
+    let itemTotal = 0;
+    $(".table-row").each(function () {
+      subTotal += Number($(this).children("#total").text());
+      itemTotal += Number($(this).children(".row-input").children().children().children().val());
+    });
 
-    let total = subTotal.toFixed(2)
-    // console.log(total);
-    // console.log(subTotal.toFixed(2));
-    $('.cart-total-item').text(total);
-    // $(".menu-container").append($cart);
-    // let test = row.children().each(function () {
-    //   // console.log($('#total').text());
-    //   let val = Number(row.children('#total').text());
-    //   // console.log(val);
-    //   subTotal += val;
-    // })
+    let total = subTotal.toFixed(2);
+    let totalText = `$ ${total.toString()}`;
 
-    // console.log(subTotal);
+    let taxAmt = (taxRate * total).toFixed(2);
+    let taxAmtText = `$ ${taxAmt.toString()}`
 
-    // $("#table-row").each(function () {
-    //   subTotal += Number($(this).children("#total").text());
+    let grandTotal = (Number(total) + Number(taxAmt)).toFixed(2);
+    let grandTotalText = `$ ${grandTotal.toString()}`
 
-    // });
-
-    // console.log(subtotal);
-
-
-
-
-
+    $(".cart-total-item").text(totalText);
+    $('.cart-tax').text(taxAmtText);
+    $('.cart-grand-total').text(grandTotalText);
+    $('.item-count').text(itemTotal)
 
   };
 });
