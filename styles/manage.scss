@@ -1,0 +1,54 @@
+body {
+  display: flex;
+  align-items: flex-start;
+
+  main {
+    flex-direction: column;
+    justify-content: center;
+
+    .orders-container {
+      position: absolute;
+      background-color: white;
+      top: 200px;
+      left: 5%;
+      width: 90%;
+
+      // tbody {
+        // tr {
+        //   cursor: pointer;
+        // }
+        // #order-items {
+        //   display:none;
+        //   position:absolute;
+        //   background-color: white;
+        //   width:50%;
+        //   left: -.1%;
+        //   border: solid;
+
+
+        // }
+        // #order-sum {
+        //   display:none;
+        //   position:absolute;
+        //   background-color: white;
+        //   width:50%;
+        //   right: .1%;
+        //   border:solid;
+      // }
+    }
+  }
+}
+
+
+
+
+
+
+#toggleOrders {
+  display:flex;
+  justify-content: end;
+  position: absolute;
+  top: 150px;
+  left: 5%;
+}
+

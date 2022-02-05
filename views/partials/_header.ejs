@@ -19,6 +19,10 @@
   <div id="dropDownMenu" class="dropdown-content">
     <a href="/orders">Orders</a>
     <a href="/profile">Profile</a>
+    <% if (user.is_owner){ %>
+      <a href="/manage">Manage</a>
+    <% } %>
+
   </div>
   <% } else { %>
     <div>USER</div>
