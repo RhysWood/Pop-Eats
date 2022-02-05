@@ -160,6 +160,23 @@ app.get('/manage', (req, res) => {
   })
 });
 
+//updates order as complete with end-date
+app.post("/manage/:orderID", (req, res) => {
+  const id = req.session.user_id || 1;
+  database.findUser(id)
+  .then(user =>{
+    if(user.is_owner){
+      console.log(req.params);
+      database.setCompleted(req.params.orderID)
+      .then(result => {
+        res.redirect('/manage');
+      })
+    } else{
+      return res.status(401).send('error, wrong user');
+    }
+  })
+});
+
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);

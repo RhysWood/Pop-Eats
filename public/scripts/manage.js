@@ -43,16 +43,13 @@ $(document).ready(function() {
 
   console.log(markComplete);
 
-  for(let i = 0; i < markComplete.length; i++) {
-    markComplete[i].addEventListener('submit', function(event) {
-      console.log('found button!');
-      event.preventDefault();
-  })
-
-
-    // $.post("/tweets", tweet).then(()=>loadNewestTweet()).catch(error=>{console.log(error.message);});
-
-  };
+  // for(let i = 0; i < markComplete.length; i++) {
+  //   markComplete[i].addEventListener('submit', function(event) {
+  //     console.log('found button!');
+  //     event.preventDefault();
+  //     event.stopImmediatePropagation();
+  // })
+  // };
 
 
 });
