@@ -167,8 +167,12 @@ app.get('/manage', (req, res) => {
 });
 
 app.post("/profile", (req, res) => {
+  const id = req.session.user_id
   console.log("THIS IS MY LOG:" + JSON.stringify(req.body));
-  // database.updateUser(id, )
+  database.updateUser(id, req.body)
+  .then(result =>{
+    res.redirect('/profile');
+  })
 });
 
 //updates order as complete with end-date
