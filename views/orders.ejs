@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="icon" href="/images/hamburger-solid.svg">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link
       href="https://fonts.googleapis.com/css2?family=Bungee&family=Montserrat&family=Roboto&family=Sacramento&family=Source+Sans+Pro:wght@600&display=swap"
       rel="stylesheet"
@@ -28,35 +29,34 @@
   <body>
     <%- include('partials/_header') %>
     <main>
-      <button id="toggleOrders">Show/Hide Completed Orders</button>
+      <button id="toggleOrders" class="btn btn-light">Show/Hide Completed Orders</button>
       <section class="orders-container">
       </div>
-        <table class="table">
+        <table class="table table-hover">
           <thead>
             <tr>
               <th scope="col">Order Number</th>
               <th scope="col">Order Date</th>
-              <th scope="col">Completed Date</th>
-              <th scope="col">Update</th>
+              <th scope="col">Completed</th>
             </tr>
           </thead>
           <tbody>
             <% let count = 0 %>
+            <% let orderCount = orders.length %>
             <% for(let order in orders) { %>
               <% const id = orders[order]['id'] %>
-              <tr>
+              <tr class="tablerow" title="Click for Order Details">
                 <div class="order">
-                  <td class="order-id"><%= id %></td>
+                  <td class="order-id"><%= orderCount %></td>
                   <td class="order-start"><%= orders[order]['start_date'] %></td>
                   <% if(orders[order]['end_date']) { %>
                     <td class="order-end"><%= orders[order]['end_date'] %></td>
                   <% } else { %>
-                    <td class="order-not-end"></td>
+                    <td class="order-not-end">Pending</td>
                   <% } %>
-
-                </div>
-                <td><button class="details-button" id ="details-button<%= count %>">Order Details</button></td>
+                  <div class = "order-items-sum">
               <td class = "order-details<%= count %>" id="order-items">
+                <p>Order Items:</p>
                 <% for(let item in items) { %>
                   <% if(items[item]['orderid'] === id) { %>
                     <p><%= items[item]['title'] %></p>
@@ -64,6 +64,7 @@
                 <% } %>
               </td>
               <td class = "order-details<%= count %>" id="order-sum">
+                <p>Order Total:</p>
                 <% let sum = 0 %>
                 <% for(let item in items) { %>
                   <% if(items[item]['orderid'] === id) { %>
@@ -73,9 +74,12 @@
                 <% sum = sum.toFixed(2) %>
                 <p>$<%= sum %></p>
               </td>
+            </div>
               </tr>
               <% count ++ %>
+              <% orderCount -- %>
             <% } %>
+          </div>
           </tbody>
       </div>
     </main>

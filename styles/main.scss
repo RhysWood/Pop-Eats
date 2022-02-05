@@ -24,12 +24,10 @@ html {
   cursor: pointer;
 }
 
-/* Dropdown button on hover & focus */
 .dropbtn:hover, .dropbtn:focus {
-  background-color: #eb1c1c;
+  color: #eb1c1c;
 }
 
-/* Dropdown Content (Hidden by Default) */
 .dropdown-content {
   display: none;
   position: absolute;
@@ -42,7 +40,6 @@ html {
   right: 5%;
 }
 
-/* Links inside the dropdown */
 .dropdown-content a {
   color: black;
   padding: 12px 16px;
@@ -50,7 +47,6 @@ html {
   display: block;
 }
 
-/* Change color of dropdown links on hover */
 .dropdown-content a:hover {background-color: #ddd}
 
 body {

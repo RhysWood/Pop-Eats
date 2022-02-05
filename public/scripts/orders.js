@@ -14,7 +14,7 @@ $(document).ready(function() {
   });
 
     // button that shows/hides order details
-    const detailsButton = document.getElementsByClassName('details-button');
+    const detailsButton = document.getElementsByClassName('tablerow');
     for (let i=0; i < detailsButton.length; i++) {
       detailsButton[i].addEventListener('click', function() {
         if ($(`.order-details${i}`).is(":visible")) {
