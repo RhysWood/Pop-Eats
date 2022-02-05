@@ -67,6 +67,7 @@ app.use((req,res, next)=>{
 const widgetsRoutes = require("./routes/widgets");
 const { query } = require("express");
 const login = require('./routes/login');
+const { json } = require("express/lib/response");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -163,6 +164,11 @@ app.get('/manage', (req, res) => {
     console.log(err.message)
     return null;
   })
+});
+
+app.post("/profile", (req, res) => {
+  console.log("THIS IS MY LOG:" + JSON.stringify(req.body));
+  // database.updateUser(id, )
 });
 
 //updates order as complete with end-date

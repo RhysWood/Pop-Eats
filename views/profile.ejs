@@ -24,7 +24,7 @@
     <title>Pop.Eats</title>
   </head>
   <body>
-    <%- include('partials/_header') %>
+    <form%- include('partials/_header') %>
     <main>
       <h1>Welcome, <span id="name"><%- user.name %></span>! </h1>
       <h3>Here are your current details:</h3>
@@ -52,9 +52,9 @@
             <th>Phone</th>
             <th>Password</th>
           </tr>
-          <tr>
+            <td>
+          <form class="form-inline" method="POST" action="/profile" >
             <!-- NEW NAME -->
-            <td><form class="form-inline" method="POST">
               <div class="form-group mb-2" id="qty-input">
               <input
                 class="form-control"
@@ -64,41 +64,43 @@
                 placeholder="New Name"
               /></td>
                 <!-- NEW EMAIL -->
-            <td><form class="form-inline" method="POST">
+            <td>
               <div class="form-group mb-2" id="qty-input">
               <input
                 class="form-control"
                 style="width: 110px;"
                 type="text"
-                name="name"
+                name="email"
                 placeholder="New Email"
               /></td>
                 <!-- NEW PHONE -->
-            <td><form class="form-inline" method="POST">
+            <td>
               <div class="form-group mb-2" id="qty-input">
               <input
                 class="form-control"
                 style="width: 110px;"
                 type="text"
-                name="name"
+                name="phone_number"
                 placeholder="New Phone"
               /></td>
             <!-- NEW PASSWORD -->
-            <td><form class="form-inline" method="POST">
+            <td>
               <div class="form-group mb-2" id="qty-input">
               <input
-
                 class="form-control"
                 style="width: 110px;"
                 type="text"
-                name="name"
+                name="password"
                 placeholder="UNSECURE"
               /></td>
-          </tr>
-      </table>
-      <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Disabled tooltip">
-        <button class="btn btn-primary" style="pointer-events: none;" type="button" disabled>SUBMIT</button>
-      </span>
+            </tr>
+            <tr>
+              <td>
+              <button class="btn btn-primary"  type="submit">SUBMIT</button>
+        </td>
+      </tr>
+    </form>
+        </table>
     </main>
   </body>
 </html>
