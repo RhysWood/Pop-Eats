@@ -120,12 +120,8 @@ app.get('/menu', (req, res) => {
 })
 
 app.get('/orders', (req, res) => {
-  console.log("orders page");
   // //sets default user as user 1 for testing purposes
   const id = req.session.user_id || 1;
-  const itemArray = [];
-  const userID = database.findUser(id);
-  let orders;
   database.findUser(id)
   .then(user => {
     database.userOrders(id)
@@ -143,6 +139,28 @@ app.get('/orders', (req, res) => {
     return null;
   })
 });
+
+app.get('/manage', (req, res) => {
+  // //sets default user as user 1 for testing purposes
+  const id = req.session.user_id || 1;
+  database.findUser(id)
+  .then(user => {
+    database.allOrders()
+    .then(orders => {
+      database.allOrdersAllItems()
+      .then(items => {
+        const templateVars = {orders, items, user};
+        res.render('manage', templateVars);
+      })
+    })
+  })
+  .catch(err => {
+    console.log(err.message)
+    return null;
+  })
+});
+
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });

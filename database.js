@@ -102,6 +102,57 @@ const alluserOrderItems = (userID) => {
 
 exports.alluserOrderItems = alluserOrderItems;
 
+//show all orders
+const allOrders = () => {
+  const queryString = `
+  SELECT *
+  FROM orders
+  ORDER BY start_date DESC;
+  `;
+  return db.query(queryString)
+   .then((res) => {
+     if(res.rows[0]) {
+      console.log('all orders!');
+      console.log(res.rows)
+      return res.rows;
+     };
+     console.log('User Not Found');
+     return null;
+   })
+   .catch((err) => {
+    console.log(err.message);
+    return null;
+  })
+};
+
+
+exports.userOrders = userOrders;
+
+//show all orders, including final price and items
+const allOrdersAllItems = () => {
+  const queryString = `
+  SELECT orders.id as orderid, items.title, items.price, sum(orders_items.quantity)
+  from items
+  JOIN orders_items on orders_items.item_id = items.id
+  JOIN orders on orders.id = orders_items.order_id
+  GROUP BY items.title, items.price, orders.id;
+  `;
+  return db.query(queryString)
+   .then((res) => {
+     if(res.rows[0]) {
+      console.log('all orders!');
+      console.log(res.rows)
+      return res.rows;
+     };
+     console.log('User Not Found');
+     return null;
+   })
+   .catch((err) => {
+    console.log(err.message);
+    return null;
+  })
+};
+
 //update user details by passing in options object
 const updateUser = (userID, options) => {
   const values = [userID];
@@ -489,4 +540,4 @@ const setCompleted = (orderID) => {
 
 exports.setCompleted = setCompleted;
 
-module.exports = {allUsers, findUser, userOrders, alluserOrderItems, updateUser, menuItems, addMenuItem, editMenuItem, deleteMenuItem, orderItems, orderCost, startOrder, addToOrder, removeFromOrder, restartCart, orderDetails, setSubmitted, setCompleted};
+module.exports = {allUsers, findUser, userOrders, alluserOrderItems, allOrders, allOrdersAllItems, updateUser, menuItems, addMenuItem, editMenuItem, deleteMenuItem, orderItems, orderCost, startOrder, addToOrder, removeFromOrder, restartCart, orderDetails, setSubmitted, setCompleted};
