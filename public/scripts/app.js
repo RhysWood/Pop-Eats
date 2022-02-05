@@ -9,6 +9,7 @@ $(document).ready(function () {
 
   $(".form-control").change(function () {
     $(".menu-container").append($cart);
+    console.log("THIS IS A TEST");
     updateTotal(this);
   });
 
@@ -45,9 +46,12 @@ $(document).ready(function () {
   // }
 
   updateTotal = (quantityInput) => {
-    let row = $(quantityInput).parent().parent().parent();
-    let price = row.children("#price").text();
+    let row = $(quantityInput).parent().parent().parent().parent();
+    let price = row.children("#whatever").children('.price').text();
+    console.log(row);
+    console.log("PRICE:" + price);
     let quantity = $(quantityInput).val();
+    console.log("QTY:" + quantity);
     let rowPrice = Number(price) * Number(quantity);
 
     row.children('#total').html(rowPrice.toFixed(2))
