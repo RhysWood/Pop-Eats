@@ -60,6 +60,9 @@ aside {
   right: 20px;
   padding: 0.1em;
   border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .table {
@@ -92,16 +95,21 @@ aside {
   background-color: #d9534f;
 }
 
-.total {
+.total, .tax, .grand-total, .cart-description {
   display: inline-flex
+}
+
+.grand-total {
+  color: #d9534f;
+  font-weight: bolder;
 }
 
 #total {
   display: none;
 }
 
-.cart-total-item {
-  margin-left: 1em;
+.cart-total-item, .cart-tax, .cart-grand-total {
+  margin-left: 5px;
 }
 
 h1{
