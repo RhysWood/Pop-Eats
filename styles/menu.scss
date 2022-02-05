@@ -51,13 +51,14 @@ img {
 }
 
 aside {
+  border: solid 1px black;
+  box-shadow: 2px 2px 8px grey;
+  color: black;
   width: 250px;
-  background: rgba(0,0,0, 0.8);
-  color: white;
-  font-size: 30px;
+  font-size: 20px;
   position: fixed;
   right: 20px;
-  padding: 0.5em;
+  padding: 0.1em;
   border-radius: 2px;
 }
 
@@ -91,9 +92,16 @@ aside {
   background-color: #d9534f;
 }
 
+.total {
+  display: inline-flex
+}
 
 #total {
   display: none;
+}
+
+.cart-total-item {
+  margin-left: 1em;
 }
 
 h1{

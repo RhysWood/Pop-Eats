@@ -1,15 +1,17 @@
 // Client facing scripts here
 $(document).ready(function () {
   const $cart = $(`<aside>
-                  <div class="cart-description"> You have item(s) in your cart</div>
-                  <div class="total"> Your Total is <div class="cart-total-item"> </div> </div>
+                  <div><i class="fas fa-shopping-cart"> </i></div>
+                  <div> YOUR CART </div>
+                  <div class="cart-description"> item(s) </div>
+                  <div class="total"> ${`SUBTOTAL: `} <div class="cart-total-item"> </div> </div>
                   <div class="tax"></div>
                   <div class="subtotal"></div>
                 </aside>`);
 
   $(".add-btn").on("click", function () {
     event.preventDefault();
-
+    if (!$('.form-control').val()) return;
     $(".menu-item-container").append($cart);
 
     let target = $(this)
@@ -27,9 +29,15 @@ $(document).ready(function () {
     event.preventDefault();
   });
 
-  $('.remove-btn').on('click', function () {
-    let inputQty = $(this).parent().parent().children('.row-input').children().children().children();
-    inputQty.val('0')
+  $(".remove-btn").on("click", function () {
+    let inputQty = $(this)
+      .parent()
+      .parent()
+      .children(".row-input")
+      .children()
+      .children()
+      .children();
+    inputQty.val("0");
     let target = $(this)
       .parent()
       .parent()
@@ -37,8 +45,8 @@ $(document).ready(function () {
       .children()
       .children()
       .children();
-    updateTotal(target)
-  })
+    updateTotal(target);
+  });
 
   // function recalculateCart() {
   //   var subtotal = 0;
