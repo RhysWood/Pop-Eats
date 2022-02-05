@@ -2,6 +2,7 @@
 require("dotenv").config();
 
 const {db} = require('./dbpool');
+const {sendMessage} = require('./services/twilio');
 
 // Web server config
 const PORT = process.env.PORT || 8080;
@@ -169,7 +170,14 @@ app.post("/manage/:orderID", (req, res) => {
       console.log(req.params);
       database.setCompleted(req.params.orderID)
       .then(result => {
-        res.redirect('/manage');
+        database.getUserFromOrder(req.params.orderID)
+        .then(user => {
+          const phoneNumber = user.phone_number;
+          const userName = user.name;
+          const message = `Hello ${userName}! Your recent order with Pop.Eats is now complete and ready for pickup!`;
+          sendMessage(phoneNumber, message);
+          res.redirect('/manage');
+        })
       })
     } else{
       return res.status(401).send('error, wrong user');

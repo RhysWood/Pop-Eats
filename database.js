@@ -102,6 +102,32 @@ const alluserOrderItems = (userID) => {
 
 exports.alluserOrderItems = alluserOrderItems;
 
+const getUserFromOrder = (orderID) => {
+  const queryString = `
+  SELECT *
+  FROM users
+  JOIN orders on users.id = user_id
+  WHERE orders.id = $1;
+  `;
+  const values = [orderID];
+  return db.query(queryString, values)
+   .then((res) => {
+     if(res.rows[0]) {
+      console.log('found user!');
+      console.log(res.rows[0])
+      return res.rows[0];
+     };
+     console.log('User Not Found');
+     return null;
+   })
+   .catch((err) => {
+    console.log(err.message);
+    return null;
+  })
+}
+
+exports.getUserFromOrder = getUserFromOrder;
+
 //show all orders
 const allOrders = () => {
   const queryString = `
@@ -540,4 +566,4 @@ const setCompleted = (orderID) => {
 
 exports.setCompleted = setCompleted;
 
-module.exports = {allUsers, findUser, userOrders, alluserOrderItems, allOrders, allOrdersAllItems, updateUser, menuItems, addMenuItem, editMenuItem, deleteMenuItem, orderItems, orderCost, startOrder, addToOrder, removeFromOrder, restartCart, orderDetails, setSubmitted, setCompleted};
+module.exports = {allUsers, findUser, userOrders, alluserOrderItems, allOrders, allOrdersAllItems, getUserFromOrder, updateUser, menuItems, addMenuItem, editMenuItem, deleteMenuItem, orderItems, orderCost, startOrder, addToOrder, removeFromOrder, restartCart, orderDetails, setSubmitted, setCompleted};
