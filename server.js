@@ -146,14 +146,21 @@ app.get('/manage', (req, res) => {
   const id = req.session.user_id || 1;
   database.findUser(id)
   .then(user => {
-    database.allOrders()
-    .then(orders => {
-      database.allOrdersAllItems()
-      .then(items => {
-        const templateVars = {orders, items, user};
-        res.render('manage', templateVars);
-      })
-    })
+    if(user.is_owner){
+      database.findUser(id)
+      .then(user => {
+        database.allOrders()
+        .then(orders => {
+          database.allOrdersAllItems()
+          .then(items => {
+            const templateVars = {orders, items, user};
+            res.render('manage', templateVars);
+          })
+        })
+      });
+    } else {
+      return res.status(401).send('error, wrong user');
+    }
   })
   .catch(err => {
     console.log(err.message)
@@ -183,7 +190,79 @@ app.post("/manage/:orderID", (req, res) => {
       return res.status(401).send('error, wrong user');
     }
   })
+  .catch(err => {
+    console.log(err.message)
+    return null;
+  })
 });
+
+app.get('/update-menu', (req, res) => {
+  // //sets default user as user 1 for testing purposes
+  const id = req.session.user_id || 1;
+  database.findUser(id)
+  .then(user => {
+    if(user.is_owner){
+      database.menuItems()
+      .then(items => {
+        console.log(items);
+        const templateVars = {items}
+        res.render('update-menu', templateVars)
+      })
+    } else {
+      return res.status(401).send('error, wrong user');
+    }
+    })
+  .catch(err => {
+    console.log(err.message)
+    return null;
+  })
+});
+
+//update a menu item
+app.post("/update-menu/update/:itemID", (req, res) => {
+  const id = req.session.user_id || 1;
+  database.findUser(id)
+  .then(user =>{
+    if(user.is_owner){
+      console.log(req.params);
+      console.log(JSON.stringify(req.body));
+      database.editMenuItem(req.params.itemID, req.params.options)
+      .then(() => {
+          res.redirect('/update-menu');
+        })
+    } else{
+      return res.status(401).send('error, wrong user');
+    }
+  })
+  .catch(err => {
+    console.log(err.message)
+    return null;
+  })
+});
+
+//delete a menu item
+app.post("/update-menu/add/", (req, res) => {
+  const id = req.session.user_id || 1;
+  database.findUser(id)
+  .then(user =>{
+    if(user.is_owner){
+      console.log(req.body);
+      console.log(JSON.stringify(req.body));
+      database.addMenuItem(req.body.title,req.body.description, req.body.price, req.body.rating, req.body.img_url, req.body.img_alt)
+      .then(() => {
+          res.redirect('/update-menu');
+        })
+    } else{
+      return res.status(401).send('error, wrong user');
+    }
+  })
+  .catch(err => {
+    console.log(err.message)
+    return null;
+  })
+});
+
+
 
 
 app.listen(PORT, () => {

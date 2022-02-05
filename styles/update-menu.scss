@@ -1,0 +1,133 @@
+body {
+  align-items: flex-start;
+  background-image: none;
+  width: 100%;
+  background-color:rgb(249, 249, 249);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+img {
+  width: 250px;
+  height: 250px;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+}
+
+.menu-container {
+  display: flex;
+  width: 100%;
+  // flex-wrap: wrap;
+  flex-direction: column;
+  text-align: center;
+  margin-top: 120px;
+  align-items: center;
+}
+
+// .menu-container {
+//   width: 90%;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+//   margin-left: auto;
+//   margin-right: auto;
+// }
+
+// .table {
+//   margin-left: 0px;
+// }
+
+.menu-item-container {
+  width: 90%;
+  display: flex;
+}
+
+aside {
+  border: solid 1px black;
+  box-shadow: 2px 2px 8px grey;
+  color: black;
+  width: 250px;
+  font-size: 20px;
+  position: fixed;
+  right: 20px;
+  padding: 0.1em;
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.table {
+  margin-right: 190px;
+}
+
+.add-btn {
+  width: 85px;
+  height: 38px;
+  background-color: white;
+  color:#5cb85c;
+  border: solid 1px #5cb85c;
+}
+
+.add-btn:hover {
+  color: white;
+  background-color: #5cb85c;
+}
+
+.remove-btn {
+  width: 85px;
+  height: 38px;
+  background-color: white;
+  color: #d9534f;
+  border: solid 1px #d9534f;
+}
+
+.remove-btn:hover {
+  color: white;
+  background-color: #d9534f;
+}
+
+.total, .tax, .grand-total, .cart-description {
+  display: inline-flex
+}
+
+.grand-total {
+  color: #d9534f;
+  font-weight: bolder;
+}
+
+#total {
+  display: none;
+}
+
+.cart-total-item, .cart-tax, .cart-grand-total, .items-text {
+  margin-left: 5px;
+}
+
+h1{
+  width: 90%;
+  display: block;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2rem;
+  margin-bottom: 2em;
+}
+
+// td img {
+//   // height: 150px;
+//   // width: 150px;
+// }
+
+.qty-submit{
+  display: flex;
+  justify-content: space-between;
+}
