@@ -7,8 +7,7 @@ $(document).ready(function () {
                   <div class="subtotal"></div>
                 </aside>`);
 
-  $(".add").on("click", function () {
-    console.log("hi");
+  $(".add-btn").on("click", function () {
     event.preventDefault();
 
     $(".menu-item-container").append($cart);
@@ -20,16 +19,26 @@ $(document).ready(function () {
       .children()
       .children()
       .children();
-    console.log(target);
-    // updateTotal(target)
+
     updateTotal(target);
-    // updateTotal($(this).parent().parent().children('.form-inline'))
-    // updateTotal(this.parent().children('.form-inline'));
   });
 
   $("button").on("click", function () {
     event.preventDefault();
   });
+
+  $('.remove-btn').on('click', function () {
+    let inputQty = $(this).parent().parent().children('.row-input').children().children().children();
+    inputQty.val('0')
+    let target = $(this)
+      .parent()
+      .parent()
+      .children(".row-input")
+      .children()
+      .children()
+      .children();
+    updateTotal(target)
+  })
 
   // function recalculateCart() {
   //   var subtotal = 0;
@@ -62,17 +71,10 @@ $(document).ready(function () {
   updateTotal = (quantityInput) => {
     let row = $(quantityInput).parent().parent().parent().parent();
     let price = row.children("#whatever").children(".price").text();
-    console.log(row);
-    console.log("PRICE:" + price);
     let quantity = $(quantityInput).val();
-    console.log("QTY:" + quantity);
     let rowPrice = Number(price) * Number(quantity);
 
     row.children("#total").html(rowPrice.toFixed(2));
-
-    // console.log($('#total').text());
-
-    // console.log($('.table-row').children('#total').text());
 
     let subTotal = 0;
     $(".table-row").each(function () {
@@ -100,6 +102,5 @@ $(document).ready(function () {
     // });
 
     // console.log(subtotal);
-
   };
 });

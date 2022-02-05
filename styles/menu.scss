@@ -65,6 +65,37 @@ aside {
   margin-right: 190px;
 }
 
+.add-btn {
+  width: 85px;
+  height: 38px;
+  background-color: white;
+  color:#5cb85c;
+  border: solid 1px #5cb85c;
+}
+
+.add-btn:hover {
+  color: white;
+  background-color: #5cb85c;
+}
+
+.remove-btn {
+  width: 85px;
+  height: 38px;
+  background-color: white;
+  color: #d9534f;
+  border: solid 1px #d9534f;
+}
+
+.remove-btn:hover {
+  color: white;
+  background-color: #d9534f;
+}
+
+
+#total {
+  display: none;
+}
+
 h1{
   width: 90%;
   display: block;
