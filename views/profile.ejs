@@ -13,7 +13,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/styles/main.css" type="text/css" />
-    <link rel="stylesheet" href="/styles/menu.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/profile.css" type="text/css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
@@ -26,7 +26,26 @@
   <body>
     <%- include('partials/_header') %>
     <main>
-
+      <h1>Welcome, <%- user.name %>! </h1>
+      <h2>You can edit your profile here:</h2>
+      <table>
+        <tr>
+          <th>Name</th>
+          <th>Email Address</th>
+          <th>Phone Number</th>
+          <th>Password</th>
+        </tr>
+        <tr>
+          <td><%- user.name %>e</td>
+          <td>Maria Anders</td>
+          <td>Germany</td>
+        </tr>
+        <tr>
+          <td>Centro comercial Moctezuma</td>
+          <td>Francisco Chang</td>
+          <td>Mexico</td>
+        </tr>
+      </table>
     </main>
   </body>
 </html>
