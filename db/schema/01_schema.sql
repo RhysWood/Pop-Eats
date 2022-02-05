@@ -10,7 +10,8 @@ CREATE TABLE "items" (
   "price" decimal,
   "rating" int,
   "img_url" varchar(250),
-  "img_alt" varchar(250)
+  "img_alt" varchar(250),
+  "active" boolean
 );
 
 CREATE TABLE "users" (

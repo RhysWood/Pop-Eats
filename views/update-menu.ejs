@@ -26,7 +26,7 @@
     <script type="module" src="/scripts/update-menu.js"></script>
     <script type="module" src="/scripts/user.js"></script>
 
-    <title>Orders</title>
+    <title>Update Menu</title>
   </head>
 
 
@@ -34,7 +34,7 @@
     <%- include('partials/_header') %>
     <div class="menu-container">
       <div id="menu-title">
-        <h1>MENU</h1>
+        <h1>UPDATE MENU</h1>
       </div>
       <div id="add-item">
         <table class="table">
@@ -143,16 +143,92 @@
               </td>
               <td>
               </td>
-              <td>
-                <button type="submit" class="remove-btn">
-                  Edit
-                </button>
-              </td>
+
               <!-- </div> -->
               <!-- </div> -->
               <!-- </td> -->
               <td id="total"></td>
               <!-- </div> -->
+            </tr>
+                <form class="form-inline" action="/update-menu/update/<%=items[item]['id'] %>" method="POST">
+                  <div class="form-group mb-2" id="qty-input">
+                <tr>
+                  <td>
+                  <input
+                  class="form-control"
+
+                  type="text"
+                  name="title"
+                  placeholder="<%=items[item]['title'] %>"
+                  min="0"
+                />
+              </td>
+              <td>
+                <input
+                class="form-control"
+
+                type="text"
+                name="description"
+                placeholder="<%=items[item]['description'] %>"
+                min="0"
+                />
+              </td>
+              <td>
+                <input
+                class="form-control"
+                style="width: 5em"
+                type="float"
+                name="price"
+                placeholder="<%=items[item]['price'] %> "
+                min="0"
+                />
+              </td>
+              <td>
+                <input
+                class="form-control"
+                style="width: 7em"
+                type="number"
+                name="rating"
+                placeholder="<%=items[item]['rating'] %> "
+                min="0"
+                max="5"
+                />
+              </td>
+              <td>
+                <input
+                class="form-control"
+                type="url"
+                name="img_url"
+                placeholder="<%=items[item]['img_url'] %>"
+                min="0"
+                />
+              </td>
+              <td>
+                <input
+                class="form-control"
+                type="text"
+                name="img_alt"
+                placeholder="<%=items[item]['img_alt'] %>"
+                min="0"
+                />
+              </td>
+              <td>
+                <button type="submit" class="update-btn">
+                  Submit Changes
+                </button>
+              </td>
+            </div>
+          </form>
+              <td>
+                <form class="form-inline" action="/update-menu/delete/<%=items[item]['id'] %>" method="POST">
+                  <button type="submit" class="remove-btn">
+                    Delete Item
+                  </button>
+                </form>
+              </td>
+
+                </tr>
+
             </tr>
             <% } %>
           </tbody>

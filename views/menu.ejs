@@ -42,6 +42,7 @@
           <tbody>
             <!-- <div class="menu-container"> -->
             <% for(let item in items) { %>
+              <% if(items[item]['active']) { %>
             <tr class="table-row">
               <td>
                 <img src = "<%= items[item]['img_url'] %>" class="rounded
@@ -91,6 +92,7 @@
               <td id="total"></td>
               <!-- </div> -->
             </tr>
+            <% } %>
             <% } %>
           </tbody>
         </table>

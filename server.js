@@ -233,15 +233,13 @@ app.get('/update-menu', (req, res) => {
   })
 });
 
-//update a menu item
-app.post("/update-menu/update/:itemID", (req, res) => {
+//deletes a menu item
+app.post("/update-menu/delete/:itemID", (req, res) => {
   const id = req.session.user_id || 1;
   database.findUser(id)
   .then(user =>{
     if(user.is_owner){
-      console.log(req.params);
-      console.log(JSON.stringify(req.body));
-      database.editMenuItem(req.params.itemID, req.params.options)
+      database.deleteMenuItem(req.params.itemID)
       .then(() => {
           res.redirect('/update-menu');
         })
@@ -255,14 +253,32 @@ app.post("/update-menu/update/:itemID", (req, res) => {
   })
 });
 
-//delete a menu item
+//update a menu item
+app.post("/update-menu/update/:itemID", (req, res) => {
+  const id = req.session.user_id || 1;
+  database.findUser(id)
+  .then(user =>{
+    if(user.is_owner){
+      database.editMenuItem(req.params.itemID, req.body)
+      .then(() => {
+          res.redirect('/update-menu');
+        })
+    } else{
+      return res.status(401).send('error, wrong user');
+    }
+  })
+  .catch(err => {
+    console.log(err.message)
+    return null;
+  })
+});
+
+//adds a menu item
 app.post("/update-menu/add/", (req, res) => {
   const id = req.session.user_id || 1;
   database.findUser(id)
   .then(user =>{
     if(user.is_owner){
-      console.log(req.body);
-      console.log(JSON.stringify(req.body));
       database.addMenuItem(req.body.title,req.body.description, req.body.price, req.body.rating, req.body.img_url, req.body.img_alt)
       .then(() => {
           res.redirect('/update-menu');

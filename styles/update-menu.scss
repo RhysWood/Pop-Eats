@@ -83,7 +83,7 @@ aside {
 }
 
 .remove-btn {
-  width: 85px;
+  width: 150px;
   height: 38px;
   background-color: white;
   color: #d9534f;
@@ -93,6 +93,20 @@ aside {
 .remove-btn:hover {
   color: white;
   background-color: #d9534f;
+}
+
+.update-btn {
+  width: 150px;
+  height: 38px;
+  background-color: white;
+  color: #4fb2d9;
+  border: solid 1px #4fb2d9;
+  ;
+}
+
+.update-btn:hover {
+  color: white;
+  background-color: #4fb2d9;
 }
 
 .total, .tax, .grand-total, .cart-description {
