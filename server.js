@@ -211,6 +211,34 @@ app.post("/manage/:orderID", (req, res) => {
   })
 });
 
+app.post("/manage/time/:orderID", (req, res) => {
+  const id = req.session.user_id || 1;
+  database.findUser(id)
+  .then(user =>{
+    if(user.is_owner){
+      console.log(req.params);
+      database.setPrepTime(req.params.orderID, req.body.time)
+      .then(times => {
+        database.getUserFromOrder(req.params.orderID)
+        .then(user => {
+          const phoneNumber = user.phone_number;
+          const userName = user.name;
+          const prepTime = times.time;
+          const message = `Hello ${userName}! Your recent order with Pop.Eats is estimated to be ready in ${prepTime} minutes. Please prepare for pickup!`;
+          sendMessage(phoneNumber, message);
+          res.redirect('/manage');
+        })
+      })
+    } else{
+      return res.status(401).send('error, wrong user');
+    }
+  })
+  .catch(err => {
+    console.log(err.message)
+    return null;
+  })
+});
+
 app.get('/update-menu', (req, res) => {
   // //sets default user as user 1 for testing purposes
   const id = req.session.user_id || 1;

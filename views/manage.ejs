@@ -38,7 +38,8 @@
           <thead>
             <tr>
               <th scope="col">Mark Complete</th>
-              <th scope="col">Order Number</th>
+              <th scope="col">Order</th>
+              <th scope="col">Est Time:</th>
               <th scope="col">Order Date</th>
               <th scope="col">Completed</th>
             </tr>
@@ -61,6 +62,40 @@
                     <% } %>
                   </td>
                   <td class="order-id"><%= orderCount %></td>
+                  <td class = "order-time<%= count %>" id="order-time">
+                    <% let timeSum = 0 %>
+                    <% if(orders[order]['end_date']) { %>
+                      <p>Done!</p>
+                    <% } else { %>
+
+                    <% if(orders[order]['time']) { %>
+                      <p><%= orders[order]['time'] %> Minutes</p>
+                    <% } else { %>
+
+                      <% for(let item in items) { %>
+                        <% if(items[item]['orderid'] === id) { %>
+                          <% timeSum += (items[item]['time'] * items[item]['sum'])  %>
+                        <% } %>
+                      <% } %>
+                      <p><%= timeSum %> Minutes</p>
+
+
+                      <% } %>
+                      <form class="form-inline" action="/manage/time/<%= id %>" method="POST">
+                        <input
+                        class="form-control"
+                        style="width:7em"
+                        type="text"
+                        name="time"
+                        placeholder="New Time: "
+                        min="0"
+                      />
+                        <button class ="update-button" type=Submit>
+                          Update
+                        </button>
+                      </form>
+                    <% } %>
+                  </td>
                   <% const start = String(orders[order]['start_date']) %>
                   <td class="order-start"><%= start.substring(0, 21) %></td>
                   <% if(orders[order]['end_date']) { %>

@@ -158,11 +158,11 @@ exports.userOrders = userOrders;
 //show all orders, including final price and items
 const allOrdersAllItems = () => {
   const queryString = `
-  SELECT orders.id as orderid, items.title, items.price, sum(orders_items.quantity)
+  SELECT orders.id as orderid, items.title, items.price, items.time, sum(orders_items.quantity)
   from items
   JOIN orders_items on orders_items.item_id = items.id
   JOIN orders on orders.id = orders_items.order_id
-  GROUP BY items.title, items.price, orders.id;
+  GROUP BY items.title, items.price, orders.id, items.time;
   `;
   return db.query(queryString)
    .then((res) => {
