@@ -1,8 +1,8 @@
 // load .env data into process.env
 require("dotenv").config();
 
-const {db} = require('./dbpool');
-const {sendMessage} = require('./services/twilio');
+const { db } = require("./dbpool");
+const { sendMessage } = require("./services/twilio");
 
 // Web server config
 const PORT = process.env.PORT || 8080;
@@ -12,7 +12,7 @@ const app = express();
 const morgan = require("morgan");
 const cookieSession = require("cookie-session");
 
-const database = require('./database')
+const database = require("./database");
 
 // const homeRoute = require('./routes/users')
 
@@ -37,10 +37,12 @@ db.connect();
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
 app.use(morgan("dev"));
-app.use(cookieSession({
-  name: 'session',
-  keys: ['key1', 'key2']
-}))
+app.use(
+  cookieSession({
+    name: "session",
+    keys: ["key1", "key2"],
+  })
+);
 
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
@@ -55,26 +57,25 @@ app.use(
 );
 
 app.use(express.static("public"));
-app.use((req,res, next)=>{
-  database.findUser(req.session.user_id)
-  .then((response)=>{
+app.use((req, res, next) => {
+  database.findUser(req.session.user_id).then((response) => {
     res.locals.user = response;
     return next();
   });
-})
+});
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
 const widgetsRoutes = require("./routes/widgets");
 const { query } = require("express");
-const login = require('./routes/login');
+const login = require("./routes/login");
 const { json } = require("express/lib/response");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // app.use("/api/users", usersRoutes(db));
 app.get("/", (req, res) => {
-  res.render('index');
+  res.render("index");
   // db.query(`SELECT * FROM users;`)
   //   .then(data => {
   //     const users = data.rows;
@@ -87,18 +88,17 @@ app.get("/", (req, res) => {
   //   });
 });
 
-app.get('/about', (req, res) => {
-    res.render('about');
-  });
+app.get("/about", (req, res) => {
+  res.render("about");
+});
 
-app.get('/contact', (req, res) => {
-  res.render('contact')
-})
+app.get("/contact", (req, res) => {
+  res.render("contact");
+});
 
-app.get('/profile', (req, res) => {
-  res.render('profile')
-})
-
+app.get("/profile", (req, res) => {
+  res.render("profile");
+});
 
 //app.use("/api/widgets", widgetsRoutes(db));
 // Note: mount other resources here, using the same pattern above
@@ -115,78 +115,82 @@ app.get('/profile', (req, res) => {
 // app.get('/', (req, res) => {
 //   res.render('home')
 // })
-app.use('/login', login)
+app.use("/login", login);
 
-app.get('/menu', (req, res) => {
-  database.menuItems()
-  .then(items => {
-    console.log(items);
-    let templateVars = {items}
-    res.render('menu', templateVars)
-  })
-})
-
-app.get('/orders', (req, res) => {
-  // //sets default user as user 1 for testing purposes
-  const id = req.session.user_id || 1;
-  database.findUser(id)
-  .then(user => {
-    database.userOrders(id)
-    .then(orders => {
-      database.alluserOrderItems(id)
-      .then(items => {
-        const templateVars = {orders, items, user};
-        console.log('these are templatevars:', templateVars);
-        res.render('orders', templateVars);
-      })
-    })
-  })
-  .catch(err => {
-    console.log(err.message)
-    return null;
-  })
+app.get("/menu", (req, res) => {
+  database.menuItems().then((items) => {
+    // console.log(items);
+    let templateVars = { items };
+    res.render("menu", templateVars);
+  });
 });
 
-app.post('/orders', (req, res) => {
-  const orderDetails = req.body
-  console.log(orderDetails[1], '!!!!!!!!!!');
-
-})
-
-app.get('/manage', (req, res) => {
+app.get("/orders", (req, res) => {
   // //sets default user as user 1 for testing purposes
   const id = req.session.user_id || 1;
-  database.findUser(id)
-  .then(user => {
-    if(user.is_owner){
-      database.findUser(id)
-      .then(user => {
-        database.allOrders()
-        .then(orders => {
-          database.allOrdersAllItems()
-          .then(items => {
-            const templateVars = {orders, items, user};
-            res.render('manage', templateVars);
-          })
-        })
+  database
+    .findUser(id)
+    .then((user) => {
+      database.userOrders(id).then((orders) => {
+        database.alluserOrderItems(id).then((items) => {
+          const templateVars = { orders, items, user };
+          // console.log('these are templatevars:', templateVars);
+          res.render("orders", templateVars);
+        });
       });
-    } else {
-      return res.status(401).send('error, wrong user');
+    })
+    .catch((err) => {
+      console.log(err.message);
+      return null;
+    });
+});
+
+app.post("/orders", (req, res) => {
+  const orderDetails = req.body;
+  database.startOrder(req.session.user_id).then((orderInfo) => {
+    console.log("***********", orderInfo);
+    for (let key in orderDetails) {
+      database.addToOrder(key, orderInfo.id, orderDetails[key]["qty"]);
     }
+    Promise.all([orderDetails]).then(x => {
+      console.log('hi', x);
+      // res.render('orders')
+    })
   })
-  .catch(err => {
-    console.log(err.message)
-    return null;
-  })
+
+});
+
+app.get("/manage", (req, res) => {
+  // //sets default user as user 1 for testing purposes
+  const id = req.session.user_id || 1;
+  database
+    .findUser(id)
+    .then((user) => {
+      if (user.is_owner) {
+        database.findUser(id).then((user) => {
+          database.allOrders().then((orders) => {
+            database.allOrdersAllItems().then((items) => {
+              const templateVars = { orders, items, user };
+              res.render("manage", templateVars);
+            });
+          });
+        });
+      } else {
+        return res.status(401).send("error, wrong user");
+      }
+    })
+    .catch((err) => {
+      console.log(err.message);
+      return null;
+    });
 });
 
 app.post("/profile", (req, res) => {
-  const id = req.session.user_id
+  const id = req.session.user_id;
   console.log("THIS IS MY LOG:" + JSON.stringify(req.body));
-  database.updateUser(id, req.body)
-  .then(result =>{
-    res.redirect('/profile');
-  })
+  database.updateUser(id, req.body).then((result) => {
+    res.redirect("/profile");
+  });
 });
 
 //updates order as complete with end-date
@@ -248,53 +252,51 @@ app.post("/manage/time/:orderID", (req, res) => {
 app.get('/update-menu', (req, res) => {
   // //sets default user as user 1 for testing purposes
   const id = req.session.user_id || 1;
-  database.findUser(id)
-  .then(user => {
-    if(user.is_owner){
-      database.menuItems()
-      .then(items => {
-        console.log(items);
-        const templateVars = {items}
-        res.render('update-menu', templateVars)
-      })
-    } else {
-      return res.status(401).send('error, wrong user');
-    }
+  database
+    .findUser(id)
+    .then((user) => {
+      if (user.is_owner) {
+        database.menuItems().then((items) => {
+          // console.log(items);
+          const templateVars = { items };
+          res.render("update-menu", templateVars);
+        });
+      } else {
+        return res.status(401).send("error, wrong user");
+      }
     })
-  .catch(err => {
-    console.log(err.message)
-    return null;
-  })
+    .catch((err) => {
+      console.log(err.message);
+      return null;
+    });
 });
 
 //deletes a menu item
 app.post("/update-menu/toggle/:itemID", (req, res) => {
   const id = req.session.user_id || 1;
-  database.findUser(id)
-  .then(user =>{
-    if(user.is_owner){
-      database.itemDetails(req.params.itemID)
-      .then(item => {
-        if(item.active) {
-          database.deleteMenuItem(item.id)
-          .then(() => {
-          res.redirect('/update-menu');
-          })
-        } else {
-          database.reactivateMenuItem(item.id)
-          .then(() => {
-            res.redirect('/update-menu');
-          })
-        }
-      })
-    } else{
-      return res.status(401).send('error, wrong user');
-    }
-  })
-  .catch(err => {
-    console.log(err.message)
-    return null;
-  })
+  database
+    .findUser(id)
+    .then((user) => {
+      if (user.is_owner) {
+        database.itemDetails(req.params.itemID).then((item) => {
+          if (item.active) {
+            database.deleteMenuItem(item.id).then(() => {
+              res.redirect("/update-menu");
+            });
+          } else {
+            database.reactivateMenuItem(item.id).then(() => {
+              res.redirect("/update-menu");
+            });
+          }
+        });
+      } else {
+        return res.status(401).send("error, wrong user");
+      }
+    })
+    .catch((err) => {
+      console.log(err.message);
+      return null;
+    });
 });
 
 //update a menu item
@@ -339,10 +341,6 @@ app.post("/update-menu/add/", (req, res) => {
   })
 });
 
-
-
-
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });
-

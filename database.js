@@ -58,8 +58,8 @@ const userOrders = (userID) => {
   return db.query(queryString, values)
    .then((res) => {
      if(res.rows[0]) {
-      console.log('all orders!');
-      console.log(res.rows)
+      // console.log('all orders!');
+      // console.log(res.rows)
       return res.rows;
      };
      console.log('User Not Found');
@@ -88,8 +88,8 @@ const alluserOrderItems = (userID) => {
   return db.query(queryString, values)
    .then((res) => {
      if(res.rows[0]) {
-      console.log('all orders!');
-      console.log(res.rows)
+      // console.log('all orders!');
+      // console.log(res.rows)
       return res.rows;
      };
      console.log('User Not Found');
@@ -139,8 +139,8 @@ const allOrders = () => {
   return db.query(queryString)
    .then((res) => {
      if(res.rows[0]) {
-      console.log('all orders!');
-      console.log(res.rows)
+      // console.log('all orders!');
+      // console.log(res.rows)
       return res.rows;
      };
      console.log('User Not Found');
@@ -358,15 +358,14 @@ exports.editMenuItem = editMenuItem;
 //deletes an item from the menu
 const deleteMenuItem = (itemID) => {
   const queryString = `
-  UPDATE items
-  SET active = false
+  DELETE from items
   WHERE id = $1
   RETURNING *;
   `;
   const values = [itemID];
   return db.query(queryString, values)
   .then((res) => {
-    console.log('Removed item from active menu!');
+    console.log('Removed item from menu!');
     console.log(res.rows);
     return null;
   })
@@ -509,11 +508,11 @@ const startOrder = (userID) => {
   VALUES($1, $2, CURRENT_TIMESTAMP, null)
   RETURNING *;
   `;
-  const values =[userID, false];
+  const values =[userID, true];
   return db.query(queryString, values)
   .then((res) => {
-    console.log('Added Order!');
-    console.log(res.rows);
+    // console.log('Added Order!');
+    // console.log(res.rows);
     return res.rows[0];
   })
   .catch((err) => {
@@ -534,8 +533,8 @@ const addToOrder = (itemID, orderID, quantity) => {
   const values = [itemID, orderID, quantity];
   return db.query(queryString, values)
   .then((res) => {
-    console.log('Added items to Order!');
-    console.log(res.rows);
+    // console.log('Added items to Order!');
+    // console.log(res.rows);
     return res.rows[0];
   })
   .catch((err) => {
@@ -663,6 +662,5 @@ const setCompleted = (orderID) => {
   })
 };
 
-exports.setCompleted = setCompleted;
 
 module.exports = {allUsers, findUser, userOrders, alluserOrderItems, allOrders, allOrdersAllItems, getUserFromOrder, updateUser, menuItems, addMenuItem, editMenuItem, deleteMenuItem, orderItems, orderCost, startOrder, addToOrder, removeFromOrder, restartCart, orderDetails, setSubmitted, setCompleted, reactivateMenuItem, itemDetails, setPrepTime, orderPrepTime};

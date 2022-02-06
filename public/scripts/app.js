@@ -11,10 +11,10 @@ $(document).ready(function () {
                   <div class="grand-total">TOTAL: <div class="cart-grand-total"></div></div>
                   <div><form action="/order" method="POST">
                   <button class="submit-btn"> SUBMIT ORDER</button>
-
                 </form></div>
                 </aside>`);
 
+  // Prevents user from submitting form on hitting 'enter' key
   $(window).keydown(function (event) {
     if (event.keyCode == 13) {
       event.preventDefault();
@@ -22,9 +22,10 @@ $(document).ready(function () {
     }
   });
 
-  // <input class="submit-btn" type="submit" value="SUBMIT ORDER"/>
+
   let orderDetails = {};
-  console.log(orderDetails);
+
+  // Event handler for 'Add' button to update the cart
   $(".add-btn").on("click", function (event) {
     event.preventDefault();
 
@@ -36,7 +37,14 @@ $(document).ready(function () {
         .children()
         .children()
         .children()
-        .val()
+        .val() || $(this)
+        .parent()
+        .parent()
+        .children(".row-input")
+        .children()
+        .children()
+        .children()
+        .val() == 0
     ) {
       return;
     }
@@ -66,21 +74,24 @@ $(document).ready(function () {
     let itemID = Number($(this).parent().parent().children(".items-id").text());
 
     if (!orderDetails[itemID]) {
-      orderDetails[itemID] = qty;
-    } else {
-      orderDetails[itemID] += qty;
-    }
-    // console.log("orderDetails", orderDetails);
-
-    $(".submit-btn").on("click", function (event) {
-      // event.preventDefault();
-      console.log(orderDetails);
-      if(Object.keys(orderDetails).length === 0) {
-        return alert(`You can't submit an empty order`)
+      orderDetails[itemID] = {
+        'itemID': itemID,
+        'qty': qty
       }
-      $.post('/orders', orderDetails);
-      window.location.href='/orders';
-    });
+    } else {
+      orderDetails[itemID]['qty'] = qty;
+    }
+
+
+    // $(".submit-btn").on("click", function (event) {
+    //   event.preventDefault();
+    //   console.log(orderDetails);
+    //   if(Object.keys(orderDetails).length === 0) {
+    //     return alert(`You can't submit an empty order`)
+    //   }
+    //   // $.post('/orders', orderDetails);
+    //   // window.location.href='/orders';
+    // });
 
   });
 
@@ -115,45 +126,9 @@ $(document).ready(function () {
 
     let itemID = Number($(this).parent().parent().children(".items-id").text());
     delete orderDetails[itemID];
-    // if (!orderDetails[itemID]) {
-    //   orderDetails[itemID] = qty;
-    // } else {
-    //   orderDetails[itemID] += qty;
-    // }
-    // console.log("orderDetails", orderDetails);
+
   });
 
-  // $('.form-control').on('change', function () {
-
-  // })
-
-  // function recalculateCart() {
-  //   var subtotal = 0;
-
-  //   /* Sum up row totals */
-  //   $("#table-row").each(function () {
-  //     subtotal += parseFloat($(this).children("#total").text());
-  //   });
-
-  //   /* Calculate totals */
-  //   var tax = subtotal * taxRate;
-  //   var shipping = subtotal > 0 ? shippingRate : 0;
-  //   var total = subtotal + tax + shipping;
-
-  //   /* Update totals display */
-  //   $(".totals-value").fadeOut(fadeTime, function () {
-  //     $("#cart-subtotal").html(subtotal.toFixed(2));
-  //     $("#cart-tax").html(tax.toFixed(2));
-  //     $("#cart-shipping").html(shipping.toFixed(2));
-  //     $("#cart-total").html(total.toFixed(2));
-  //     if (total == 0) {
-  //       $(".checkout").fadeOut(fadeTime);
-  //     } else {
-  //       $(".checkout").fadeIn(fadeTime);
-  //     }
-  //     $(".totals-value").fadeIn(fadeTime);
-  //   });
-  // }
 
   updateTotal = (quantityInput) => {
     let taxRate = 0.12;
@@ -190,7 +165,14 @@ $(document).ready(function () {
 
     $(".submit-btn").on("click", function (event) {
       event.preventDefault();
-      // console.log(orderDetails);
+      event.stopImmediatePropagation();
+      console.log(orderDetails);
+      if(Object.keys(orderDetails).length === 0) {
+        return alert(`You can't submit an empty order`)
+      }
+
+      $.post('/orders', orderDetails);
+      window.location.href='/orders';
     });
   };
 });
