@@ -11,7 +11,8 @@ CREATE TABLE "items" (
   "rating" int,
   "img_url" varchar(250),
   "img_alt" varchar(250),
-  "active" boolean
+  "active" boolean,
+  "time" int
 );
 
 CREATE TABLE "users" (
