@@ -31,7 +31,7 @@
   <body>
     <%- include('partials/_header') %>
     <main>
-      <button id="toggleOrders" class="btn btn-light">Show/Hide Completed Orders</button>
+      <button id="toggleOrders" class="btn btn-outline-info">Show/Hide Completed Orders</button>
       <section class="orders-container">
       </div>
         <table class="table table-hover">
@@ -57,7 +57,7 @@
                       <i class="fas fa-check-circle" id="complete-check"></i>
                     <% } else { %>
                     <form action="/manage/<%= id %>" method="POST">
-                      <button class = "mark-complete" class="btn btn-success"> Mark Complete!</button>
+                      <button class = "mark-complete" type="button" class="btn btn-success"> Mark Complete!</button>
                     </form>
                     <% } %>
                   </td>

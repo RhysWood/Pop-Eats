@@ -1,6 +1,9 @@
 body {
   display: flex;
   align-items: flex-start;
+  background-image: none;
+  width: 100%;
+  background-color:rgb(249, 249, 249);
 
   main {
     flex-direction: column;
