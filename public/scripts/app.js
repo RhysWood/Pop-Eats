@@ -37,7 +37,14 @@ $(document).ready(function () {
         .children()
         .children()
         .children()
-        .val()
+        .val() || $(this)
+        .parent()
+        .parent()
+        .children(".row-input")
+        .children()
+        .children()
+        .children()
+        .val() == 0
     ) {
       return;
     }
@@ -163,6 +170,7 @@ $(document).ready(function () {
       if(Object.keys(orderDetails).length === 0) {
         return alert(`You can't submit an empty order`)
       }
+
       $.post('/orders', orderDetails);
       window.location.href='/orders';
     });
