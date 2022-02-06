@@ -9,11 +9,37 @@ $(document).ready(function () {
                   <div class="tax">TAX: <div class="cart-tax"></div></div>
                   <br>
                   <div class="grand-total">TOTAL: <div class="cart-grand-total"></div></div>
+                  <div><form action="/order" method="POST">
+                  <button class="submit-btn"> SUBMIT ORDER</button>
+
+                </form></div>
                 </aside>`);
 
-  $(".add-btn").on("click", function () {
+  $(window).keydown(function (event) {
+    if (event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+
+  // <input class="submit-btn" type="submit" value="SUBMIT ORDER"/>
+  let orderDetails = {};
+  console.log(orderDetails);
+  $(".add-btn").on("click", function (event) {
     event.preventDefault();
-    if (!$('.form-control').val()) return;
+
+    if (
+      !$(this)
+        .parent()
+        .parent()
+        .children(".row-input")
+        .children()
+        .children()
+        .children()
+        .val()
+    ) {
+      return;
+    }
     $(".menu-item-container").append($cart);
 
     let target = $(this)
@@ -25,14 +51,41 @@ $(document).ready(function () {
       .children();
 
     updateTotal(target);
-  });
 
-  $("button").on("click", function () {
-    event.preventDefault();
+    let qty = Number(
+      $(this)
+        .parent()
+        .parent()
+        .children(".row-input")
+        .children()
+        .children()
+        .children()
+        .val()
+    );
+
+    let itemID = Number($(this).parent().parent().children(".items-id").text());
+
+    if (!orderDetails[itemID]) {
+      orderDetails[itemID] = qty;
+    } else {
+      orderDetails[itemID] += qty;
+    }
+    // console.log("orderDetails", orderDetails);
+
+    $(".submit-btn").on("click", function (event) {
+      // event.preventDefault();
+      console.log(orderDetails);
+      if(Object.keys(orderDetails).length === 0) {
+        return alert(`You can't submit an empty order`)
+      }
+      $.post('/orders', orderDetails);
+      window.location.href='/orders';
+    });
+
   });
 
   $(".remove-btn").on("click", function () {
-    if (!$('.form-control').val()) return;
+    // if (!$(".form-control").val()) return;
     let inputQty = $(this)
       .parent()
       .parent()
@@ -40,7 +93,7 @@ $(document).ready(function () {
       .children()
       .children()
       .children();
-    inputQty.val("0");
+    inputQty.val(0);
     let target = $(this)
       .parent()
       .parent()
@@ -49,7 +102,30 @@ $(document).ready(function () {
       .children()
       .children();
     updateTotal(target);
+    let qty = Number(
+      $(this)
+        .parent()
+        .parent()
+        .children(".row-input")
+        .children()
+        .children()
+        .children()
+        .val()
+    );
+
+    let itemID = Number($(this).parent().parent().children(".items-id").text());
+    delete orderDetails[itemID];
+    // if (!orderDetails[itemID]) {
+    //   orderDetails[itemID] = qty;
+    // } else {
+    //   orderDetails[itemID] += qty;
+    // }
+    // console.log("orderDetails", orderDetails);
   });
+
+  // $('.form-control').on('change', function () {
+
+  // })
 
   // function recalculateCart() {
   //   var subtotal = 0;
@@ -90,24 +166,31 @@ $(document).ready(function () {
 
     let subTotal = 0;
     let itemTotal = 0;
+
     $(".table-row").each(function () {
       subTotal += Number($(this).children("#total").text());
-      itemTotal += Number($(this).children(".row-input").children().children().children().val());
+      itemTotal += Number(
+        $(this).children(".row-input").children().children().children().val()
+      );
     });
 
     let total = subTotal.toFixed(2);
     let totalText = `$ ${total.toString()}`;
 
     let taxAmt = (taxRate * total).toFixed(2);
-    let taxAmtText = `$ ${taxAmt.toString()}`
+    let taxAmtText = `$ ${taxAmt.toString()}`;
 
     let grandTotal = (Number(total) + Number(taxAmt)).toFixed(2);
-    let grandTotalText = `$ ${grandTotal.toString()}`
+    let grandTotalText = `$ ${grandTotal.toString()}`;
 
     $(".cart-total-item").text(totalText);
-    $('.cart-tax').text(taxAmtText);
-    $('.cart-grand-total').text(grandTotalText);
-    $('.item-count').text(itemTotal)
+    $(".cart-tax").text(taxAmtText);
+    $(".cart-grand-total").text(grandTotalText);
+    $(".item-count").text(itemTotal);
 
+    $(".submit-btn").on("click", function (event) {
+      event.preventDefault();
+      // console.log(orderDetails);
+    });
   };
 });
