@@ -136,7 +136,7 @@ app.get('/orders', (req, res) => {
       database.alluserOrderItems(id)
       .then(items => {
         const templateVars = {orders, items, user};
-        console.log('these are templatevars:', templateVars);
+        // console.log('these are templatevars:', templateVars);
         res.render('orders', templateVars);
       })
     })
@@ -148,14 +148,13 @@ app.get('/orders', (req, res) => {
 });
 
 app.post('/orders', (req, res) => {
-  const orderDetails = req.body
+  const orderDetails = req.body;
   database.startOrder(req.session.user_id)
   .then(orderInfo => {
+    console.log('***********', orderInfo);
     for (let key in orderDetails) {
-      database.addToOrder(key, orderInfo.user_id, orderDetails[key]['qty'])
+      database.addToOrder(key, orderInfo.id, orderDetails[key]['qty'])
     }
-  }).then(result => {
-    res.redirect('/orders')
   })
 
 })

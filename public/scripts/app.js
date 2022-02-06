@@ -72,7 +72,7 @@ $(document).ready(function () {
         'qty': qty
       }
     } else {
-      orderDetails[itemID]['qty'] += qty;
+      orderDetails[itemID]['qty'] = qty;
     }
 
 
