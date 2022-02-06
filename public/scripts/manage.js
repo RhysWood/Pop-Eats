@@ -39,9 +39,9 @@ $(document).ready(function() {
     showOnlyOpen();
   });
 
-  const markComplete = document.getElementsByClassName('mark-complete');
+  // const markComplete = document.getElementsByClassName('mark-complete');
 
-  console.log(markComplete);
+  // console.log(markComplete);
 
   // for(let i = 0; i < markComplete.length; i++) {
   //   markComplete[i].addEventListener('submit', function(event) {

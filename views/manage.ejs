@@ -49,7 +49,7 @@
             <% let orderCount = orders.length %>
             <% let markCompleteCount = 0 %>
             <% for(let order in orders) { %>
-              <% const id = orders[order]['id'] %>
+            <% const id = orders[order]['id'] %>
               <tr class="tablerow" title="Click for Order Details">
                 <div class="order">
                   <td class="order-ended">
@@ -106,7 +106,7 @@
                   <% } %>
                   <div class = "order-items-sum">
               <td class = "order-details<%= count %>" id="order-items">
-                <p>Customer: <%= orders[order]['name'] %> <br>Contact: <%= orders[order]['phone_number'] %> <br>Order Items:</p>
+                <p>Order Items:</p>
                 <% for(let item in items) { %>
                   <% if(items[item]['orderid'] === id) { %>
                     <p> <%= items[item]['sum'] %>

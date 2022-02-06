@@ -132,9 +132,8 @@ exports.getUserFromOrder = getUserFromOrder;
 //show all orders
 const allOrders = () => {
   const queryString = `
-  SELECT *, users.name
+  SELECT *
   FROM orders
-  JOIN users on users.id = orders.user_id
   ORDER BY start_date DESC;
   `;
   return db.query(queryString)
@@ -170,7 +169,7 @@ const allOrdersAllItems = () => {
    .then((res) => {
      if(res.rows[0]) {
       console.log('all orders!');
-      console.log(res.rows)
+      // console.log(res.rows)
       return res.rows;
      };
      console.log('User Not Found');

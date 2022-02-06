@@ -197,7 +197,7 @@ app.post("/manage/:orderID", (req, res) => {
     if(user.is_owner){
       console.log(req.params);
       database.setCompleted(req.params.orderID)
-      .then(result => {
+      .then(() => {
         database.getUserFromOrder(req.params.orderID)
         .then(user => {
           const phoneNumber = user.phone_number;
