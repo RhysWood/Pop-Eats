@@ -248,6 +248,27 @@ const menuItems = () => {
   })
 };
 
+//get details of a specific item
+const itemDetails = (itemID) => {
+  const queryString = `
+  SELECT * from items
+  WHERE items.id = $1
+  GROUP BY id
+  ORDER BY id;
+  `;
+  const values = [itemID];
+  return db.query(queryString, values)
+  .then((res) => {
+    return res.rows[0];
+  })
+  .catch((err) => {
+    console.log(err.message);
+    return null;
+  })
+};
+
+exports.itemDetails = itemDetails;
+
 //adds a new menu item to the item list
 const addMenuItem = (title, description, price, rating, img_url, img_alt) => {
   const queryString = `
@@ -330,14 +351,15 @@ exports.editMenuItem = editMenuItem;
 //deletes an item from the menu
 const deleteMenuItem = (itemID) => {
   const queryString = `
-  DELETE from items
+  UPDATE items
+  SET active = false
   WHERE id = $1
   RETURNING *;
   `;
   const values = [itemID];
   return db.query(queryString, values)
   .then((res) => {
-    console.log('Removed item from menu!');
+    console.log('Removed item from active menu!');
     console.log(res.rows);
     return null;
   })
@@ -348,6 +370,29 @@ const deleteMenuItem = (itemID) => {
 };
 
 exports.deleteMenuItem = deleteMenuItem;
+
+//re-adds an item to the menu
+const reactivateMenuItem = (itemID) => {
+  const queryString = `
+  UPDATE items
+  SET active = true
+  WHERE id = $1
+  RETURNING *;
+  `;
+  const values = [itemID];
+  return db.query(queryString, values)
+  .then((res) => {
+    console.log('Add item back to menu!');
+    console.log(res.rows);
+    return null;
+  })
+  .catch((err) => {
+    console.log(err.message);
+    return null;
+  })
+};
+
+exports.reactivateMenuItem = reactivateMenuItem;
 
 //returns all items in an order
 const orderItems = (orderID) => {
@@ -566,4 +611,4 @@ const setCompleted = (orderID) => {
 
 exports.setCompleted = setCompleted;
 
-module.exports = {allUsers, findUser, userOrders, alluserOrderItems, allOrders, allOrdersAllItems, getUserFromOrder, updateUser, menuItems, addMenuItem, editMenuItem, deleteMenuItem, orderItems, orderCost, startOrder, addToOrder, removeFromOrder, restartCart, orderDetails, setSubmitted, setCompleted};
+module.exports = {allUsers, findUser, userOrders, alluserOrderItems, allOrders, allOrdersAllItems, getUserFromOrder, updateUser, menuItems, addMenuItem, editMenuItem, deleteMenuItem, orderItems, orderCost, startOrder, addToOrder, removeFromOrder, restartCart, orderDetails, setSubmitted, setCompleted, reactivateMenuItem, itemDetails};

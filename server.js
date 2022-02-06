@@ -234,15 +234,25 @@ app.get('/update-menu', (req, res) => {
 });
 
 //deletes a menu item
-app.post("/update-menu/delete/:itemID", (req, res) => {
+app.post("/update-menu/toggle/:itemID", (req, res) => {
   const id = req.session.user_id || 1;
   database.findUser(id)
   .then(user =>{
     if(user.is_owner){
-      database.deleteMenuItem(req.params.itemID)
-      .then(() => {
+      database.itemDetails(req.params.itemID)
+      .then(item => {
+        if(item.active) {
+          database.deleteMenuItem(item.id)
+          .then(() => {
           res.redirect('/update-menu');
-        })
+          })
+        } else {
+          database.reactivateMenuItem(item.id)
+          .then(() => {
+            res.redirect('/update-menu');
+          })
+        }
+      })
     } else{
       return res.status(401).send('error, wrong user');
     }

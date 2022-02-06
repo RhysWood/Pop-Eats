@@ -66,22 +66,22 @@
           <td>
             <input
             class="form-control"
-            style="width: 5em"
-            type="float"
-            name="price"
-            placeholder="Price: "
-            min="0"
-            />
-          </td>
-          <td>
-            <input
-            class="form-control"
             style="width: 7em"
             type="number"
             name="rating"
             placeholder="Rating: "
             min="0"
             max="5"
+            />
+          </td>
+          <td>
+            <input
+            class="form-control"
+            style="width: 5em"
+            type="float"
+            name="price"
+            placeholder="Price: "
+            min="0"
             />
           </td>
           <td>
@@ -140,8 +140,10 @@
                   ><%= items[item]['price'] %></span
                 >
               </td>
-              </td>
               <td>
+                Availble On Menu:<br /><span class="available"
+                  ><%= items[item]['active'] %></span
+                >
               </td>
 
               <!-- </div> -->
@@ -154,9 +156,9 @@
                   <div class="form-group mb-2" id="qty-input">
                 <tr>
                   <td>
+                    Name:
                   <input
                   class="form-control"
-
                   type="text"
                   name="title"
                   placeholder="<%=items[item]['title'] %>"
@@ -164,9 +166,9 @@
                 />
               </td>
               <td>
+                Description:
                 <input
                 class="form-control"
-
                 type="text"
                 name="description"
                 placeholder="<%=items[item]['description'] %>"
@@ -174,6 +176,19 @@
                 />
               </td>
               <td>
+                Rating:
+                <input
+                class="form-control"
+                style="width: 4em"
+                type="number"
+                name="rating"
+                placeholder="<%=items[item]['rating'] %> "
+                min="0"
+                max="5"
+                />
+              </td>
+              <td>
+                Price:
                 <input
                 class="form-control"
                 style="width: 5em"
@@ -184,19 +199,10 @@
                 />
               </td>
               <td>
+                Image URL:
                 <input
                 class="form-control"
-                style="width: 7em"
-                type="number"
-                name="rating"
-                placeholder="<%=items[item]['rating'] %> "
-                min="0"
-                max="5"
-                />
-              </td>
-              <td>
-                <input
-                class="form-control"
+                style="width: 15em"
                 type="url"
                 name="img_url"
                 placeholder="<%=items[item]['img_url'] %>"
@@ -204,6 +210,7 @@
                 />
               </td>
               <td>
+                Alt Text:
                 <input
                 class="form-control"
                 type="text"
@@ -220,9 +227,9 @@
             </div>
           </form>
               <td>
-                <form class="form-inline" action="/update-menu/delete/<%=items[item]['id'] %>" method="POST">
+                <form class="form-inline" action="/update-menu/toggle/<%=items[item]['id'] %>" method="POST">
                   <button type="submit" class="remove-btn">
-                    Delete Item
+                    Toggle Menu Availability
                   </button>
                 </form>
               </td>
