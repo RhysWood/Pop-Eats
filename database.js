@@ -132,8 +132,9 @@ exports.getUserFromOrder = getUserFromOrder;
 //show all orders
 const allOrders = () => {
   const queryString = `
-  SELECT *
+  SELECT *, users.name
   FROM orders
+  JOIN users on users.id = orders.user_id
   ORDER BY start_date DESC;
   `;
   return db.query(queryString)
@@ -158,11 +159,12 @@ exports.userOrders = userOrders;
 //show all orders, including final price and items
 const allOrdersAllItems = () => {
   const queryString = `
-  SELECT orders.id as orderid, items.title, items.price, items.time, sum(orders_items.quantity)
+  SELECT orders.id as orderid, items.title, items.price, items.time, users.name, sum(orders_items.quantity)
   from items
   JOIN orders_items on orders_items.item_id = items.id
   JOIN orders on orders.id = orders_items.order_id
-  GROUP BY items.title, items.price, orders.id, items.time;
+  JOIN users on users.id = orders.user_id
+  GROUP BY items.title, items.price, orders.id, items.time, users.name;
   `;
   return db.query(queryString)
    .then((res) => {

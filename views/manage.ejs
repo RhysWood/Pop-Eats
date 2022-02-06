@@ -62,6 +62,7 @@
                     <% } %>
                   </td>
                   <td class="order-id"><%= orderCount %></td>
+                  <% const start = String(orders[order]['start_date']) %>
                   <td class = "order-time<%= count %>" id="order-time">
                     <% let timeSum = 0 %>
                     <% if(orders[order]['end_date']) { %>
@@ -70,6 +71,7 @@
 
                     <% if(orders[order]['time']) { %>
                       <p><%= orders[order]['time'] %> Minutes</p>
+                      <p></p>
                     <% } else { %>
 
                       <% for(let item in items) { %>
@@ -78,8 +80,6 @@
                         <% } %>
                       <% } %>
                       <p><%= timeSum %> Minutes</p>
-
-
                       <% } %>
                       <form class="form-inline" action="/manage/time/<%= id %>" method="POST">
                         <input
@@ -96,7 +96,7 @@
                       </form>
                     <% } %>
                   </td>
-                  <% const start = String(orders[order]['start_date']) %>
+
                   <td class="order-start"><%= start.substring(0, 21) %></td>
                   <% if(orders[order]['end_date']) { %>
                     <% const end = String(orders[order]['end_date']) %>
@@ -106,7 +106,7 @@
                   <% } %>
                   <div class = "order-items-sum">
               <td class = "order-details<%= count %>" id="order-items">
-                <p class="font-weight-bold">Order Items:</p>
+                <p>Customer: <%= orders[order]['name'] %> <br>Contact: <%= orders[order]['phone_number'] %> <br>Order Items:</p>
                 <% for(let item in items) { %>
                   <% if(items[item]['orderid'] === id) { %>
                     <p> <%= items[item]['sum'] %>
