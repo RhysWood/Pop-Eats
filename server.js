@@ -148,13 +148,32 @@ app.get("/orders", (req, res) => {
 app.post("/orders", (req, res) => {
   const orderDetails = req.body;
   database.startOrder(req.session.user_id).then((orderInfo) => {
-    console.log("***********", orderInfo);
+    // console.log("***********", orderInfo);
+    const test = [];
     for (let key in orderDetails) {
-      database.addToOrder(key, orderInfo.id, orderDetails[key]["qty"]);
+      test.push(database.addToOrder(key, orderInfo.id, orderDetails[key]["qty"]));
     }
-    Promise.all([orderDetails]).then(x => {
-      console.log('hi', x);
-      // res.render('orders')
+    Promise.all(test).then(info => {
+      // console.log('hi', info);
+      let orderID = info[0].order_id;
+      database.orderItems(orderID).then((x) => {
+        let message = '';
+        for (let item of x) {
+          message += `${item.sum} x ${item.title},`;
+        }
+        return {message, orderID};
+      }).then((message) => {
+
+        database.getUserFromOrder(message.orderID)
+        .then((userInfo) => {
+          console.log('line 169', userInfo);
+          const phoneNumber = userInfo.phone_number;
+          const userName = userInfo.name;
+          const msg = `Thank you for your order, ${userName}. Your order details are: ` + message.message;
+          console.log('username', userName, 'Phone', phoneNumber, msg);
+          // sendMessage(phoneNumber, msg);
+        })
+      })
     })
   })
 

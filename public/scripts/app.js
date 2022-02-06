@@ -166,7 +166,6 @@ $(document).ready(function () {
     $(".submit-btn").on("click", function (event) {
       event.preventDefault();
       event.stopImmediatePropagation();
-      console.log(orderDetails);
       if(Object.keys(orderDetails).length === 0) {
         return alert(`You can't submit an empty order`)
       }
