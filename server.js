@@ -269,6 +269,7 @@ app.post("/update-menu/update/:itemID", (req, res) => {
   database.findUser(id)
   .then(user =>{
     if(user.is_owner){
+      console.log(req.body);
       database.editMenuItem(req.params.itemID, req.body)
       .then(() => {
           res.redirect('/update-menu');
@@ -289,7 +290,8 @@ app.post("/update-menu/add/", (req, res) => {
   database.findUser(id)
   .then(user =>{
     if(user.is_owner){
-      database.addMenuItem(req.body.title,req.body.description, req.body.price, req.body.rating, req.body.img_url, req.body.img_alt)
+      console.log(JSON.stringify(req.body));
+      database.addMenuItem(req.body.title,req.body.description, req.body.price, req.body.rating, req.body.img_url, req.body.img_alt, req.body.time)
       .then(() => {
           res.redirect('/update-menu');
         })

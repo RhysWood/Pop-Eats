@@ -29,7 +29,8 @@ CREATE TABLE "orders" (
   "user_id" int,
   "submitted" boolean,
   "start_date" TIMESTAMP,
-  "end_date" TIMESTAMP
+  "end_date" TIMESTAMP,
+  "time" int
 );
 
 CREATE TABLE "orders_items" (

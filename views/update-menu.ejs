@@ -87,6 +87,16 @@
           <td>
             <input
             class="form-control"
+            style="width: 11em"
+            type="number"
+            name="time"
+            placeholder="Time to Complete: "
+            min="0"
+            />
+          </td>
+          <td>
+            <input
+            class="form-control"
             type="url"
             name="img_url"
             placeholder="Enter the url of item image: "
@@ -145,6 +155,11 @@
                   ><%= items[item]['active'] %></span
                 >
               </td>
+              <td>
+                Time to Make (Minutes):<br /><span class="available"
+                  ><%= items[item]['time'] %></span
+                >
+              </td>
 
               <!-- </div> -->
               <!-- </div> -->
@@ -195,6 +210,17 @@
                 type="float"
                 name="price"
                 placeholder="<%=items[item]['price'] %> "
+                min="0"
+                />
+              </td>
+              <td>
+                Time:
+                <input
+                class="form-control"
+                style="width: 5em"
+                type="number"
+                name="time"
+                placeholder="<%=items[item]['time'] %> "
                 min="0"
                 />
               </td>

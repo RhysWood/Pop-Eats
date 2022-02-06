@@ -36,6 +36,7 @@
           <thead>
             <tr>
               <th scope="col">Order Number</th>
+              <th scope="col">Estimated Time To Fulfill</th>
               <th scope="col">Order Date</th>
               <th scope="col">Completed</th>
             </tr>
@@ -52,6 +53,27 @@
               <tr class="tablerow" title="Click for Order Details">
                 <div class="order">
                   <td class="order-id"><%= orderCount %></td>
+                  <td class = "order-time<%= count %>" id="order-sum">
+                    <% let timeSum = 0 %>
+                    <% if(orders[order]['end_date']) { %>
+                      <p>Done!</p>
+                    <% } else { %>
+
+                    <% if(orders[order]['time']) { %>
+                      <p><%= orders[order]['time'] %></p>
+                    <% } else { %>
+
+                      <% for(let item in items) { %>
+                        <% if(items[item]['orderid'] === id) { %>
+                          <% timeSum += (items[item]['time'] * items[item]['sum'])  %>
+                        <% } %>
+                      <% } %>
+                      <p><%= timeSum %> Minutes</p>
+
+                      <% } %>
+                    <% } %>
+
+                  </td>
                   <% const start = String(orders[order]['start_date']) %>
                   <td class="order-start"><%= start.substring(0, 21) %></td>
                   <% if(orders[order]['end_date']) { %>

@@ -1,3 +1,4 @@
+const { set } = require('express/lib/response');
 const {db} = require('./dbpool');
 
 //Return all users on website as array
@@ -76,12 +77,12 @@ exports.userOrders = userOrders;
 //show all orders, including final price and items under the current user
 const alluserOrderItems = (userID) => {
   const queryString = `
-  SELECT orders.id as orderid, items.title, items.price, sum(orders_items.quantity)
+  SELECT orders.id as orderid, items.title, items.price, items.time, sum(orders_items.quantity)
   from items
   JOIN orders_items on orders_items.item_id = items.id
   JOIN orders on orders.id = orders_items.order_id
   WHERE user_id = $1
-  GROUP BY items.title, items.price, orders.id;
+  GROUP BY items.title, items.price, orders.id, items.time;
   `;
   const values = [userID];
   return db.query(queryString, values)
@@ -270,13 +271,13 @@ const itemDetails = (itemID) => {
 exports.itemDetails = itemDetails;
 
 //adds a new menu item to the item list
-const addMenuItem = (title, description, price, rating, img_url, img_alt) => {
+const addMenuItem = (title, description, price, rating, img_url, img_alt, time) => {
   const queryString = `
-  INSERT INTO items (title, description, price, rating, img_url, img_alt)
-  VALUES($1, $2, $3, $4, $5, $6)
+  INSERT INTO items (title, description, price, rating, img_url, img_alt, active, time)
+  VALUES($1, $2, $3, $4, $5, $6, TRUE, $7)
   RETURNING *;
   `;
-  const values = [title, description, price, rating, img_url, img_alt];
+  const values = [title, description, price, rating, img_url, img_alt, time];
   return db.query(queryString, values)
   .then((res) => {
     console.log('Added items to menu!');
@@ -327,6 +328,11 @@ const editMenuItem = (itemID, options) => {
   values.push(`${options.img_alt}`);
   queryString += `, img_alt= $${values.length}`;
   }
+
+  if(options.time) {
+    values.push(`${options.time}`);
+    queryString += `, time= $${values.length}`;
+    }
 
   queryString += ` WHERE id = $1
   RETURNING *;`;
@@ -447,6 +453,53 @@ const orderCost = (orderID) => {
 };
 
 exports.orderCost = orderCost;
+
+//return the total prep time of an order in minutes based on items in the order
+const orderPrepTime = (orderID) => {
+  const queryString = `
+  SELECT sum(orders_items.quantity * items.time) from orders_items JOIN orders on orders.id = order_id JOIN items on item_id = items.id  WHERE orders.id = $1;
+  `;
+  const values = [orderID];
+  return db.query(queryString, values)
+  .then((res) => {
+    if(res.rows[0]['sum'] !== null) {
+      return res.rows[0];
+    }
+    console.log(`Order #${orderID} Empty`);
+    return null;
+  })
+  .catch((err) => {
+    console.log(err.message);
+    return null;
+  })
+}
+
+exports.orderPrepTime = orderPrepTime;
+
+const setPrepTime = (orderID, newTime) => {
+  const values = [newTime, orderID];
+  let queryString = `
+  UPDATE orders
+  SET time = $1
+  WHERE id = $2
+  RETURNING *;`;
+  return db.query(queryString, values)
+   .then((res) => {
+     if(res.rows[0]) {
+      console.log('Time Updated!');
+      console.log(res.rows[0])
+      return res.rows[0];
+     };
+     console.log('User Not Found');
+     return null;
+   })
+   .catch((err) => {
+    console.log(err.message);
+    return null;
+  })
+}
+
+exports.setPrepTime = setPrepTime;
 
 //initiates a new order item in the database
 const startOrder = (userID) => {
@@ -611,4 +664,4 @@ const setCompleted = (orderID) => {
 
 exports.setCompleted = setCompleted;
 
-module.exports = {allUsers, findUser, userOrders, alluserOrderItems, allOrders, allOrdersAllItems, getUserFromOrder, updateUser, menuItems, addMenuItem, editMenuItem, deleteMenuItem, orderItems, orderCost, startOrder, addToOrder, removeFromOrder, restartCart, orderDetails, setSubmitted, setCompleted, reactivateMenuItem, itemDetails};
+module.exports = {allUsers, findUser, userOrders, alluserOrderItems, allOrders, allOrdersAllItems, getUserFromOrder, updateUser, menuItems, addMenuItem, editMenuItem, deleteMenuItem, orderItems, orderCost, startOrder, addToOrder, removeFromOrder, restartCart, orderDetails, setSubmitted, setCompleted, reactivateMenuItem, itemDetails, setPrepTime, orderPrepTime};
