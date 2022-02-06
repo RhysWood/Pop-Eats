@@ -57,8 +57,8 @@ const userOrders = (userID) => {
   return db.query(queryString, values)
    .then((res) => {
      if(res.rows[0]) {
-      console.log('all orders!');
-      console.log(res.rows)
+      // console.log('all orders!');
+      // console.log(res.rows)
       return res.rows;
      };
      console.log('User Not Found');
@@ -87,8 +87,8 @@ const alluserOrderItems = (userID) => {
   return db.query(queryString, values)
    .then((res) => {
      if(res.rows[0]) {
-      console.log('all orders!');
-      console.log(res.rows)
+      // console.log('all orders!');
+      // console.log(res.rows)
       return res.rows;
      };
      console.log('User Not Found');
@@ -102,32 +102,6 @@ const alluserOrderItems = (userID) => {
 
 exports.alluserOrderItems = alluserOrderItems;
 
-const getUserFromOrder = (orderID) => {
-  const queryString = `
-  SELECT *
-  FROM users
-  JOIN orders on users.id = user_id
-  WHERE orders.id = $1;
-  `;
-  const values = [orderID];
-  return db.query(queryString, values)
-   .then((res) => {
-     if(res.rows[0]) {
-      console.log('found user!');
-      console.log(res.rows[0])
-      return res.rows[0];
-     };
-     console.log('User Not Found');
-     return null;
-   })
-   .catch((err) => {
-    console.log(err.message);
-    return null;
-  })
-}
-
-exports.getUserFromOrder = getUserFromOrder;
-
 //show all orders
 const allOrders = () => {
   const queryString = `
@@ -138,8 +112,8 @@ const allOrders = () => {
   return db.query(queryString)
    .then((res) => {
      if(res.rows[0]) {
-      console.log('all orders!');
-      console.log(res.rows)
+      // console.log('all orders!');
+      // console.log(res.rows)
       return res.rows;
      };
      console.log('User Not Found');
@@ -166,8 +140,8 @@ const allOrdersAllItems = () => {
   return db.query(queryString)
    .then((res) => {
      if(res.rows[0]) {
-      console.log('all orders!');
-      console.log(res.rows)
+      // console.log('all orders!');
+      // console.log(res.rows)
       return res.rows;
      };
      console.log('User Not Found');
@@ -247,27 +221,6 @@ const menuItems = () => {
     return null;
   })
 };
-
-//get details of a specific item
-const itemDetails = (itemID) => {
-  const queryString = `
-  SELECT * from items
-  WHERE items.id = $1
-  GROUP BY id
-  ORDER BY id;
-  `;
-  const values = [itemID];
-  return db.query(queryString, values)
-  .then((res) => {
-    return res.rows[0];
-  })
-  .catch((err) => {
-    console.log(err.message);
-    return null;
-  })
-};
-
-exports.itemDetails = itemDetails;
 
 //adds a new menu item to the item list
 const addMenuItem = (title, description, price, rating, img_url, img_alt) => {
@@ -351,15 +304,14 @@ exports.editMenuItem = editMenuItem;
 //deletes an item from the menu
 const deleteMenuItem = (itemID) => {
   const queryString = `
-  UPDATE items
-  SET active = false
+  DELETE from items
   WHERE id = $1
   RETURNING *;
   `;
   const values = [itemID];
   return db.query(queryString, values)
   .then((res) => {
-    console.log('Removed item from active menu!');
+    console.log('Removed item from menu!');
     console.log(res.rows);
     return null;
   })
@@ -370,29 +322,6 @@ const deleteMenuItem = (itemID) => {
 };
 
 exports.deleteMenuItem = deleteMenuItem;
-
-//re-adds an item to the menu
-const reactivateMenuItem = (itemID) => {
-  const queryString = `
-  UPDATE items
-  SET active = true
-  WHERE id = $1
-  RETURNING *;
-  `;
-  const values = [itemID];
-  return db.query(queryString, values)
-  .then((res) => {
-    console.log('Add item back to menu!');
-    console.log(res.rows);
-    return null;
-  })
-  .catch((err) => {
-    console.log(err.message);
-    return null;
-  })
-};
-
-exports.reactivateMenuItem = reactivateMenuItem;
 
 //returns all items in an order
 const orderItems = (orderID) => {
@@ -455,11 +384,11 @@ const startOrder = (userID) => {
   VALUES($1, $2, CURRENT_TIMESTAMP, null)
   RETURNING *;
   `;
-  const values =[userID, false];
+  const values =[userID, true];
   return db.query(queryString, values)
   .then((res) => {
-    console.log('Added Order!');
-    console.log(res.rows);
+    // console.log('Added Order!');
+    // console.log(res.rows);
     return res.rows[0];
   })
   .catch((err) => {
@@ -480,8 +409,8 @@ const addToOrder = (itemID, orderID, quantity) => {
   const values = [itemID, orderID, quantity];
   return db.query(queryString, values)
   .then((res) => {
-    console.log('Added items to Order!');
-    console.log(res.rows);
+    // console.log('Added items to Order!');
+    // console.log(res.rows);
     return res.rows[0];
   })
   .catch((err) => {
@@ -609,6 +538,6 @@ const setCompleted = (orderID) => {
   })
 };
 
-exports.setCompleted = setCompleted;
 
-module.exports = {allUsers, findUser, userOrders, alluserOrderItems, allOrders, allOrdersAllItems, getUserFromOrder, updateUser, menuItems, addMenuItem, editMenuItem, deleteMenuItem, orderItems, orderCost, startOrder, addToOrder, removeFromOrder, restartCart, orderDetails, setSubmitted, setCompleted, reactivateMenuItem, itemDetails};
+exports.setCompleted = setCompleted;
+module.exports = {allUsers, findUser, userOrders, alluserOrderItems, allOrders, allOrdersAllItems, updateUser, menuItems, addMenuItem, editMenuItem, deleteMenuItem, orderItems, orderCost, startOrder, addToOrder, removeFromOrder, restartCart, orderDetails, setSubmitted, setCompleted};

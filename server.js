@@ -120,7 +120,7 @@ app.use('/login', login)
 app.get('/menu', (req, res) => {
   database.menuItems()
   .then(items => {
-    console.log(items);
+    // console.log(items);
     let templateVars = {items}
     res.render('menu', templateVars)
   })
@@ -149,7 +149,14 @@ app.get('/orders', (req, res) => {
 
 app.post('/orders', (req, res) => {
   const orderDetails = req.body
-  console.log(orderDetails[1], '!!!!!!!!!!');
+  database.startOrder(req.session.user_id)
+  .then(orderInfo => {
+    for (let key in orderDetails) {
+      database.addToOrder(key, orderInfo.user_id, orderDetails[key]['qty'])
+    }
+  }).then(result => {
+    res.redirect('/orders')
+  })
 
 })
 
@@ -225,7 +232,7 @@ app.get('/update-menu', (req, res) => {
     if(user.is_owner){
       database.menuItems()
       .then(items => {
-        console.log(items);
+        // console.log(items);
         const templateVars = {items}
         res.render('update-menu', templateVars)
       })
