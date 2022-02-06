@@ -1,6 +1,6 @@
 // Client facing scripts here
 $(document).ready(function () {
-  const $cart = $(`<aside>
+  const $cart = $(`<aside id="cart">
                   <div><i class="fas fa-shopping-cart"> </i></div>
                   <div> YOUR CART: </div>
                   <br>
@@ -10,9 +10,23 @@ $(document).ready(function () {
                   <br>
                   <div class="grand-total">TOTAL: <div class="cart-grand-total"></div></div>
                   <div><form action="/order" method="POST">
+                  <google-pay-button id="static" environment="TEST" button-type="plain" button-color="black" button-locale="fr">
+                  Pay</google-pay-button>
                   <button class="submit-btn"> SUBMIT ORDER</button>
                 </form></div>
                 </aside>`);
+
+  //order submitted popup
+  const $orderSubmitted = $(`
+                  <div id="submitPopup">
+                  <div> Your Order Has Been Submitted! </div>
+                  <br>
+                  <div>You will now receive a confirmation text message with your order details and estimated time to fulfillment.</div>
+                  <br>
+                  <div> You will receive another text when your order is ready for pickup.</div>
+                  <br>
+                  <div>Thank you for your business. We hope you will order with us again soon.</div>
+                </div>`);
 
   // Prevents user from submitting form on hitting 'enter' key
   $(window).keydown(function (event) {
@@ -171,8 +185,13 @@ $(document).ready(function () {
         return alert(`You can't submit an empty order`)
       }
 
-      $.post('/orders', orderDetails);
-      window.location.href='/orders';
+      $(".menu-item-container").append($orderSubmitted);
+
+      // setTimeout(() => {
+      //   $.post('/orders', orderDetails);
+      //   window.location.href='/orders';
+      // }, 10000);
+
     });
   };
 });

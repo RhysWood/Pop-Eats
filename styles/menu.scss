@@ -153,3 +153,17 @@ h1{
   color: #5cb85c;
   border: solid 1px #5cb85c;
 }
+
+#submitPopup {
+  background-color: white;
+  position: fixed;
+  top: 130px;
+  padding: 125px;
+  border: solid 1px black;
+  box-shadow: 2px 2px 8px grey;
+  color: black;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
