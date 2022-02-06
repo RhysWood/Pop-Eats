@@ -140,6 +140,12 @@ app.get('/orders', (req, res) => {
   })
 });
 
+app.post('/orders', (req, res) => {
+  const orderDetails = req.body
+  console.log(orderDetails[1], '!!!!!!!!!!');
+
+})
+
 app.get('/manage', (req, res) => {
   // //sets default user as user 1 for testing purposes
   const id = req.session.user_id || 1;

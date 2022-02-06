@@ -15,15 +15,16 @@ $(document).ready(function () {
                 </form></div>
                 </aside>`);
 
-  // $(window).keydown(function (event) {
-  //   if (event.keyCode == 13) {
-  //     event.preventDefault();
-  //     return false;
-  //   }
-  // });
+  $(window).keydown(function (event) {
+    if (event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
 
   // <input class="submit-btn" type="submit" value="SUBMIT ORDER"/>
   let orderDetails = {};
+  console.log(orderDetails);
   $(".add-btn").on("click", function (event) {
     event.preventDefault();
 
@@ -72,8 +73,13 @@ $(document).ready(function () {
     // console.log("orderDetails", orderDetails);
 
     $(".submit-btn").on("click", function (event) {
-      event.preventDefault();
+      // event.preventDefault();
       console.log(orderDetails);
+      if(Object.keys(orderDetails).length === 0) {
+        return alert(`You can't submit an empty order`)
+      }
+      $.post('/orders', orderDetails);
+      window.location.href='/orders';
     });
 
   });
