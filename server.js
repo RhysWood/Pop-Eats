@@ -100,6 +100,11 @@ app.get("/profile", (req, res) => {
   res.render("profile");
 });
 
+app.get("/logout", (req, res) => {
+  res.clearCookie('session');
+  res.redirect("/");
+});
+
 //app.use("/api/widgets", widgetsRoutes(db));
 // Note: mount other resources here, using the same pattern above
 
