@@ -10,8 +10,6 @@ $(document).ready(function () {
                   <br>
                   <div class="grand-total">TOTAL: <div class="cart-grand-total"></div></div>
                   <div><form action="/order" method="POST">
-                  <google-pay-button id="static" environment="TEST" button-type="plain" button-color="black" button-locale="fr">
-                  Pay</google-pay-button>
                   <button class="submit-btn"> SUBMIT ORDER</button>
                 </form></div>
                 </aside>`);

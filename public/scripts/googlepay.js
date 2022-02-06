@@ -1,43 +1,37 @@
-import './node_modules/@google-pay/button-element/dist/index.js';
+const button = document.querySelector("google-pay-button");
 
-function onLoadPaymentData(paymentData) {
-  console.log('load payment data', paymentData);
-}
-
-const staticButton = document.getElementById('static');
-
-staticButton.paymentRequest = {
+button.paymentRequest = {
   apiVersion: 2,
   apiVersionMinor: 0,
   allowedPaymentMethods: [
     {
-      type: 'CARD',
+      type: "CARD",
       parameters: {
-        allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
-        allowedCardNetworks: ['MASTERCARD', 'VISA'],
-        billingAddressParameters: {
-          format: 'MIN',
-        },
+        allowedAuthMethods: ["PAN_ONLY", "CRYPTOGRAM_3DS"],
+        allowedCardNetworks: ["MASTERCARD", "VISA"]
       },
       tokenizationSpecification: {
-        type: 'PAYMENT_GATEWAY',
+        type: "PAYMENT_GATEWAY",
         parameters: {
-          gateway: 'example',
-          gatewayMerchantId: 'exampleGatewayMerchantId',
-        },
-      },
-    },
+          gateway: "example",
+          gatewayMerchantId: "exampleGatewayMerchantId"
+        }
+      }
+    }
   ],
   merchantInfo: {
-    merchantId: '12345678901234567890',
-    merchantName: 'Demo Merchant',
+    merchantId: "12345678901234567890",
+    merchantName: "Demo Merchant"
   },
   transactionInfo: {
-    totalPriceStatus: 'FINAL',
-    totalPriceLabel: 'Total',
-    totalPrice: '100.00',
-    currencyCode: 'CAD',
-    countryCode: 'CA',
-  },
+    totalPriceStatus: "FINAL",
+    totalPriceLabel: "Total",
+    totalPrice: "100.00",
+    currencyCode: "USD",
+    countryCode: "US"
+  }
 };
-staticButton.onLoadPaymentData = onLoadPaymentData;
+
+button.addEventListener("loadpaymentdata", event => {
+  console.log("load payment data", event.detail);
+});
