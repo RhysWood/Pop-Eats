@@ -23,7 +23,6 @@
 
     <!-- APP JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script type="module" src="/scripts/update-menu.js"></script>
     <script type="module" src="/scripts/user.js"></script>
 
     <title>Update Menu</title>
@@ -194,7 +193,7 @@
                 Rating:
                 <input
                 class="form-control"
-                style="width: 4em"
+
                 type="number"
                 name="rating"
                 placeholder="<%=items[item]['rating'] %> "
@@ -206,7 +205,7 @@
                 Price:
                 <input
                 class="form-control"
-                style="width: 5em"
+
                 type="float"
                 name="price"
                 placeholder="<%=items[item]['price'] %> "
@@ -217,7 +216,7 @@
                 Time:
                 <input
                 class="form-control"
-                style="width: 5em"
+
                 type="number"
                 name="time"
                 placeholder="<%=items[item]['time'] %> "
@@ -236,15 +235,17 @@
                 />
               </td>
               <td>
-                Alt Text:
+                Alt:
                 <input
                 class="form-control"
                 type="text"
+                style="width: 5em"
                 name="img_alt"
                 placeholder="<%=items[item]['img_alt'] %>"
                 min="0"
                 />
               </td>
+              <tr>
               <td>
                 <button type="submit" class="update-btn">
                   Submit Changes
@@ -259,7 +260,7 @@
                   </button>
                 </form>
               </td>
-
+            </tr>
                 </tr>
 
             </tr>

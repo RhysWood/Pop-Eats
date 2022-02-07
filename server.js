@@ -152,12 +152,21 @@ app.get("/orders", (req, res) => {
 
 app.post("/orders", (req, res) => {
   const orderDetails = req.body;
+  console.log(req.body);
   database.startOrder(req.session.user_id).then((orderInfo) => {
     // console.log("***********", orderInfo);
     const test = [];
     for (let key in orderDetails) {
-      test.push(database.addToOrder(key, orderInfo.id, orderDetails[key]["qty"]));
-      console.log('test', test);
+      if(key !== 'paid') {
+        test.push(database.addToOrder(key, orderInfo.id, orderDetails[key]["qty"]));
+        console.log('test', test);
+      }
+      if(key === 'paid') {
+        if(key) {
+          database.setPaid(orderInfo.id);
+        }
+      }
+
     }
 
     // console.log('test', test);
@@ -206,8 +215,10 @@ app.get("/manage", (req, res) => {
         database.findUser(id).then((user) => {
           database.allOrders().then((orders) => {
             database.allOrdersAllItems().then((items) => {
-              const templateVars = { orders, items, user };
-              res.render("manage", templateVars);
+              database.allUsers().then(users => {
+                const templateVars = { orders, items, user, users };
+                res.render("manage", templateVars);
+              })
             });
           });
         });
