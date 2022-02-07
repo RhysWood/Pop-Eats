@@ -10,8 +10,8 @@ $(document).ready(function () {
                   <br>
                   <div class="grand-total">TOTAL: <div class="cart-grand-total" id="final-price"></div></div>
                   <div><form action="/order" method="POST">
-                  <button class="submit-btn"> SUBMIT ORDER</button>
-                </form><div id="buy-now">Buy Now!</div></div>
+                  <button class="submit-btn"> SUBMIT ORDER <br> Pay at Pickup</button>
+                </form><div id="buy-now">Or Pay Now with Google Pay!</div></div>
                 </aside>`);
 
   //order submitted popup
