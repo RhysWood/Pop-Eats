@@ -135,7 +135,7 @@ $(document).ready(function () {
     let row = $(quantityInput).parent().parent().parent().parent();
     let price = row.children("#whatever").children(".price").text();
     let quantity = $(quantityInput).val();
-    let rowPrice = Number(price) * Number(quantity);
+    let rowPrice = Number(price) * Math.floor(Number(quantity));
 
     row.children("#total").html(rowPrice.toFixed(2));
 
@@ -144,9 +144,9 @@ $(document).ready(function () {
 
     $(".table-row").each(function () {
       subTotal += Number($(this).children("#total").text());
-      itemTotal += Number(
+      itemTotal += Math.floor(Number(
         $(this).children(".row-input").children().children().children().val()
-      );
+      ));
     });
 
     let total = subTotal.toFixed(2);
