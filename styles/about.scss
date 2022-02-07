@@ -24,3 +24,27 @@ body {
   width: 260px;
   border-bottom: 1px solid white;
 }
+
+@media only screen and (max-width: 420px) {
+  .header {
+    width: 100vw;
+  }
+
+  .about-text {
+    width: 200px;
+    font-size: 20px;
+  }
+
+  #about-us {
+    font-size: 20px;
+    width: 108px;
+  }
+
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .about-text {
+    width: 350px;
+    font-size: 35px;
+  }
+}
