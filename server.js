@@ -158,20 +158,29 @@ app.post("/orders", (req, res) => {
       let orderID = info[0].order_id;
       database.orderItems(orderID).then((x) => {
         let message = '';
-        for (let item of x) {
-          message += `${item.sum} x ${item.title},`;
+        if (x.length === 1) {
+          message += `${x[0].sum} x ${x[0].title}`;
+          return {message, orderID};
+        }
+        for (let i = 0; i < x.length; i++) {
+          if (i === 0) {
+            message += `${x[i].sum} x ${x[i].title},`;
+          } else if (i === x.length - 1) {
+            message += ` and ${x[i].sum} x ${x[i].title}!`
+          } else {
+            message += ` ${x[i].sum} x ${x[i].title},`;
+          }
         }
         return {message, orderID};
       }).then((message) => {
-
         database.getUserFromOrder(message.orderID)
         .then((userInfo) => {
-          console.log('line 169', userInfo);
+          // console.log('line 169', userInfo);
           const phoneNumber = userInfo.phone_number;
           const userName = userInfo.name;
-          const msg = `Thank you for your order, ${userName}. Your order details are: ` + message.message;
-          console.log('username', userName, 'Phone', phoneNumber, msg);
-          // sendMessage(phoneNumber, msg);
+          const msg = `Thank you for your order, ${userName}! Your order details are: ` + message.message;
+          // console.log('username', userName, 'Phone', phoneNumber, msg);
+          sendMessage(phoneNumber, msg);
         })
       })
     })
