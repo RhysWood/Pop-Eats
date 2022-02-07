@@ -162,6 +162,7 @@ $(document).ready(function () {
       ));
     });
 
+    console.log('subtotal', subTotal);
     let total = subTotal.toFixed(2);
     let totalText = `$ ${total.toString()}`;
 

@@ -42,33 +42,43 @@
               </div> -->
           <tbody>
             <!-- <div class="menu-container"> -->
-            <% for(let item in items) { %>
-              <% if(items[item]['active']) { %>
+            <% for(let item in items) { %> <% if(items[item]['active']) { %>
             <tr class="table-row">
-              <td class="items-id"> <%= items[item]['id'] %></td>
+              <td class="items-id"><%= items[item]['id'] %></td>
               <td>
                 <img src = "<%= items[item]['img_url'] %>" class="rounded
                 mx-auto d-block" alt = <%= items[item]['img_alt'] %>>
               </td>
-              <td style="font-size: large">
-                <b><%= items[item]['title'] %></b> <br /><br />
-                <%= items[item]['description'] %>
+              <td>
+                <div class="menu-title"><%= items[item]['title'] %></div>
+                <br />
+                <!-- <b><%= items[item]['title'] %></b> <br /><br /> -->
+                <div class="menu-description">
+                  <%= items[item]['description'] %>
+                </div>
+                <!-- <%= items[item]['description'] %> -->
               </td>
               <td>
-                Rating: <br />
-                <%= items[item]['rating'] %> / 5
+                <div class="rating-title">RATING:</div>
+                <br />
+                <div class="rating"><%= items[item]['rating'] %> / 5</div>
+
+                <!-- Rating: <br /> -->
+                <!-- <%= items[item]['rating'] %> / 5 -->
               </td>
               <td id="whatever">
-                Price:<br />$<span class="price"
-                  ><%= items[item]['price'] %></span
-                >
+                <div class="price-title">PRICE</div>
+                  <!-- <br /> -->
+                  <br /><span class="price"
+                    >$ <%= items[item]['price'] %></span
+                  >
+
               </td>
               <td class="row-input">
                 <form class="form-inline" method="POST">
                   <div class="form-group mb-2" id="qty-input">
                     <input
                       class="form-control"
-                      style="width: 75px"
                       type="number"
                       name="longURL"
                       placeholder="qty"
@@ -79,14 +89,10 @@
               </td>
               <td>
                 <!-- class="btn btn-success -->
-                <button class="add-btn" type="submit">
-                  Add
-                </button>
+                <button class="add-btn" type="submit">Add</button>
               </td>
               <td>
-                <button type="submit" class="remove-btn">
-                  Remove
-                </button>
+                <button type="submit" class="remove-btn">Remove</button>
               </td>
               <!-- </div> -->
               <!-- </div> -->
@@ -94,16 +100,14 @@
               <td id="total"></td>
               <!-- </div> -->
             </tr>
-            <% } %>
-            <% } %>
+            <% } %> <% } %>
           </tbody>
         </table>
       </div>
     </div>
     <!-- Scipt -->
     <script src="/scripts/app.js"></script>
-    <script async src="https://pay.google.com/gp/p/js/pay.js" ></script>
-
+    <script async src="https://pay.google.com/gp/p/js/pay.js"></script>
   </body>
 </html>
 
@@ -115,8 +119,6 @@
   <div class="subtotal"></div>
 </aside> -->
 
-
 <!-- <form action="/orders" method="POST">
   <button>SUBMIT ORDER</button>
 </form> -->
-
