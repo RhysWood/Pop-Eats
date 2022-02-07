@@ -41,10 +41,10 @@ img {
 //   margin-left: 0px;
 // }
 
-.menu-item-container {
-  width: 90%;
-  display: flex;
-}
+// .menu-item-container {
+//   width: 90%;
+//   display: flex;
+// }
 
 .logo {
   align-items: center;
@@ -204,6 +204,10 @@ h1{
   flex-direction: column;
   align-items: center;
 }
+.menu-item-container {
+  width: 90%;
+  display: flex;
+}
 
 @media only screen and (max-width: 420px) {
   .header {
@@ -238,5 +242,17 @@ h1{
   .add-btn, .remove-btn {
     width: 70px;
     font-size: 15px;
+  }
+
+  #cart {
+    position: relative;
+    height: 200px;
+    width: 80%;
+    margin-left: 85px;
+  }
+
+  .menu-item-container {
+    display: block;
+    width: 95%;
   }
 }
