@@ -111,3 +111,26 @@ a:hover {
   background-color: white;
   color: #eb1c1c;
 }
+
+@media only screen and (max-width: 420px) {
+  .header {
+    font-size: 16px;
+    width: 100vw;
+  }
+
+  .intro-text {
+    width: 250px;
+    font-size: 25px;
+  }
+
+  .order-now {
+    width: 200px;
+    font-size: 25px;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .header {
+    font-size: 30px;
+  }
+}
