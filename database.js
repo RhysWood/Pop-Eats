@@ -414,8 +414,8 @@ const orderItems = (orderID) => {
   return db.query(queryString, values)
   .then((res) => {
     if(res.rows[0]) {
-      console.log('Order Items:');
-      console.log(res.rows);
+      // console.log('Order Items:');
+      // console.log(res.rows);
       return res.rows;
     }
     console.log(`Order #${orderID} Empty`);

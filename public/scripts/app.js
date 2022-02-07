@@ -74,7 +74,7 @@ $(document).ready(function () {
 
     updateTotal(target);
 
-    let qty = Number(
+    let qty = Math.floor(Number(
       $(this)
         .parent()
         .parent()
@@ -83,7 +83,7 @@ $(document).ready(function () {
         .children()
         .children()
         .val()
-    );
+    ));
 
     let itemID = Number($(this).parent().parent().children(".items-id").text());
 
@@ -149,7 +149,7 @@ $(document).ready(function () {
     let row = $(quantityInput).parent().parent().parent().parent();
     let price = row.children("#whatever").children(".price").text();
     let quantity = $(quantityInput).val();
-    let rowPrice = Number(price) * Number(quantity);
+    let rowPrice = Number(price) * Math.floor(Number(quantity));
 
     row.children("#total").html(rowPrice.toFixed(2));
 
@@ -158,9 +158,9 @@ $(document).ready(function () {
 
     $(".table-row").each(function () {
       subTotal += Number($(this).children("#total").text());
-      itemTotal += Number(
+      itemTotal += Math.floor(Number(
         $(this).children(".row-input").children().children().children().val()
-      );
+      ));
     });
 
     let total = subTotal.toFixed(2);
@@ -180,7 +180,6 @@ $(document).ready(function () {
     $(".submit-btn").on("click", function (event) {
       event.preventDefault();
       event.stopImmediatePropagation();
-      console.log(orderDetails);
       if(Object.keys(orderDetails).length === 0) {
         return alert(`You can't submit an empty order`)
       }
@@ -192,6 +191,10 @@ $(document).ready(function () {
       //   window.location.href='/orders';
       // }, 10000);
 
+      console.log(orderDetails);
+
+      $.post('/orders', orderDetails);
+      window.location.href='/orders';
     });
   };
 });
