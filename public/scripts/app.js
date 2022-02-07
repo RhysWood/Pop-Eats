@@ -8,11 +8,10 @@ $(document).ready(function () {
                   <div class="total"> SUB-TOTAL: <div class="cart-total-item"> </div> </div>
                   <div class="tax">TAX: <div class="cart-tax"></div></div>
                   <br>
-                  <div class="grand-total">TOTAL: <div class="cart-grand-total"></div></div>
+                  <div class="grand-total">TOTAL: <div class="cart-grand-total" id="final-price"></div></div>
                   <div><form action="/order" method="POST">
-                  <div id="buy-now">Buy Now!</div>
                   <button class="submit-btn"> SUBMIT ORDER</button>
-                </form></div>
+                </form><div id="buy-now">Buy Now!</div></div>
                 </aside>`);
 
   //order submitted popup
@@ -144,7 +143,7 @@ $(document).ready(function () {
   });
 
 
-  updateTotal = (quantityInput) => {
+  const updateTotal = (quantityInput) => {
     let taxRate = 0.12;
     let row = $(quantityInput).parent().parent().parent().parent();
     let price = row.children("#whatever").children(".price").text();
@@ -193,8 +192,117 @@ $(document).ready(function () {
 
       console.log(orderDetails);
 
-      $.post('/orders', orderDetails);
-      window.location.href='/orders';
+
+      setTimeout(() => {
+        $.post('/orders', orderDetails);
+        window.location.href='/orders';
+      }, 5000);
+
     });
   };
+  //Google pay config
+
+const tokenizationSpecification = {
+  type: 'PAYMENT_GATEWAY',
+  parameters: {
+    gateway: 'example',
+    gatewayMerchantId: 'exampleGatewayMerchantId',
+  }
+};
+
+const basecardPaymentMethod = {
+  type: 'CARD',
+  parameters: {
+    allowedCardNetworks: ['VISA', 'MASTERCARD'],
+    allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
+  }
+};
+
+const cardPaymentMethod = Object.assign(
+  {tokenizationSpecification: tokenizationSpecification},
+  basecardPaymentMethod
+);
+
+const googlePayConfiguration = {
+  apiVersion: 2,
+  apiVersionMinor: 0,
+  allowedPaymentMethods: [cardPaymentMethod],
+};
+
+//Payments client
+
+let googlePayClient;
+
+//Function that runs when google pay is loaded
+
+const onGooglePayLoaded = function() {
+  googlePayClient = new google.payments.api.PaymentsClient({
+    environment: 'TEST',
+  });
+  console.log('google pay loaded!')
+
+  googlePayClient.isReadyToPay(googlePayConfiguration)
+  .then(response => {
+    if(response.result) {
+      createAndAddButton();
+    } else {
+      //no button generated. Don't do anything.
+    }
+  })
+  .catch(error => console.error('isReadyToPay error:', error));
+};
+
+
+
+//google pay button creation
+
+function createAndAddButton() {
+  const googlePayButton = googlePayClient.createButton({
+    onClick: onGooglePayButtonClicked,
+  })
+  if(!(document.getElementsByClassName('gpay-card-info-container black long en')).length) {
+    document.getElementById('buy-now').append(googlePayButton);
+  }
+};
+
+function onGooglePayButtonClicked() {
+
+  const paymentDataRequest = {... googlePayConfiguration };
+  paymentDataRequest.merchantInfo = {
+    merchantId: 'example',
+    merchantName: 'Pop.Eats',
+  };
+
+  const price = document.getElementById('final-price');
+  const priceTotal = ($(price).text()).slice(2);
+
+  if(priceTotal <= 0) {
+    return alert(`You can't submit an empty order`);
+  }
+
+  paymentDataRequest.transactionInfo = {
+    totalPriceStatus: 'FINAL',
+    totalPrice: priceTotal,
+    currencyCode: 'CAD',
+    countryCode: 'CA'
+  };
+
+  googlePayClient.loadPaymentData(paymentDataRequest)
+  .then(paymentData => { processPaymentData(paymentData)
+  })
+  .catch(error => console.error('loadPaymentData error: ', error));
+};
+
+// import { orderDetails } from './app';
+
+function processPaymentData(paymentData) {
+  console.log(paymentData);
+  // $(".submit-btn").click();
+  $(".menu-item-container").append($orderSubmitted);
+  setTimeout(() => {
+    $.post('/orders', orderDetails);
+    window.location.href='/orders';
+  }, 5000);
+};
+
 });

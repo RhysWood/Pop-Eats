@@ -152,6 +152,7 @@ app.get("/orders", (req, res) => {
 
 app.post("/orders", (req, res) => {
   const orderDetails = req.body;
+  console.log(req.body);
   database.startOrder(req.session.user_id).then((orderInfo) => {
     // console.log("***********", orderInfo);
     const test = [];
@@ -160,6 +161,7 @@ app.post("/orders", (req, res) => {
       console.log('test', test);
     }
 
+    setTimeout(() => {
     // console.log('test', test);
     Promise.all(test).then(info => {
       console.log('hi', info);
@@ -192,6 +194,7 @@ app.post("/orders", (req, res) => {
         })
       })
     })
+  }, 1000);
   })
 
 });
