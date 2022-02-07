@@ -157,9 +157,12 @@ app.post("/orders", (req, res) => {
     const test = [];
     for (let key in orderDetails) {
       test.push(database.addToOrder(key, orderInfo.id, orderDetails[key]["qty"]));
+      console.log('test', test);
     }
+
+    // console.log('test', test);
     Promise.all(test).then(info => {
-      // console.log('hi', info);
+      console.log('hi', info);
       let orderID = info[0].order_id;
       database.orderItems(orderID).then((x) => {
         let message = '';
@@ -185,7 +188,7 @@ app.post("/orders", (req, res) => {
           const userName = userInfo.name;
           const msg = `Thank you for your order, ${userName}! Your order details are: ` + message.message;
           // console.log('username', userName, 'Phone', phoneNumber, msg);
-          sendMessage(phoneNumber, msg);
+          // sendMessage(phoneNumber, msg);
         })
       })
     })

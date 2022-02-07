@@ -60,7 +60,7 @@ $(document).ready(function () {
 
     updateTotal(target);
 
-    let qty = Number(
+    let qty = Math.floor(Number(
       $(this)
         .parent()
         .parent()
@@ -69,7 +69,7 @@ $(document).ready(function () {
         .children()
         .children()
         .val()
-    );
+    ));
 
     let itemID = Number($(this).parent().parent().children(".items-id").text());
 
@@ -169,6 +169,8 @@ $(document).ready(function () {
       if(Object.keys(orderDetails).length === 0) {
         return alert(`You can't submit an empty order`)
       }
+
+      console.log(orderDetails);
 
       $.post('/orders', orderDetails);
       window.location.href='/orders';
