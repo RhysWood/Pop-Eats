@@ -10,6 +10,7 @@ $(document).ready(function () {
                   <br>
                   <div class="grand-total">TOTAL: <div class="cart-grand-total"></div></div>
                   <div><form action="/order" method="POST">
+                  <div id="buy-now">Buy Now!</div>
                   <button class="submit-btn"> SUBMIT ORDER</button>
                 </form></div>
                 </aside>`);
@@ -61,6 +62,7 @@ $(document).ready(function () {
       return;
     }
     $(".menu-item-container").append($cart);
+    onGooglePayLoaded();
 
     let target = $(this)
       .parent()
