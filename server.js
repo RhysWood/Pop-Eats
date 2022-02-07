@@ -157,8 +157,16 @@ app.post("/orders", (req, res) => {
     // console.log("***********", orderInfo);
     const test = [];
     for (let key in orderDetails) {
-      test.push(database.addToOrder(key, orderInfo.id, orderDetails[key]["qty"]));
-      console.log('test', test);
+      if(key !== 'paid') {
+        test.push(database.addToOrder(key, orderInfo.id, orderDetails[key]["qty"]));
+        console.log('test', test);
+      }
+      if(key === 'paid') {
+        if(key) {
+          database.setPaid(orderInfo.id);
+        }
+      }
+
     }
 
     setTimeout(() => {

@@ -27,7 +27,7 @@ CREATE TABLE "users" (
 CREATE TABLE "orders" (
   "id" SERIAL PRIMARY KEY,
   "user_id" int,
-  "submitted" boolean,
+  "paid" boolean,
   "start_date" TIMESTAMP,
   "end_date" TIMESTAMP,
   "time" int

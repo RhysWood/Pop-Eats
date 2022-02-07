@@ -296,6 +296,7 @@ function onGooglePayButtonClicked() {
 // import { orderDetails } from './app';
 
 function processPaymentData(paymentData) {
+  orderDetails['paid'] = true;
   console.log(paymentData);
   // $(".submit-btn").click();
   $(".menu-item-container").append($orderSubmitted);

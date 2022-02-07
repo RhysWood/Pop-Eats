@@ -504,11 +504,11 @@ exports.setPrepTime = setPrepTime;
 //initiates a new order item in the database
 const startOrder = (userID) => {
   const queryString = `
-  INSERT INTO orders (user_id, submitted, start_date, end_date)
+  INSERT INTO orders (user_id, paid, start_date, end_date)
   VALUES($1, $2, CURRENT_TIMESTAMP, null)
   RETURNING *;
   `;
-  const values =[userID, true];
+  const values =[userID, false];
   return db.query(queryString, values)
   .then((res) => {
     // console.log('Added Order!');
@@ -612,18 +612,18 @@ const orderDetails = (orderID) => {
 
 exports.orderDetails = orderDetails;
 
-//sets an order status as submitted
-const setSubmitted = (orderID) => {
+//sets an order status as paid
+const setPaid = (orderID) => {
   const values = [orderID];
   let queryString = `
   UPDATE orders
-  SET submitted = true
+  SET paid = true
   WHERE id = $1
   RETURNING *;`;
   return db.query(queryString, values)
    .then((res) => {
      if(res.rows[0]) {
-      console.log('Submitted Order!');
+      console.log('Order Paid!');
       console.log(res.rows[0])
       return res.rows[0];
      };
@@ -636,7 +636,7 @@ const setSubmitted = (orderID) => {
   })
 };
 
-exports.setSubmitted = setSubmitted;
+exports.setPaid = setPaid;
 
 //sets an end date on an order as completed
 const setCompleted = (orderID) => {
@@ -663,4 +663,4 @@ const setCompleted = (orderID) => {
 };
 
 
-module.exports = {allUsers, findUser, userOrders, alluserOrderItems, allOrders, allOrdersAllItems, getUserFromOrder, updateUser, menuItems, addMenuItem, editMenuItem, deleteMenuItem, orderItems, orderCost, startOrder, addToOrder, removeFromOrder, restartCart, orderDetails, setSubmitted, setCompleted, reactivateMenuItem, itemDetails, setPrepTime, orderPrepTime};
+module.exports = {allUsers, findUser, userOrders, alluserOrderItems, allOrders, allOrdersAllItems, getUserFromOrder, updateUser, menuItems, addMenuItem, editMenuItem, deleteMenuItem, orderItems, orderCost, startOrder, addToOrder, removeFromOrder, restartCart, orderDetails, setPaid, setCompleted, reactivateMenuItem, itemDetails, setPrepTime, orderPrepTime};
