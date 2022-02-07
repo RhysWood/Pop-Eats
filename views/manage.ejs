@@ -39,6 +39,7 @@
             <tr>
               <th scope="col">Mark Complete</th>
               <th scope="col">Order</th>
+              <th scope="col">Pay Status</th>
               <th scope="col">Est Time:</th>
               <th scope="col">Order Date</th>
               <th scope="col">Completed</th>
@@ -62,6 +63,13 @@
                     <% } %>
                   </td>
                   <td class="order-id"><%= orderCount %></td>
+                  <td class="payment-status">
+                    <% if(orders[order]['paid']) { %>
+                      <p>Paid Online</p>
+                    <% } else { %>
+                      <p>Pay at Pickup</p>
+                    <% } %>
+                  </td>
                   <% const start = String(orders[order]['start_date']) %>
                   <td class = "order-time<%= count %>" id="order-time">
                     <% let timeSum = 0 %>
