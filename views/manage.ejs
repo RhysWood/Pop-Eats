@@ -114,6 +114,13 @@
                   <% } %>
                   <div class = "order-items-sum">
               <td class = "order-details<%= count %>" id="order-items">
+                <% for(let user in users) { %>
+                  <% if(users[user]['id'] === orders[order]['user_id']) { %>
+                    <p> <%= users[user]['name'] %>
+                      <br> <%= users[user]['phone_number'] %>
+                    </p>
+                  <% } %>
+                <% } %>
                 <p>Order Items:</p>
                 <% for(let item in items) { %>
                   <% if(items[item]['orderid'] === id) { %>

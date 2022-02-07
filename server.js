@@ -217,8 +217,10 @@ app.get("/manage", (req, res) => {
         database.findUser(id).then((user) => {
           database.allOrders().then((orders) => {
             database.allOrdersAllItems().then((items) => {
-              const templateVars = { orders, items, user };
-              res.render("manage", templateVars);
+              database.allUsers().then(users => {
+                const templateVars = { orders, items, user, users };
+                res.render("manage", templateVars);
+              })
             });
           });
         });
