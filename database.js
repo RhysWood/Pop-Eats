@@ -358,7 +358,8 @@ exports.editMenuItem = editMenuItem;
 //deletes an item from the menu
 const deleteMenuItem = (itemID) => {
   const queryString = `
-  DELETE from items
+  UPDATE items
+  SET active = false
   WHERE id = $1
   RETURNING *;
   `;

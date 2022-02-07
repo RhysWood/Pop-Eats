@@ -192,9 +192,8 @@ $(document).ready(function () {
 
       console.log(orderDetails);
 
-
+      $.post('/orders', orderDetails);
       setTimeout(() => {
-        $.post('/orders', orderDetails);
         window.location.href='/orders';
       }, 5000);
 
@@ -300,8 +299,8 @@ function processPaymentData(paymentData) {
   console.log(paymentData);
   // $(".submit-btn").click();
   $(".menu-item-container").append($orderSubmitted);
+  $.post('/orders', orderDetails);
   setTimeout(() => {
-    $.post('/orders', orderDetails);
     window.location.href='/orders';
   }, 5000);
 };

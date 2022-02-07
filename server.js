@@ -169,7 +169,6 @@ app.post("/orders", (req, res) => {
 
     }
 
-    setTimeout(() => {
     // console.log('test', test);
     Promise.all(test).then(info => {
       console.log('hi', info);
@@ -202,7 +201,6 @@ app.post("/orders", (req, res) => {
         })
       })
     })
-  }, 1000);
   })
 
 });
