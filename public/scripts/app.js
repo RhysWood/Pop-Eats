@@ -146,7 +146,8 @@ $(document).ready(function () {
   const updateTotal = (quantityInput) => {
     let taxRate = 0.12;
     let row = $(quantityInput).parent().parent().parent().parent();
-    let price = row.children("#whatever").children(".price").text();
+    let price = row.children("#whatever").children(".price").html().split('$').join('');
+
     let quantity = $(quantityInput).val();
     let rowPrice = Number(price) * Math.floor(Number(quantity));
 
@@ -162,7 +163,8 @@ $(document).ready(function () {
       ));
     });
 
-    console.log('subtotal', subTotal);
+
+
     let total = subTotal.toFixed(2);
     let totalText = `$ ${total.toString()}`;
 
