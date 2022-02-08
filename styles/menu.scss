@@ -37,7 +37,7 @@ aside {
   box-shadow: 2px 2px 8px grey;
   color: black;
   width: 250px;
-  font-size: 20px;
+  font-size: $standardFont;
   position: fixed;
   right: 20px;
   padding: 0.1em;
@@ -122,7 +122,7 @@ h1{
 }
 
 .menu-description {
-  font-size: 20px;
+  font-size: $standardFont;
   font-style: italic;
   letter-spacing: 1px;
 }
@@ -133,11 +133,11 @@ h1{
 }
 
 .rating {
-  font-size: 20px;
+  font-size: $standardFont;
 }
 
 .price {
-  font-size: 20px;
+  font-size: $standardFont;
 }
 
 .price-title {
@@ -177,7 +177,7 @@ h1{
   border: solid 1px black;
   box-shadow: 2px 2px 8px grey;
   color: black;
-  font-size: 20px;
+  font-size: $standardFont;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -194,14 +194,14 @@ h1{
   }
 
   .menu-title {
-    font-size: 20px;
+    font-size: $standardFont;
   }
 
 }
 
 @media only screen and (min-width: 420px) and (max-width: 820px) {
   .menu-title, .rating-title, .price-title {
-    font-size: 20px;
+    font-size: $standardFont;
   }
 
   .menu-description, .price {
