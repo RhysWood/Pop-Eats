@@ -14,10 +14,6 @@ const cookieSession = require("cookie-session");
 
 const database = require("./database");
 
-// PG database client/connection setup
-// const { Pool } = require("pg");
-// const dbParams = require("./lib/db.js");
-// const db = new Pool(dbParams);
 db.connect();
 
 app.use(morgan("dev"));
@@ -49,13 +45,13 @@ app.use((req, res, next) => {
 });
 
 // Separated Routes for each Resource
-// Note: Feel free to replace the example routes below with your own
 
 const login = require("./routes/login");
+const orders = require("./routes/orders");
+const manage = require("./routes/manage");
+const updateMenu = require("./routes/update-menu")
 
 // Mount all resource routes
-// Note: Feel free to replace the example routes below with your own
-// app.use("/api/users", usersRoutes(db));
 app.get("/", (req, res) => {
   res.render("index");
 });
@@ -79,120 +75,17 @@ app.get("/logout", (req, res) => {
 
 app.use("/login", login);
 
+app.use("/orders", orders);
+
+app.use("/manage", manage);
+
+app.use("/update-menu", updateMenu);
+
 app.get("/menu", (req, res) => {
   database.menuItems().then((items) => {
-    // console.log(items);
     let templateVars = { items };
     res.render("menu", templateVars);
   });
-});
-
-app.get("/orders", (req, res) => {
-  // //sets default user as user 1 for testing purposes
-  const id = req.session.user_id || 1;
-  database
-    .findUser(id)
-    .then((user) => {
-      database.userOrders(id).then((orders) => {
-        database.alluserOrderItems(id).then((items) => {
-          const templateVars = { orders, items, user };
-          // console.log('these are templatevars:', templateVars);
-          res.render("orders", templateVars);
-        });
-      });
-    })
-    .catch((err) => {
-      console.log(err.message);
-      return null;
-    });
-});
-
-app.post("/orders", (req, res) => {
-  const orderDetails = req.body;
-  console.log(req.body);
-  database.startOrder(req.session.user_id).then((orderInfo) => {
-    // console.log("***********", orderInfo);
-    const test = [];
-    for (let key in orderDetails) {
-      if(key !== 'paid') {
-        test.push(database.addToOrder(key, orderInfo.id, orderDetails[key]["qty"]));
-        console.log('test', test);
-      }
-      if(key === 'paid') {
-        if(key) {
-          database.setPaid(orderInfo.id);
-        }
-      }
-
-    }
-
-    // console.log('test', test);
-    Promise.all(test).then(info => {
-      console.log('hi', info);
-      let orderID = info[0].order_id;
-      database.orderItems(orderID).then((x) => {
-        let message = '';
-        if (x.length === 1) {
-          message += `${x[0].sum} x ${x[0].title}`;
-          return {message, orderID};
-        }
-        for (let i = 0; i < x.length; i++) {
-          if (i === 0) {
-            message += `${x[i].sum} x ${x[i].title},`;
-          } else if (i === x.length - 1) {
-            message += ` and ${x[i].sum} x ${x[i].title}!`
-          } else {
-            message += ` ${x[i].sum} x ${x[i].title},`;
-          }
-        }
-        return {message, orderID};
-      }).then((message) => {
-        database.getUserFromOrder(message.orderID)
-        .then((userInfo) => {
-          // console.log('line 169', userInfo);
-          const phoneNumber = userInfo.phone_number;
-          const userName = userInfo.name;
-          const msg = `Thank you for your order, ${userName}! Your order details are: ` + message.message;
-          // console.log('username', userName, 'Phone', phoneNumber, msg);
-          // sendMessage(phoneNumber, msg);
-        })
-        database.findUser(1)
-        .then((managementContact) => {
-          const phoneNumber = managementContact.phone_number;
-          const msg = `A new order has been submitted! Check the online portal for order details and to provide an updated prep-time estimate.`;
-          //sendMessage(phoneNumber, msg);
-        })
-      })
-    })
-  })
-
-});
-
-app.get("/manage", (req, res) => {
-  // //sets default user as user 1 for testing purposes
-  const id = req.session.user_id || 1;
-  database
-    .findUser(id)
-    .then((user) => {
-      if (user.is_owner) {
-        database.findUser(id).then((user) => {
-          database.allOrders().then((orders) => {
-            database.allOrdersAllItems().then((items) => {
-              database.allUsers().then(users => {
-                const templateVars = { orders, items, user, users };
-                res.render("manage", templateVars);
-              })
-            });
-          });
-        });
-      } else {
-        return res.status(401).send("error, wrong user");
-      }
-    })
-    .catch((err) => {
-      console.log(err.message);
-      return null;
-    });
 });
 
 app.post("/profile", (req, res) => {
@@ -201,154 +94,6 @@ app.post("/profile", (req, res) => {
   database.updateUser(id, req.body).then((result) => {
     res.redirect("/profile");
   });
-});
-
-//updates order as complete with end-date
-app.post("/manage/:orderID", (req, res) => {
-  const id = req.session.user_id || 1;
-  database.findUser(id)
-  .then(user =>{
-    if(user.is_owner){
-      console.log(req.params);
-      database.setCompleted(req.params.orderID)
-      .then(() => {
-        database.getUserFromOrder(req.params.orderID)
-        .then(user => {
-          const phoneNumber = user.phone_number;
-          const userName = user.name;
-          const message = `Hello ${userName}! Your recent order with Pop.Eats is now complete and ready for pickup!`;
-          sendMessage(phoneNumber, message);
-          res.redirect('/manage');
-        })
-      })
-    } else{
-      return res.status(401).send('error, wrong user');
-    }
-  })
-  .catch(err => {
-    console.log(err.message)
-    return null;
-  })
-});
-
-app.post("/manage/time/:orderID", (req, res) => {
-  const id = req.session.user_id || 1;
-  database.findUser(id)
-  .then(user =>{
-    if(user.is_owner){
-      console.log(req.params);
-      database.setPrepTime(req.params.orderID, req.body.time)
-      .then(times => {
-        database.getUserFromOrder(req.params.orderID)
-        .then(user => {
-          const phoneNumber = user.phone_number;
-          const userName = user.name;
-          const prepTime = times.time;
-          const message = `Hello ${userName}! Your recent order with Pop.Eats is estimated to be ready in ${prepTime} minutes. Please prepare for pickup!`;
-          sendMessage(phoneNumber, message);
-          res.redirect('/manage');
-        })
-      })
-    } else{
-      return res.status(401).send('error, wrong user');
-    }
-  })
-  .catch(err => {
-    console.log(err.message)
-    return null;
-  })
-});
-
-app.get('/update-menu', (req, res) => {
-  // //sets default user as user 1 for testing purposes
-  const id = req.session.user_id || 1;
-  database
-    .findUser(id)
-    .then((user) => {
-      if (user.is_owner) {
-        database.menuItems().then((items) => {
-          // console.log(items);
-          const templateVars = { items };
-          res.render("update-menu", templateVars);
-        });
-      } else {
-        return res.status(401).send("error, wrong user");
-      }
-    })
-    .catch((err) => {
-      console.log(err.message);
-      return null;
-    });
-});
-
-//deletes a menu item
-app.post("/update-menu/toggle/:itemID", (req, res) => {
-  const id = req.session.user_id || 1;
-  database
-    .findUser(id)
-    .then((user) => {
-      if (user.is_owner) {
-        database.itemDetails(req.params.itemID).then((item) => {
-          if (item.active) {
-            database.deleteMenuItem(item.id).then(() => {
-              res.redirect("/update-menu");
-            });
-          } else {
-            database.reactivateMenuItem(item.id).then(() => {
-              res.redirect("/update-menu");
-            });
-          }
-        });
-      } else {
-        return res.status(401).send("error, wrong user");
-      }
-    })
-    .catch((err) => {
-      console.log(err.message);
-      return null;
-    });
-});
-
-//update a menu item
-app.post("/update-menu/update/:itemID", (req, res) => {
-  const id = req.session.user_id || 1;
-  database.findUser(id)
-  .then(user =>{
-    if(user.is_owner){
-      console.log(req.body);
-      database.editMenuItem(req.params.itemID, req.body)
-      .then(() => {
-          res.redirect('/update-menu');
-        })
-    } else{
-      return res.status(401).send('error, wrong user');
-    }
-  })
-  .catch(err => {
-    console.log(err.message)
-    return null;
-  })
-});
-
-//adds a menu item
-app.post("/update-menu/add/", (req, res) => {
-  const id = req.session.user_id || 1;
-  database.findUser(id)
-  .then(user =>{
-    if(user.is_owner){
-      console.log(JSON.stringify(req.body));
-      database.addMenuItem(req.body.title,req.body.description, req.body.price, req.body.rating, req.body.img_url, req.body.img_alt, req.body.time)
-      .then(() => {
-          res.redirect('/update-menu');
-        })
-    } else{
-      return res.status(401).send('error, wrong user');
-    }
-  })
-  .catch(err => {
-    console.log(err.message)
-    return null;
-  })
 });
 
 app.listen(PORT, () => {
