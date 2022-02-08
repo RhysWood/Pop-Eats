@@ -51,7 +51,11 @@
             <% let markCompleteCount = 0 %>
             <% for(let order in orders) { %>
             <% const id = orders[order]['id'] %>
-              <tr class="tablerow" title="Click for Order Details">
+            <% if(orders[order]['end_date']) { %>
+              <tr class="tablerow done-row">
+            <% } else { %>
+              <tr class="tablerow">
+            <% } %>
                 <div class="order">
                   <td class="order-ended">
                     <% if(orders[order]['end_date']) { %>
@@ -118,6 +122,7 @@
                   <% if(users[user]['id'] === orders[order]['user_id']) { %>
                     <p> <%= users[user]['name'] %>
                       <br> <%= users[user]['phone_number'] %>
+                      <br>Order ID: <%= id %>
                     </p>
                   <% } %>
                 <% } %>
