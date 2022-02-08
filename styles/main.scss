@@ -23,7 +23,24 @@ html {
 .dropbtn {
   color: $fontColor;
   cursor: pointer;
+  i {
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    transform-origin: top;
+  }
+
 }
+
+.dropbtn:hover i {
+  animation-name: bounce;
+  animation-timing-function: ease;
+  color:red;
+}
+@keyframes bounce {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(25px); }
+  100% { transform: translateY(0); }
+  }
 
 .dropbtn:hover, .dropbtn:focus {
   color: $accentColor;
@@ -39,7 +56,7 @@ html {
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 100;
   top: 100px;
-  right: .1%;
+  right: .1px;
 }
 
 .dropdown-content a {
