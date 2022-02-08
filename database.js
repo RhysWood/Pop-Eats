@@ -9,7 +9,6 @@ const allUsers = () => {
   `;
   return db.query(queryString)
   .then((res) => {
-    console.log('allUsers');
     return res.rows;
   })
   .catch((err) => {
@@ -30,8 +29,6 @@ const findUser = (userID) => {
   return db.query(queryString, values)
    .then((res) => {
      if(res.rows[0]) {
-      // console.log('foundUser!');
-      // console.log(res.rows[0])
       return res.rows[0];
      };
      console.log('User Not Found');
@@ -57,8 +54,6 @@ const userOrders = (userID) => {
   return db.query(queryString, values)
    .then((res) => {
      if(res.rows[0]) {
-      // console.log('all orders!');
-      // console.log(res.rows)
       return res.rows;
      };
      console.log('User Not Found');
@@ -87,8 +82,6 @@ const alluserOrderItems = (userID) => {
   return db.query(queryString, values)
    .then((res) => {
      if(res.rows[0]) {
-      // console.log('all orders!');
-      // console.log(res.rows)
       return res.rows;
      };
      console.log('User Not Found');
@@ -113,8 +106,6 @@ const getUserFromOrder = (orderID) => {
   return db.query(queryString, values)
    .then((res) => {
      if(res.rows[0]) {
-      console.log('found user!');
-      console.log(res.rows[0])
       return res.rows[0];
      };
      console.log('User Not Found');
@@ -138,8 +129,6 @@ const allOrders = () => {
   return db.query(queryString)
    .then((res) => {
      if(res.rows[0]) {
-      // console.log('all orders!');
-      // console.log(res.rows)
       return res.rows;
      };
      console.log('User Not Found');
@@ -167,8 +156,6 @@ const allOrdersAllItems = () => {
   return db.query(queryString)
    .then((res) => {
      if(res.rows[0]) {
-      console.log('all orders!');
-      // console.log(res.rows)
       return res.rows;
      };
      console.log('User Not Found');
@@ -217,8 +204,6 @@ const updateUser = (userID, options) => {
   return db.query(queryString, values)
    .then((res) => {
      if(res.rows[0]) {
-      console.log('updated user!');
-      console.log(res.rows[0])
       return res.rows[0];
      };
      console.log('User Not Found');
@@ -280,8 +265,6 @@ const addMenuItem = (title, description, price, rating, img_url, img_alt, time) 
   const values = [title, description, price, rating, img_url, img_alt, time];
   return db.query(queryString, values)
   .then((res) => {
-    console.log('Added items to menu!');
-    console.log(res.rows);
     return res.rows[0];
   })
   .catch((err) => {
@@ -339,8 +322,6 @@ const editMenuItem = (itemID, options) => {
   return db.query(queryString, values)
    .then((res) => {
      if(res.rows[0]) {
-      console.log('updated menu item!');
-      console.log(res.rows[0])
       return res.rows[0];
      };
      console.log('User Not Found');
@@ -365,8 +346,6 @@ const deleteMenuItem = (itemID) => {
   const values = [itemID];
   return db.query(queryString, values)
   .then((res) => {
-    console.log('Removed item from menu!');
-    console.log(res.rows);
     return null;
   })
   .catch((err) => {
@@ -388,8 +367,6 @@ const reactivateMenuItem = (itemID) => {
   const values = [itemID];
   return db.query(queryString, values)
   .then((res) => {
-    console.log('Add item back to menu!');
-    console.log(res.rows);
     return null;
   })
   .catch((err) => {
@@ -439,8 +416,6 @@ const orderCost = (orderID) => {
   return db.query(queryString, values)
   .then((res) => {
     if(res.rows[0]['sum'] !== null) {
-      // console.log('Order Total:');
-      //console.log(res.rows[0]);
       return res.rows[0];
     }
     console.log(`Order #${orderID} Empty`);
@@ -486,8 +461,6 @@ const setPrepTime = (orderID, newTime) => {
   return db.query(queryString, values)
    .then((res) => {
      if(res.rows[0]) {
-      console.log('Time Updated!');
-      console.log(res.rows[0])
       return res.rows[0];
      };
      console.log('User Not Found');
@@ -511,8 +484,6 @@ const startOrder = (userID) => {
   const values =[userID, false];
   return db.query(queryString, values)
   .then((res) => {
-    // console.log('Added Order!');
-    // console.log(res.rows);
     return res.rows[0];
   })
   .catch((err) => {
@@ -533,8 +504,6 @@ const addToOrder = (itemID, orderID, quantity) => {
   const values = [itemID, orderID, quantity];
   return db.query(queryString, values)
   .then((res) => {
-    // console.log('Added items to Order!');
-    // console.log(res.rows);
     return res.rows[0];
   })
   .catch((err) => {
@@ -555,8 +524,6 @@ const orderDetails = (orderID) => {
   const values = [orderID];
   return db.query(queryString, values)
   .then((res) => {
-    console.log('orderDetails');
-    console.log(res.rows[0]);
     return res.rows[0];
   })
   .catch((err) => {
@@ -578,8 +545,6 @@ const setPaid = (orderID) => {
   return db.query(queryString, values)
    .then((res) => {
      if(res.rows[0]) {
-      console.log('Order Paid!');
-      console.log(res.rows[0])
       return res.rows[0];
      };
      console.log('User Not Found');
@@ -604,8 +569,6 @@ const setCompleted = (orderID) => {
   return db.query(queryString, values)
    .then((res) => {
      if(res.rows[0]) {
-      console.log('Ended Order!');
-      console.log(res.rows[0])
       return res.rows[0];
      };
      console.log('User Not Found');
