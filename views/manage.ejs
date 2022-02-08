@@ -38,7 +38,7 @@
           <thead>
             <tr>
               <th scope="col">Mark Complete</th>
-              <th scope="col">Order</th>
+              <th scope="col">Order ID</th>
               <th scope="col">Pay Status</th>
               <th scope="col">Est Time:</th>
               <th scope="col">Order Date</th>
@@ -122,7 +122,6 @@
                   <% if(users[user]['id'] === orders[order]['user_id']) { %>
                     <p> <%= users[user]['name'] %>
                       <br> <%= users[user]['phone_number'] %>
-                      <br>Order ID: <%= id %>
                     </p>
                   <% } %>
                 <% } %>

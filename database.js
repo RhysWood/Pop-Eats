@@ -1,4 +1,3 @@
-const { set } = require('express/lib/response');
 const {db} = require('./dbpool');
 
 //Return all users on website as array
@@ -355,7 +354,7 @@ const editMenuItem = (itemID, options) => {
 
 exports.editMenuItem = editMenuItem;
 
-//deletes an item from the menu
+//deactives an item from the menu
 const deleteMenuItem = (itemID) => {
   const queryString = `
   UPDATE items
@@ -546,51 +545,6 @@ const addToOrder = (itemID, orderID, quantity) => {
 
 exports.startOrder = startOrder;
 
-//deletes a specific item from the cart from a specific order
-const removeFromOrder = (itemID, orderID) => {
-  const queryString = `
-  DELETE from orders_items
-  WHERE item_id = $1
-  AND order_id = $2
-  RETURNING *;
-  `;
-  const values = [itemID, orderID];
-  return db.query(queryString, values)
-  .then((res) => {
-    console.log('Removed items from Order!');
-    console.log(res.rows);
-    return null;
-  })
-  .catch((err) => {
-    console.log(err.message);
-    return null;
-  })
-};
-
-exports.removeFromOrder = removeFromOrder;
-
-//emptys the cart and discards the order in progress
-const restartCart = (orderID) => {
-  const queryString = `
-  DELETE from orders_items
-  WHERE order_id = $1
-  RETURNING *;
-  `;
-  const values = [orderID];
-  return db.query(queryString, values)
-  .then((res) => {
-    console.log('Discarded Order in Progress!');
-    console.log(res.rows);
-    return null;
-  })
-  .catch((err) => {
-    console.log(err.message);
-    return null;
-  })
-};
-
-exports.restartCart = restartCart;
-
 //retrieves all order details from a specific order
 const orderDetails = (orderID) => {
   const queryString = `
@@ -664,4 +618,4 @@ const setCompleted = (orderID) => {
 };
 
 
-module.exports = {allUsers, findUser, userOrders, alluserOrderItems, allOrders, allOrdersAllItems, getUserFromOrder, updateUser, menuItems, addMenuItem, editMenuItem, deleteMenuItem, orderItems, orderCost, startOrder, addToOrder, removeFromOrder, restartCart, orderDetails, setPaid, setCompleted, reactivateMenuItem, itemDetails, setPrepTime, orderPrepTime};
+module.exports = {allUsers, findUser, userOrders, alluserOrderItems, allOrders, allOrdersAllItems, getUserFromOrder, updateUser, menuItems, addMenuItem, editMenuItem, deleteMenuItem, orderItems, orderCost, startOrder, addToOrder, orderDetails, setPaid, setCompleted, reactivateMenuItem, itemDetails, setPrepTime, orderPrepTime};
