@@ -205,9 +205,18 @@ h1{
   flex-direction: column;
   align-items: center;
 }
+
+#submitPopup:hover {
+  box-shadow: 2px 2px 15px black;
+}
 .menu-item-container {
   width: 90%;
   display: flex;
+}
+
+
+.loading-img-hide {
+  display: none;
 }
 
 // @media only screen and (max-width: 420px) {
