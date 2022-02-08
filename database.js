@@ -1,4 +1,4 @@
-const {db} = require('./dbpool');
+//import all queries for central use
 
 const {menuItems, addMenuItem, itemDetails, editMenuItem, deleteMenuItem, reactivateMenuItem} = require('./dataqueries/items');
 
