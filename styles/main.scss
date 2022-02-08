@@ -6,18 +6,16 @@ html {
 }
 
 .header {
-  // position: fixed;
   background: rgba(0, 0, 0, 0.85);
-  // width: 100%;
   width: 100vw;
   overflow-x: hidden;
-  height: 120px;
+  height: 100px;
   display: flex;
   justify-content: space-around;
   align-items: center;
   margin: 0;
   color: white;
-  font-size: 40px;
+  font-size: 25px;
 }
 
 .dropbtn {
@@ -112,6 +110,42 @@ a:hover {
   filter: brightness(90%);
   background-color: white;
   color: #eb1c1c;
+}
+
+footer {
+    // position: fixed;
+    background: rgba(0, 0, 0, 0.85);
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    height: 90px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0;
+    color: white;
+    font-size: 25px;
+}
+
+.footer-containers {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 15px;
+  height: 100px;
+}
+
+.address {
+  font-size: 12px;
+  width: 160px;
+}
+
+.social-media {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
 }
 
 @media only screen and (max-width: 420px) {

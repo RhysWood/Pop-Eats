@@ -14,28 +14,12 @@ const cookieSession = require("cookie-session");
 
 const database = require("./database");
 
-// const homeRoute = require('./routes/users')
-
 // PG database client/connection setup
 // const { Pool } = require("pg");
 // const dbParams = require("./lib/db.js");
 // const db = new Pool(dbParams);
 db.connect();
 
-// const testFunc = () => {
-//   const queryString = `SELECT * FROM users WHERE id = $1`;
-//   const values = [4];
-//   return db.query(queryString, values)
-//    .then((res) => {
-//      console.log(res.rows[0].id)
-//    })
-// }
-
-// testFunc();
-
-// Load the logger first so all (static) HTTP requests are logged to STDOUT
-// 'dev' = Concise output colored by response status for development use.
-//         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
 app.use(morgan("dev"));
 app.use(
   cookieSession({
@@ -66,26 +50,14 @@ app.use((req, res, next) => {
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
-const widgetsRoutes = require("./routes/widgets");
-const { query } = require("express");
+
 const login = require("./routes/login");
-const { json } = require("express/lib/response");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // app.use("/api/users", usersRoutes(db));
 app.get("/", (req, res) => {
   res.render("index");
-  // db.query(`SELECT * FROM users;`)
-  //   .then(data => {
-  //     const users = data.rows;
-  //     res.json({ users });
-  //   })
-  //   .catch(err => {
-  //     res
-  //       .status(500)
-  //       .json({ error: err.message });
-  //   });
 });
 
 app.get("/about", (req, res) => {
@@ -105,21 +77,6 @@ app.get("/logout", (req, res) => {
   res.redirect("/");
 });
 
-//app.use("/api/widgets", widgetsRoutes(db));
-// Note: mount other resources here, using the same pattern above
-
-// Home page
-// Warning: avoid creating more routes in this file!
-// Separate them into separate routes files (see above).
-
-// app.get("/", (req, res) => {
-//   res.render("index");
-// });
-
-// app.use('/', usersRoutes(db))
-// app.get('/', (req, res) => {
-//   res.render('home')
-// })
 app.use("/login", login);
 
 app.get("/menu", (req, res) => {
@@ -198,6 +155,12 @@ app.post("/orders", (req, res) => {
           const msg = `Thank you for your order, ${userName}! Your order details are: ` + message.message;
           // console.log('username', userName, 'Phone', phoneNumber, msg);
           // sendMessage(phoneNumber, msg);
+        })
+        database.findUser(1)
+        .then((managementContact) => {
+          const phoneNumber = managementContact.phone_number;
+          const msg = `A new order has been submitted! Check the online portal for order details and to provide an updated prep-time estimate.`;
+          //sendMessage(phoneNumber, msg);
         })
       })
     })

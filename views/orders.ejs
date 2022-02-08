@@ -51,7 +51,11 @@
 
             <% for(let order in orders) { %>
               <% const id = orders[order]['id'] %>
-              <tr class="tablerow" title="Click for Order Details">
+              <% if(orders[order]['end_date']) { %>
+                <tr class="tablerow done-row">
+              <% } else { %>
+                <tr class="tablerow">
+              <% } %>
                 <div class="order">
                   <td class="order-id"><%= orderCount %></td>
                   <td class="payment-status">
@@ -92,7 +96,7 @@
                   <% } %>
                   <div class = "order-items-sum">
               <td class = "order-details<%= count %>" id="order-items">
-                <p class="font-weight-bold">Order Items:</p>
+                <p class="font-weight-bold">Order ID: <%= id %><br>Order Items:</p>
                 <% for(let item in items) { %>
                   <% if(items[item]['orderid'] === id) { %>
                     <p> <%= items[item]['sum'] %>
