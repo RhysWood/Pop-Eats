@@ -1,8 +1,10 @@
+@import "./variables";
+
 body {
   align-items: flex-start;
   background-image: none;
   width: 100%;
-  background-color:rgb(249, 249, 249);
+  background-color:$backgroundColor;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -27,65 +29,49 @@ img {
   align-items: center;
 }
 
-// .menu-container {
-//   width: 90%;
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: center;
-//   align-items: center;
-//   margin-left: auto;
-//   margin-right: auto;
-// }
-
-// .table {
-//   margin-left: 0px;
-// }
-
 .menu-item-container {
   width: 90%;
   display: flex;
 }
 
-
-
 .add-btn {
   width: 85px;
   height: 38px;
-  background-color: white;
-  color:#5cb85c;
-  border: solid 1px #5cb85c;
+  background-color: $buttonBackground;
+  color: $positiveButton;
+  border: solid 1px $positiveButton;
 }
 
 .add-btn:hover {
-  color: white;
-  background-color: #5cb85c;
+  color: $buttonBackground;
+  background-color: $positiveButton;
 }
 
 .remove-btn {
   width: 200px;
   height: 38px;
-  background-color: white;
-  color: #d9534f;
-  border: solid 1px #d9534f;
+  background-color: $buttonBackground;
+  color: $removeButton;
+  border: solid 1px $removeButton;
 }
 
 .remove-btn:hover {
-  color: white;
-  background-color: #d9534f;
+  color: $fontColor;
+  background-color: $removeButton;
 }
 
 .update-btn {
   width: 150px;
   height: 38px;
-  background-color: white;
-  color: #4fb2d9;
-  border: solid 1px #4fb2d9;
+  background-color: $buttonBackground;
+  color: $updateButton;
+  border: solid 1px $updateButton;
   ;
 }
 
 .update-btn:hover {
-  color: white;
-  background-color: #4fb2d9;
+  color: $fontColor;
+  background-color: $updateButton;
 }
 
 .total, .tax, .grand-total, .cart-description {
@@ -114,11 +100,6 @@ h1{
   margin-top: 2rem;
   margin-bottom: 2em;
 }
-
-// td img {
-//   // height: 150px;
-//   // width: 150px;
-// }
 
 .qty-submit{
   display: flex;

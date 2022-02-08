@@ -1,3 +1,5 @@
+@import "./variables";
+
 html {
   box-sizing: border-box;
   max-width: 100%;
@@ -6,7 +8,7 @@ html {
 }
 
 .header {
-  background: rgba(0, 0, 0, 0.85);
+  background: $mainColor;
   width: 100vw;
   overflow-x: hidden;
   height: 100px;
@@ -14,23 +16,23 @@ html {
   justify-content: space-around;
   align-items: center;
   margin: 0;
-  color: white;
+  color: $fontColor;
   font-size: 25px;
 }
 
 .dropbtn {
-  color: white;
+  color: $fontColor;
   cursor: pointer;
 }
 
 .dropbtn:hover, .dropbtn:focus {
-  color: #eb1c1c;
+  color: $accentColor;
 }
 
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #f1f1f1;
+  background-color: $backgroundColor;
   width:auto;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
@@ -40,13 +42,13 @@ html {
 }
 
 .dropdown-content a {
-  color: black;
+  color: $mainColor;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
 }
 
-.dropdown-content a:hover {background-color: #ddd}
+.dropdown-content a:hover {background-color: $backgroundColor}
 
 body {
   display: flex;
@@ -74,16 +76,16 @@ main {
 
 a {
   text-decoration: none;
-  color: white;
+  color: $fontColor;
 }
 
 a:hover {
-  color: #eb1c1c;
+  color: $accentColor;
 }
 
 .intro-text {
-  background: rgba(0, 0, 0, 0.75);
-  color: white;
+  background: $mainColor;
+  color: $fontColor;
   width: 400px;
   font-size: 40px;
   font-weight: bolder;
@@ -95,8 +97,8 @@ a:hover {
 .order-now {
   cursor: pointer;
   outline: none;
-  color:white;
-  background: rgba(255, 0, 0, 0.8);
+  color:$fontColor;
+  background: $accentColor;
   border-radius: 5px;
   width: 250px;
   height: 85px;
@@ -108,13 +110,13 @@ a:hover {
 
 .order-now:hover {
   filter: brightness(90%);
-  background-color: white;
-  color: #eb1c1c;
+  background-color: $backgroundColor;
+  color: $accentColor;
 }
 
 footer {
     // position: fixed;
-    background: rgba(0, 0, 0, 0.85);
+    background: $mainColor;
     width: 100%;
     overflow-x: hidden;
     overflow-y: hidden;
@@ -123,7 +125,7 @@ footer {
     justify-content: space-around;
     align-items: center;
     margin: 0;
-    color: white;
+    color: $fontColor;
     font-size: 25px;
 }
 

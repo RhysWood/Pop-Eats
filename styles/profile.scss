@@ -1,8 +1,10 @@
+@import "./variables";
+
 body {
   display: flex;
   background-image: none;
   width: 100%;
-  background-color:rgb(249, 249, 249);
+  background-color:$backgroundColor;
   flex-direction: column;
   justify-content: center;
   align-items: center;

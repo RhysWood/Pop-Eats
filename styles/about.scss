@@ -1,3 +1,6 @@
+@import "./variables";
+
+
 body {
   background: url(/images/about.jpg);
   background-size: cover;
@@ -8,9 +11,9 @@ body {
   display: flex;
   flex-direction: column;
   width: 500px;
-  background: rgba(0,0,0, 0.8);
+  background: $mainColor;
   margin-top: 200px;
-  color: white;
+  color: $fontColor;
   border-radius: 5px;
   padding: 1em;
   margin-left: 3%;

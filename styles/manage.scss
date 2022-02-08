@@ -1,9 +1,11 @@
+@import "./variables";
+
 body {
   display: flex;
   align-items: flex-start;
   background-image: none;
   width: 100%;
-  background-color:rgb(249, 249, 249);
+  background-color:$backgroundColor;
 
   main {
     flex-direction: column;
@@ -19,12 +21,18 @@ body {
   }
 }
 
+.tablerow {
+  transition: transform .2s;
+  background-color: white;
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
 
 .done-row{
   visibility:collapse;
 }
-
-
 
 #toggleOrders {
   display:flex;

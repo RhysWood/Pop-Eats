@@ -1,8 +1,10 @@
+@import "./variables";
+
 body {
   align-items: flex-start;
   background-image: none;
   width: 100%;
-  background-color:rgb(249, 249, 249);
+  background-color:$backgroundColor;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -27,25 +29,6 @@ img {
   align-items: center;
 }
 
-// .menu-container {
-//   width: 90%;
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: center;
-//   align-items: center;
-//   margin-left: auto;
-//   margin-right: auto;
-// }
-
-// .table {
-//   margin-left: 0px;
-// }
-
-// .menu-item-container {
-//   width: 90%;
-//   display: flex;
-// }
-
 .logo {
   align-items: center;
 }
@@ -63,7 +46,7 @@ aside {
   flex-direction: column;
   align-items: center;
   bottom:10px;
-  background-color: rgb(249, 249, 249);
+  background-color: $backgroundColor;
 }
 
 aside:hover {
@@ -77,30 +60,30 @@ aside:hover {
 .add-btn {
   width: 85px;
   height: 38px;
-  background-color: white;
-  color:#5cb85c;
-  border: solid 1px #5cb85c;
+  background-color: $buttonBackground;
+  color: $positiveButton;
+  border: solid 1px $positiveButton;
 }
 
 .form-control {
   width: 75px;
 }
 .add-btn:hover {
-  color: white;
-  background-color: #5cb85c;
+  color: $buttonBackground;
+  background-color: $positiveButton;
 }
 
 .remove-btn {
   width: 85px;
   height: 38px;
-  background-color: white;
-  color: #d9534f;
-  border: solid 1px #d9534f;
+  background-color: $buttonBackground;
+  color: $removeButton;
+  border: solid 1px $removeButton;
 }
 
 .remove-btn:hover {
-  color: white;
-  background-color: #d9534f;
+  color: $buttonBackground;
+  background-color: $removeButton;
 }
 
 .total, .tax, .grand-total, .cart-description {
@@ -131,11 +114,6 @@ h1{
   font-size: 30px;
   text-decoration: underline;
 }
-
-// td img {
-//   // height: 150px;
-//   // width: 150px;
-// }
 
 .menu-title {
   font-size: 35px;
@@ -177,8 +155,8 @@ h1{
 }
 
 .submit-btn {
-  color: white;
-  background-color: #5cb85c;
+  color: $fontColor;
+  background-color: $positiveButton;
   border: none;
   padding: 0.5em;
   margin-top: 5px;
@@ -186,13 +164,13 @@ h1{
 }
 
 .submit-btn:hover {
-  background-color: white;
-  color: #5cb85c;
-  border: solid 1px #5cb85c;
+  background-color: $buttonBackground;
+  color: $positiveButton;
+  border: solid 1px $positiveButton;
 }
 
 #submitPopup {
-  background-color: white;
+  background-color: $buttonBackground;
   position: fixed;
   top: 130px;
   padding: 125px;
