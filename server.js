@@ -2,7 +2,6 @@
 require("dotenv").config();
 
 const { db } = require("./dbpool");
-const { sendMessage } = require("./services/twilio");
 
 // Web server config
 const PORT = process.env.PORT || 8080;
