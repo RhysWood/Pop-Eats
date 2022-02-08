@@ -209,17 +209,61 @@ h1{
   display: flex;
 }
 
-@media only screen and (max-width: 420px) {
-  .header {
-    font-size: 16px;
-    width: 100vw;
-  }
+// @media only screen and (max-width: 420px) {
+//   .header {
+//     font-size: 16px;
+//     width: 100vw;
+//   }
 
-  .menu-title {
-    font-size: 20px;
-  }
+//   h1 {
+//     font-size: 25px;
+//   }
+//   .menu-title, .rating-title, .price-title {
+//     font-size: 10px;
+//     font-weight: 200;
+//   }
 
-}
+//   .menu-description, .price, .rating {
+//     font-size: 8px;
+//   }
+
+//   .form-control {
+//     width: 20px;
+//     height: 20px;
+//   }
+
+//   // #whatever {
+//   //   padding: 2px;
+//   // }
+
+//   .row-input {
+//     padding: 2px;
+//   }
+
+//   img {
+//     width: 80px;
+//     height: 80px;
+//   }
+
+//   .add-btn, .remove-btn {
+//     width: 20px;
+//     height: 20px;
+//     font-size: 8px;
+//     padding: 0;
+//   }
+
+//   #cart {
+//     position: relative;
+//     width: 80%;
+//     margin-left: 85px;
+//   }
+
+//   .menu-item-container {
+//     display: block;
+//     width: 95%;
+//   }
+
+// }
 
 @media only screen and (min-width: 420px) and (max-width: 820px) {
   .menu-title, .rating-title, .price-title {
