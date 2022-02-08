@@ -5,6 +5,8 @@ body {
   background: url(/images/about.jpg);
   background-size: cover;
   align-items: flex-start;
+  height: 100vh;
+  justify-content: space-between;
 }
 
 .about-text {
@@ -50,4 +52,5 @@ body {
     width: 350px;
     font-size: 35px;
   }
+
 }
