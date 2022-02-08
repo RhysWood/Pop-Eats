@@ -195,6 +195,7 @@ h1{
   background-color: white;
   position: fixed;
   top: 130px;
+  left: 30%;
   padding: 125px;
   border: solid 1px black;
   box-shadow: 2px 2px 8px grey;
@@ -286,6 +287,12 @@ h1{
   .add-btn, .remove-btn {
     width: 70px;
     font-size: 15px;
+  }
+
+  #submitPopup {
+    padding: 1em;
+    width: 600px;
+    left: 15%;
   }
 
   #cart {
