@@ -5,15 +5,10 @@ $(document).ready(function() {
   const toggleOrders = document.getElementById('toggleOrders');
 
   toggleOrders.addEventListener('click', function() {
-    if($('.order-end').is((":visible"))) {
-      $('.order-end').parent().slideUp();
-    } else {
-      $('.order-end').parent().slideDown();
-    }
-      //document.getElementById('order-details').focus();
+    $('.order-end').parent().toggleClass("done-row");
   });
 
-    // button that shows/hides order details
+    // button that marks completed on order when finished
     const detailsButton = document.getElementsByClassName('order-ended');
     for (let i=0; i < detailsButton.length; i++) {
       detailsButton[i].addEventListener('click', function() {
@@ -27,29 +22,4 @@ $(document).ready(function() {
         }
       });
     }
-
-  //hides all orders, except for open orders, and all details
-  const showOnlyOpen = function() {
-    if($('.order-end').is((":visible"))) {
-      $('.order-end').parent().slideUp();
-    };
-  };
-
-  $(() => {
-    showOnlyOpen();
-  });
-
-  // const markComplete = document.getElementsByClassName('mark-complete');
-
-  // console.log(markComplete);
-
-  // for(let i = 0; i < markComplete.length; i++) {
-  //   markComplete[i].addEventListener('submit', function(event) {
-  //     console.log('found button!');
-  //     event.preventDefault();
-  //     event.stopImmediatePropagation();
-  // })
-  // };
-
-
 });
