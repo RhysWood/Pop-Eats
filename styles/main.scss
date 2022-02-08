@@ -114,6 +114,16 @@ a:hover {
   color: #eb1c1c;
 }
 
+footer {
+  color: white;
+  display: flex;
+  width: 100px;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.85);
+}
+
 @media only screen and (max-width: 420px) {
   .header {
     font-size: 16px;
