@@ -199,6 +199,12 @@ app.post("/orders", (req, res) => {
           // console.log('username', userName, 'Phone', phoneNumber, msg);
           // sendMessage(phoneNumber, msg);
         })
+        database.findUser(1)
+        .then((managementContact) => {
+          const phoneNumber = managementContact.phone_number;
+          const msg = `A new order has been submitted! Check the online portal for order details and to provide an updated prep-time estimate.`;
+          //sendMessage(phoneNumber, msg);
+        })
       })
     })
   })
