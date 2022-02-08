@@ -1,6 +1,6 @@
 // Client facing scripts here
 $(document).ready(function () {
-  const $cart = $(`<aside>
+  const $cart = $(`<aside id="cart">
                   <div><i class="fas fa-shopping-cart"> </i></div>
                   <div> YOUR CART: </div>
                   <br>
@@ -8,11 +8,23 @@ $(document).ready(function () {
                   <div class="total"> SUB-TOTAL: <div class="cart-total-item"> </div> </div>
                   <div class="tax">TAX: <div class="cart-tax"></div></div>
                   <br>
-                  <div class="grand-total">TOTAL: <div class="cart-grand-total"></div></div>
+                  <div class="grand-total">TOTAL: <div class="cart-grand-total" id="final-price"></div></div>
                   <div><form action="/order" method="POST">
-                  <button class="submit-btn"> SUBMIT ORDER</button>
-                </form></div>
+                  <button class="submit-btn"> SUBMIT ORDER <br> Pay at Pickup</button>
+                </form><div id="buy-now">Or Pay Now with Google Pay!</div></div>
                 </aside>`);
+
+  //order submitted popup
+  const $orderSubmitted = $(`
+                  <div id="submitPopup">
+                  <div> Your Order Has Been Submitted! </div>
+                  <br>
+                  <div>You will now receive a confirmation text message with your order details and estimated time to fulfillment.</div>
+                  <br>
+                  <div> You will receive another text when your order is ready for pickup.</div>
+                  <br>
+                  <div>Thank you for your business. We hope you will order with us again soon.</div>
+                </div>`);
 
   // Prevents user from submitting form on hitting 'enter' key
   $(window).keydown(function (event) {
@@ -49,6 +61,7 @@ $(document).ready(function () {
       return;
     }
     $(".menu-item-container").append($cart);
+    onGooglePayLoaded();
 
     let target = $(this)
       .parent()
@@ -60,7 +73,7 @@ $(document).ready(function () {
 
     updateTotal(target);
 
-    let qty = Number(
+    let qty = Math.floor(Number(
       $(this)
         .parent()
         .parent()
@@ -69,7 +82,7 @@ $(document).ready(function () {
         .children()
         .children()
         .val()
-    );
+    ));
 
     let itemID = Number($(this).parent().parent().children(".items-id").text());
 
@@ -130,12 +143,13 @@ $(document).ready(function () {
   });
 
 
-  updateTotal = (quantityInput) => {
+  const updateTotal = (quantityInput) => {
     let taxRate = 0.12;
     let row = $(quantityInput).parent().parent().parent().parent();
-    let price = row.children("#whatever").children(".price").text();
+    let price = row.children("#whatever").children(".price").html().split('$').join('');
+
     let quantity = $(quantityInput).val();
-    let rowPrice = Number(price) * Number(quantity);
+    let rowPrice = Number(price) * Math.floor(Number(quantity));
 
     row.children("#total").html(rowPrice.toFixed(2));
 
@@ -144,10 +158,12 @@ $(document).ready(function () {
 
     $(".table-row").each(function () {
       subTotal += Number($(this).children("#total").text());
-      itemTotal += Number(
+      itemTotal += Math.floor(Number(
         $(this).children(".row-input").children().children().children().val()
-      );
+      ));
     });
+
+
 
     let total = subTotal.toFixed(2);
     let totalText = `$ ${total.toString()}`;
@@ -166,13 +182,130 @@ $(document).ready(function () {
     $(".submit-btn").on("click", function (event) {
       event.preventDefault();
       event.stopImmediatePropagation();
-      console.log(orderDetails);
       if(Object.keys(orderDetails).length === 0) {
         return alert(`You can't submit an empty order`)
       }
 
+      $(".menu-item-container").append($orderSubmitted);
+
+      // setTimeout(() => {
+      //   $.post('/orders', orderDetails);
+      //   window.location.href='/orders';
+      // }, 10000);
+
+      console.log(orderDetails);
+
       $.post('/orders', orderDetails);
-      window.location.href='/orders';
+      setTimeout(() => {
+        window.location.href='/orders';
+      }, 5000);
+
     });
   };
+  //Google pay config
+
+const tokenizationSpecification = {
+  type: 'PAYMENT_GATEWAY',
+  parameters: {
+    gateway: 'example',
+    gatewayMerchantId: 'exampleGatewayMerchantId',
+  }
+};
+
+const basecardPaymentMethod = {
+  type: 'CARD',
+  parameters: {
+    allowedCardNetworks: ['VISA', 'MASTERCARD'],
+    allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
+  }
+};
+
+const cardPaymentMethod = Object.assign(
+  {tokenizationSpecification: tokenizationSpecification},
+  basecardPaymentMethod
+);
+
+const googlePayConfiguration = {
+  apiVersion: 2,
+  apiVersionMinor: 0,
+  allowedPaymentMethods: [cardPaymentMethod],
+};
+
+//Payments client
+
+let googlePayClient;
+
+//Function that runs when google pay is loaded
+
+const onGooglePayLoaded = function() {
+  googlePayClient = new google.payments.api.PaymentsClient({
+    environment: 'TEST',
+  });
+  console.log('google pay loaded!')
+
+  googlePayClient.isReadyToPay(googlePayConfiguration)
+  .then(response => {
+    if(response.result) {
+      createAndAddButton();
+    } else {
+      //no button generated. Don't do anything.
+    }
+  })
+  .catch(error => console.error('isReadyToPay error:', error));
+};
+
+
+
+//google pay button creation
+
+function createAndAddButton() {
+  const googlePayButton = googlePayClient.createButton({
+    onClick: onGooglePayButtonClicked,
+  })
+  if(!(document.getElementsByClassName('gpay-card-info-container black long en')).length) {
+    document.getElementById('buy-now').append(googlePayButton);
+  }
+};
+
+function onGooglePayButtonClicked() {
+
+  const paymentDataRequest = {... googlePayConfiguration };
+  paymentDataRequest.merchantInfo = {
+    merchantId: 'example',
+    merchantName: 'Pop.Eats',
+  };
+
+  const price = document.getElementById('final-price');
+  const priceTotal = ($(price).text()).slice(2);
+
+  if(priceTotal <= 0) {
+    return alert(`You can't submit an empty order`);
+  }
+
+  paymentDataRequest.transactionInfo = {
+    totalPriceStatus: 'FINAL',
+    totalPrice: priceTotal,
+    currencyCode: 'CAD',
+    countryCode: 'CA'
+  };
+
+  googlePayClient.loadPaymentData(paymentDataRequest)
+  .then(paymentData => { processPaymentData(paymentData)
+  })
+  .catch(error => console.error('loadPaymentData error: ', error));
+};
+
+// import { orderDetails } from './app';
+
+function processPaymentData(paymentData) {
+  orderDetails['paid'] = true;
+  console.log(paymentData);
+  // $(".submit-btn").click();
+  $(".menu-item-container").append($orderSubmitted);
+  $.post('/orders', orderDetails);
+  setTimeout(() => {
+    window.location.href='/orders';
+  }, 5000);
+};
+
 });

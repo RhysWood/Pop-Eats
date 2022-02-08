@@ -36,6 +36,7 @@
           <thead>
             <tr>
               <th scope="col">Order Number</th>
+              <th scope="col">Payment:</th>
               <th scope="col">Estimated Time To Fulfill</th>
               <th scope="col">Order Date</th>
               <th scope="col">Completed</th>
@@ -53,6 +54,13 @@
               <tr class="tablerow" title="Click for Order Details">
                 <div class="order">
                   <td class="order-id"><%= orderCount %></td>
+                  <td class="payment-status">
+                    <% if(orders[order]['paid']) { %>
+                      <p>Paid Online</p>
+                    <% } else { %>
+                      <p>Pay at Pickup</p>
+                    <% } %>
+                  </td>
                   <td class = "order-time<%= count %>" id="order-time">
                     <% let timeSum = 0 %>
                     <% if(orders[order]['end_date']) { %>

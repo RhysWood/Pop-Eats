@@ -41,10 +41,10 @@ img {
 //   margin-left: 0px;
 // }
 
-.menu-item-container {
-  width: 90%;
-  display: flex;
-}
+// .menu-item-container {
+//   width: 90%;
+//   display: flex;
+// }
 
 .logo {
   align-items: center;
@@ -62,6 +62,8 @@ aside {
   display: flex;
   flex-direction: column;
   align-items: center;
+  bottom:10px;
+  background-color: rgb(249, 249, 249);
 }
 
 aside:hover {
@@ -80,6 +82,9 @@ aside:hover {
   border: solid 1px #5cb85c;
 }
 
+.form-control {
+  width: 75px;
+}
 .add-btn:hover {
   color: white;
   background-color: #5cb85c;
@@ -123,6 +128,8 @@ h1{
   margin-right: auto;
   margin-top: 2rem;
   margin-bottom: 2em;
+  font-size: 30px;
+  text-decoration: underline;
 }
 
 // td img {
@@ -130,14 +137,44 @@ h1{
 //   // width: 150px;
 // }
 
+.menu-title {
+  font-size: 35px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.menu-description {
+  font-size: 20px;
+  font-style: italic;
+  letter-spacing: 1px;
+}
+
+.rating-title {
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.rating {
+  font-size: 20px;
+}
+
+.price {
+  font-size: 20px;
+}
+
+.price-title {
+  font-size: 35px;
+  font-weight: bold;
+}
+
 .qty-submit{
   display: flex;
   justify-content: space-between;
 }
 
-// .items-id {
-//   // display: none;
-// }
+.items-id {
+  display: none;
+}
 
 .submit-btn {
   color: white;
@@ -152,4 +189,70 @@ h1{
   background-color: white;
   color: #5cb85c;
   border: solid 1px #5cb85c;
+}
+
+#submitPopup {
+  background-color: white;
+  position: fixed;
+  top: 130px;
+  padding: 125px;
+  border: solid 1px black;
+  box-shadow: 2px 2px 8px grey;
+  color: black;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.menu-item-container {
+  width: 90%;
+  display: flex;
+}
+
+@media only screen and (max-width: 420px) {
+  .header {
+    font-size: 16px;
+    width: 100vw;
+  }
+
+  .menu-title {
+    font-size: 20px;
+  }
+
+}
+
+@media only screen and (min-width: 420px) and (max-width: 820px) {
+  .menu-title, .rating-title, .price-title {
+    font-size: 20px;
+  }
+
+  .menu-description, .price {
+    font-size: 16px;
+  }
+
+  .form-control {
+    width: 50px;
+  }
+
+  img {
+    width: 200px;
+    height: 220px;
+  }
+
+  .add-btn, .remove-btn {
+    width: 70px;
+    font-size: 15px;
+  }
+
+  #cart {
+    position: relative;
+    height: 200px;
+    width: 80%;
+    margin-left: 85px;
+  }
+
+  .menu-item-container {
+    display: block;
+    width: 95%;
+  }
 }

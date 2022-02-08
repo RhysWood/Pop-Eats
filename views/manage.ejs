@@ -39,6 +39,7 @@
             <tr>
               <th scope="col">Mark Complete</th>
               <th scope="col">Order</th>
+              <th scope="col">Pay Status</th>
               <th scope="col">Est Time:</th>
               <th scope="col">Order Date</th>
               <th scope="col">Completed</th>
@@ -57,11 +58,18 @@
                       <i class="fas fa-check-circle" id="complete-check"></i>
                     <% } else { %>
                     <form action="/manage/<%= id %>" method="POST">
-                      <button class = "mark-complete" type="button" class="btn btn-success"> Mark Complete!</button>
+                      <button class = "mark-complete" type="submit" class="btn btn-success"> Mark Complete!</button>
                     </form>
                     <% } %>
                   </td>
                   <td class="order-id"><%= orderCount %></td>
+                  <td class="payment-status">
+                    <% if(orders[order]['paid']) { %>
+                      <p>Paid Online</p>
+                    <% } else { %>
+                      <p>Pay at Pickup</p>
+                    <% } %>
+                  </td>
                   <% const start = String(orders[order]['start_date']) %>
                   <td class = "order-time<%= count %>" id="order-time">
                     <% let timeSum = 0 %>
@@ -106,6 +114,13 @@
                   <% } %>
                   <div class = "order-items-sum">
               <td class = "order-details<%= count %>" id="order-items">
+                <% for(let user in users) { %>
+                  <% if(users[user]['id'] === orders[order]['user_id']) { %>
+                    <p> <%= users[user]['name'] %>
+                      <br> <%= users[user]['phone_number'] %>
+                    </p>
+                  <% } %>
+                <% } %>
                 <p>Order Items:</p>
                 <% for(let item in items) { %>
                   <% if(items[item]['orderid'] === id) { %>

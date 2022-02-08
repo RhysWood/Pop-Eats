@@ -152,14 +152,54 @@ app.get("/orders", (req, res) => {
 
 app.post("/orders", (req, res) => {
   const orderDetails = req.body;
+  console.log(req.body);
   database.startOrder(req.session.user_id).then((orderInfo) => {
-    console.log("***********", orderInfo);
+    // console.log("***********", orderInfo);
+    const test = [];
     for (let key in orderDetails) {
-      database.addToOrder(key, orderInfo.id, orderDetails[key]["qty"]);
+      if(key !== 'paid') {
+        test.push(database.addToOrder(key, orderInfo.id, orderDetails[key]["qty"]));
+        console.log('test', test);
+      }
+      if(key === 'paid') {
+        if(key) {
+          database.setPaid(orderInfo.id);
+        }
+      }
+
     }
-    Promise.all([orderDetails]).then(x => {
-      console.log('hi', x);
-      // res.render('orders')
+
+    // console.log('test', test);
+    Promise.all(test).then(info => {
+      console.log('hi', info);
+      let orderID = info[0].order_id;
+      database.orderItems(orderID).then((x) => {
+        let message = '';
+        if (x.length === 1) {
+          message += `${x[0].sum} x ${x[0].title}`;
+          return {message, orderID};
+        }
+        for (let i = 0; i < x.length; i++) {
+          if (i === 0) {
+            message += `${x[i].sum} x ${x[i].title},`;
+          } else if (i === x.length - 1) {
+            message += ` and ${x[i].sum} x ${x[i].title}!`
+          } else {
+            message += ` ${x[i].sum} x ${x[i].title},`;
+          }
+        }
+        return {message, orderID};
+      }).then((message) => {
+        database.getUserFromOrder(message.orderID)
+        .then((userInfo) => {
+          // console.log('line 169', userInfo);
+          const phoneNumber = userInfo.phone_number;
+          const userName = userInfo.name;
+          const msg = `Thank you for your order, ${userName}! Your order details are: ` + message.message;
+          // console.log('username', userName, 'Phone', phoneNumber, msg);
+          // sendMessage(phoneNumber, msg);
+        })
+      })
     })
   })
 
@@ -175,8 +215,10 @@ app.get("/manage", (req, res) => {
         database.findUser(id).then((user) => {
           database.allOrders().then((orders) => {
             database.allOrdersAllItems().then((items) => {
-              const templateVars = { orders, items, user };
-              res.render("manage", templateVars);
+              database.allUsers().then(users => {
+                const templateVars = { orders, items, user, users };
+                res.render("manage", templateVars);
+              })
             });
           });
         });
