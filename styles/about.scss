@@ -31,6 +31,17 @@ body {
   margin-bottom: 1em;
 }
 
+.card-container{
+  display: flex;
+  justify-content: space-around;
+  padding: 150px;
+}
+
+.column {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
 @media only screen and (max-width: 420px) {
   .header {
     width: 100vw;
