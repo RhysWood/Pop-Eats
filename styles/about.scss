@@ -2,25 +2,14 @@
 
 
 body {
-  background: url(/images/about.jpg);
+  background-image: none;
   background-size: cover;
-  align-items: flex-start;
+  background-color: $backgroundColor;
+  align-items: center;
   // height: 100vh;
-  justify-content: space-between;
+  justify-content: center;
 }
 
-.about-text {
-  display: flex;
-  flex-direction: column;
-  width: 500px;
-  background: $mainColor;
-  margin-top: 200px;
-  color: $fontColor;
-  border-radius: 5px;
-  padding: 1em;
-  margin-left: 3%;
-  font-size: 40px;
-}
 
 #about-us{
   display: inline-block;
@@ -28,6 +17,29 @@ body {
   margin-bottom: 1em;
   width: 260px;
   border-bottom: 1px solid white;
+}
+
+.about-section {
+  padding: 50px;
+  text-align: center;
+  background-color: #944556;
+  color: white;
+  width: 100%;
+}
+
+.about-section h1 {
+  margin-bottom: 1em;
+}
+
+.card-container{
+  display: flex;
+  justify-content: space-around;
+  padding: 150px;
+}
+
+.column {
+  margin-left: 50px;
+  margin-right: 50px;
 }
 
 @media only screen and (max-width: 420px) {
