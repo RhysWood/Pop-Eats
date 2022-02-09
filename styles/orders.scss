@@ -54,3 +54,69 @@ h1{
   font-size: 30px;
   text-decoration: underline;
 }
+
+tbody tr{
+  outline-style: solid;
+}
+
+@media only screen and (max-width: 420px) {
+
+  h1{
+    top: 80px;
+    left: 70px;
+    font-size: 20px;
+    width: 150px;
+  }
+
+  .titles {
+    display:inline-block;
+  }
+
+  th {
+    display:none;
+  }
+
+  .menu-img {
+    display:inline-block;
+  }
+
+  .order-id{
+    display:block;
+  }
+
+  .payment-status {
+    display:block;
+  }
+
+  .order-start {
+    display:block;
+  }
+
+  .price-block {
+    display:block;
+  }
+
+  .order-items-sum {
+    display:block;
+  }
+
+  .order-details {
+    display:block;
+  }
+
+  #order-items {
+    display:block;
+  }
+
+  tr td {
+    display:flex;
+  }
+
+  .row-input, .remove-btn-block, .add-btn-block  {
+    display:inline-block;
+  }
+
+    .menu-description, .price, .rating {
+    font-size: 12px;
+  }
+}

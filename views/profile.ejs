@@ -36,10 +36,10 @@
           <th>Password</th>
         </tr>
         <tr>
-          <td><%- user.name %></td>
-          <td><%- user.email %></td>
-          <td><%- user.phone_number %></td>
-          <td>********</td>
+          <td><span class="responsive">Name:</span><%- user.name %></td>
+          <td><span class="responsive">Email:</span><%- user.email %></td>
+          <td><span class="responsive">Phone Number:</span><%- user.phone_number %></td>
+          <td><span class="responsive">Password:</span>********</td>
         </tr>
       </table>
       <br>
@@ -55,7 +55,7 @@
             <td>
           <form class="form-inline" method="POST" action="/profile" >
             <!-- NEW NAME -->
-              <div class="form-group mb-2" id="qty-input">
+              <div class="form-group mb-2" id="qty-input"><span class="responsive">Name:</span>
               <input
                 class="form-control"
                 style="width: 110px;"
@@ -66,6 +66,7 @@
                 <!-- NEW EMAIL -->
             <td>
               <div class="form-group mb-2" id="qty-input">
+                <span class="responsive">Email:</span>
               <input
                 class="form-control"
                 style="width: 110px;"
@@ -76,6 +77,7 @@
                 <!-- NEW PHONE -->
             <td>
               <div class="form-group mb-2" id="qty-input">
+                <span class="responsive">Phone Number:</span>
               <input
                 class="form-control"
                 style="width: 110px;"
@@ -86,6 +88,7 @@
             <!-- NEW PASSWORD -->
             <td>
               <div class="form-group mb-2" id="qty-input">
+                <span class="responsive">Password:</span>
               <input
                 class="form-control"
                 style="width: 110px;"

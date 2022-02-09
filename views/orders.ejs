@@ -73,7 +73,7 @@
                     <% } else { %>
 
                     <% if(orders[order]['time']) { %>
-                      <p><%= orders[order]['time'] %> Minutes</p>
+                      <p><%= orders[order]['time'] %> Minute Wait</p>
                     <% } else { %>
 
                       <% for(let item in items) { %>
@@ -81,7 +81,7 @@
                           <% timeSum += (items[item]['time'] * items[item]['sum'])  %>
                         <% } %>
                       <% } %>
-                      <p><%= timeSum %> Minutes</p>
+                      <p><%= timeSum %> Minute Wait</p>
 
                       <% } %>
                     <% } %>

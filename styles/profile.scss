@@ -47,3 +47,40 @@ tr th {
   font-weight: bold;
   color:darkblue;
 }
+
+.responsive {
+  display:none;
+}
+
+@media only screen and (max-width: 420px) {
+
+  h1{
+    top: 80px;
+    left: 70px;
+    font-size: 20px;
+    width: 235px;
+  }
+
+  th {
+    display:none;
+  }
+
+  tr td {
+    display:flex;
+  }
+
+  .responsive {
+    display:inline-block;
+    font-weight:bold;
+    padding-right: 5px;
+  }
+
+  footer{
+    position: absolute;
+    bottom: -253px;
+  }
+
+  #qty-input{
+    display:flex;
+  }
+}

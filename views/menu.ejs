@@ -25,7 +25,7 @@
     />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script type="module" src="/scripts/user.js"></script>
+
 
     <title>Pop.Eats</title>
   </head>
@@ -37,43 +37,31 @@
       </div>
       <div class="menu-item-container">
         <table class="table">
-          <!-- <div id="menu-title">
-                <h1>MENU</h1>
-              </div> -->
           <tbody>
-            <!-- <div class="menu-container"> -->
             <% for(let item in items) { %> <% if(items[item]['active']) { %>
             <tr class="table-row">
               <td class="items-id"><%= items[item]['id'] %></td>
-              <td>
+              <td class="menu-img">
                 <img src = "<%= items[item]['img_url'] %>" class="rounded
                 mx-auto d-block" alt = <%= items[item]['img_alt'] %>>
               </td>
-              <td>
+              <td class="item-name-block">
                 <div class="menu-title"><%= items[item]['title'] %></div>
                 <br />
-                <!-- <b><%= items[item]['title'] %></b> <br /><br /> -->
                 <div class="menu-description">
                   <%= items[item]['description'] %>
                 </div>
-                <!-- <%= items[item]['description'] %> -->
               </td>
-              <td>
+              <td class="rating-block">
                 <div class="rating-title">RATING</div>
                 <br />
                 <div class="rating"><%= items[item]['rating'] %> / 5</div>
-
-                <!-- Rating: <br /> -->
-                <!-- <%= items[item]['rating'] %> / 5 -->
               </td>
-              <td id="whatever">
+              <td class ="price-block " id="whatever">
                 <div class="price-title">PRICE</div>
-                <!-- <div class="dollar-sign">$</div> -->
                   <br />
                   <span class="price"
-                    > $<%= items[item]['price'] %></span
-                  >
-
+                    > $<%= items[item]['price'] %></span>
               </td>
               <td class="row-input">
                 <form class="form-inline" method="POST">
@@ -88,18 +76,13 @@
                   </div>
                 </form>
               </td>
-              <td>
-                <!-- class="btn btn-success -->
+              <td class="add-btn-block">
                 <button class="add-btn" type="submit">Add</button>
               </td>
-              <td>
+              <td class="remove-btn-block">
                 <button type="submit" class="remove-btn">Remove</button>
               </td>
-              <!-- </div> -->
-              <!-- </div> -->
-              <!-- </td> -->
               <td id="total"></td>
-              <!-- </div> -->
             </tr>
             <% } %> <% } %>
           </tbody>
@@ -108,6 +91,7 @@
     </div>
     <!-- Scipt -->
     <script src="/scripts/app.js"></script>
+    <script type="module" src="/scripts/user.js"></script>
     <script async src="https://pay.google.com/gp/p/js/pay.js"></script>
   </body>
   <%- include('partials/_footer') %>
