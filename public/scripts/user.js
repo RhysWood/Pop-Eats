@@ -10,4 +10,14 @@ $(document).ready(function () {
     }
   });
 
+  //accessibility Enter option
+  userPress.addEventListener('keypress', function(e) {
+    if(e.key === 'Enter') {
+      if($('#dropDownMenu').is((":visible"))) {
+        $('#dropDownMenu').hide();
+      } else {
+        $('#dropDownMenu').show();
+      }
+    }
+  });
 });

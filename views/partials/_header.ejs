@@ -15,7 +15,7 @@
     <a href="/contact">CONTACT</a>
   </div>
   <% if (user && user.name){ %>
-  <div id="user" class="dropbtn"></i>Hi, <%- user.name %> <i class="fa-solid fa-angles-down"></i></div>
+  <div id="user" class="dropbtn" tabindex="0"></i>Hi, <%- user.name %> <i class="fa-solid fa-angles-down"></i></div>
   <div id="dropDownMenu" class="dropdown-content">
     <a href="/orders">Orders</a>
     <a href="/profile">Profile</a>
@@ -26,7 +26,7 @@
     <a href="/logout">Logout</a>
   </div>
   <% } else { %>
-    <div id="user" class="dropbtn"></i>USER<i class="fa-solid fa-angles-down"></i></div>
+    <div id="user" class="dropbtn" tabindex="0"></i>USER<i class="fa-solid fa-angles-down"></i></div>
     <% } %>
     <div id="dropDownMenu" class="dropdown-content">
       <a href="/login/1">Management - Rhys Wood</a>
