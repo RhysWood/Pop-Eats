@@ -66,3 +66,22 @@ body {
   }
 
 }
+
+@media only screen and (max-width: 420px) {
+
+  .card-container{
+    display:flex;
+    flex-direction: column;
+    padding: 0;
+  }
+
+  footer{
+    position: absolute;
+    bottom: -903px;
+  }
+
+  .about-section {
+    padding:0;
+  }
+
+}
