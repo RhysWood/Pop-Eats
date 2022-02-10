@@ -94,22 +94,9 @@ $(document).ready(function () {
     } else {
       orderDetails[itemID]['qty'] = qty;
     }
-
-
-    // $(".submit-btn").on("click", function (event) {
-    //   event.preventDefault();
-    //   console.log(orderDetails);
-    //   if(Object.keys(orderDetails).length === 0) {
-    //     return alert(`You can't submit an empty order`)
-    //   }
-    //   // $.post('/orders', orderDetails);
-    //   // window.location.href='/orders';
-    // });
-
   });
 
   $(".remove-btn").on("click", function () {
-    // if (!$(".form-control").val()) return;
     let inputQty = $(this)
       .parent()
       .parent()
