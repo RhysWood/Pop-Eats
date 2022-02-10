@@ -59,12 +59,21 @@ body {
 
 }
 
-@media only screen and (min-width: 768px) and (max-width: 1024px) {
+@media only screen and (min-width: 420px) and (max-width: 1024px) {
+
   .about-text {
     width: 350px;
     font-size: 35px;
   }
 
+  .card-container{
+    .column {
+      width:10em;
+      div {
+        width:8rem;
+      }
+    }
+  }
 }
 
 @media only screen and (max-width: 420px) {
