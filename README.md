@@ -20,9 +20,21 @@ Customers can log in, place orders, view their previous orders and update their 
 
 > Restaurant owers can process their orders and give an estimated time for the order, which is then texted to the customer using Twilio
 
-![text](planning/text.png)
+![text](planning/text1.png)
 
-> Users recieve text updates once they have placed their order.
+> Users recieves a text upon receipt of order
+
+![text](planning/text2.png)
+
+> Restaurant ower recieved text to notify them of a new order
+
+![text](planning/text3.png)
+
+> Once the restaurant gives an estimated time it is texted to the user
+
+![text](planning/text4.png)
+
+> When the order is ready, the user is notified by text
 
 ## Stretch Work
 
