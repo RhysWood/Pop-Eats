@@ -34,7 +34,7 @@ body {
 .card-container{
   display: flex;
   justify-content: space-around;
-  padding: 150px;
+  padding: 70px;
 }
 
 .column {
@@ -42,6 +42,13 @@ body {
   margin-right: 50px;
 }
 
+.card {
+  text-align: center;
+}
+
+.card-title{
+  color: #944556;
+}
 @media only screen and (max-width: 420px) {
   .header {
     width: 100vw;
