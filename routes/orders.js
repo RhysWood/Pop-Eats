@@ -25,7 +25,6 @@ router.get("/", (req, res) => {
 router.post("/", (req, res) => {
   const orderDetails = req.body;
   database.startOrder(req.session.user_id).then((orderInfo) => {
-    // console.log("***********", orderInfo);
     const test = [];
     for (let key in orderDetails) {
       if(key !== 'paid') {
@@ -40,7 +39,6 @@ router.post("/", (req, res) => {
 
     }
 
-    // console.log('test', test);
     Promise.all(test).then(info => {
       let orderID = info[0].order_id;
       database.orderItems(orderID).then((x) => {
@@ -62,18 +60,16 @@ router.post("/", (req, res) => {
       }).then((message) => {
         database.getUserFromOrder(message.orderID)
         .then((userInfo) => {
-          // console.log('line 169', userInfo);
           const phoneNumber = userInfo.phone_number;
           const userName = userInfo.name;
           const msg = `Thank you for your order, ${userName}! Your order details are: ` + message.message;
-          // console.log('username', userName, 'Phone', phoneNumber, msg);
-          // sendMessage(phoneNumber, msg);
+          sendMessage(phoneNumber, msg);
         })
         database.findUser(1)
         .then((managementContact) => {
           const phoneNumber = managementContact.phone_number;
           const msg = `A new order has been submitted! Check the online portal for order details and to provide an updated prep-time estimate.`;
-          //sendMessage(phoneNumber, msg);
+          sendMessage(phoneNumber, msg);
         })
       })
     })
